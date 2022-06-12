@@ -1,14 +1,19 @@
-package com.rockspoon.core.usecase
+package com.example.core.domain.base
 
 import android.util.Log
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import com.example.poc.core.data.user.User
 import kotlinx.coroutines.*
 import kotlinx.coroutines.flow.*
 
 /**
  * Executes business logic synchronously or asynchronously using Coroutines.
+ *
+ * Note: There is no JetPack UseCase library as today. We use this slightly modified
+ * implementation from iosched Android App from Google, which is used as reference
+ * for architectural design by the Android Team. I made another implementation of this
+ * class using a Call interface that may be preferable, but since this has been tested
+ * by the IOScheduler developers, we leave it like this and monitor if JetPack will
+ * release something for this.
  */
 abstract class UseCase<in P, R>(private val coroutineDispatcher: CoroutineDispatcher) {
 

@@ -1,6 +1,9 @@
 package com.example.poc.core.data
 
 import androidx.room.Room
+import com.example.poc.core.data.preference.PreferenceDataSource
+import com.example.poc.core.data.preference.PreferenceDataSourceImpl
+import com.example.poc.core.data.preference.PreferenceDataSourceImpl.Companion.preferencesDataStore
 import com.example.poc.core.data.user.*
 import com.example.poc.datasource.database.Database
 import com.example.poc.datasource.network.GitHubApiClient
@@ -23,6 +26,13 @@ val coreDataModule = module {
     // ApiClient
     single {
         GitHubApiClient()
+    }
+
+    // DataSource<Preferences>
+    single<PreferenceDataSource> {
+        PreferenceDataSourceImpl(
+            dataStore = androidApplication().preferencesDataStore
+        )
     }
 
     // User

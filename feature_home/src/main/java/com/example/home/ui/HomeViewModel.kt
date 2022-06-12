@@ -3,7 +3,7 @@ package com.example.home.ui
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.core.domain.user.ObserveUserUseCase
-import com.rockspoon.core.usecase.UseCase
+import com.example.core.domain.base.UseCase
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn

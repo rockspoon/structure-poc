@@ -1,9 +1,9 @@
 package com.example.core.domain.user
 
-import com.example.core.domain.FlowUseCase
+import com.example.core.domain.base.FlowUseCase
 import com.example.poc.core.data.user.User
 import com.example.poc.core.data.user.UserRepository
-import com.rockspoon.core.usecase.UseCase
+import com.example.core.domain.base.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

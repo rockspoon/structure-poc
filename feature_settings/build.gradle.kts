@@ -21,12 +21,18 @@ android {
 			)
 		}
 	}
+
+	buildFeatures {
+		viewBinding = true
+	}
 }
 
 dependencies {
 
 	implementation(project(":core_data"))
+	implementation(project(":core_domain"))
 	implementation(project(":core_ui"))
+
 
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 

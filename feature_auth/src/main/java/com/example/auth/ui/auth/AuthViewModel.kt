@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.core.data.user.User
-import com.rockspoon.core.usecase.UseCase
+import com.example.core.domain.base.UseCase
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow

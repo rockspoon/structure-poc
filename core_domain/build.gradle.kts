@@ -41,6 +41,11 @@ dependencies {
 
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 
+	// DI
+	implementation("io.insert-koin:koin-android:3.2.0")
+	testImplementation("io.insert-koin:koin-test:3.2.0")
+	testImplementation("io.insert-koin:koin-test-junit4:3.2.0")
+
 	implementation("androidx.core:core-ktx:1.7.0")
 	implementation("androidx.appcompat:appcompat:1.4.2")
 	implementation("com.google.android.material:material:1.6.0")

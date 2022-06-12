@@ -1,6 +1,5 @@
-package com.example.core.domain
+package com.example.core.domain.base
 
-import com.rockspoon.core.usecase.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch

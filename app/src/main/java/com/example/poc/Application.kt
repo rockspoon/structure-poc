@@ -1,6 +1,7 @@
 package com.example.poc
 
 import androidx.multidex.MultiDexApplication
+import com.example.core.domain.coreDomainModule
 import com.example.poc.core.data.coreDataModule
 import com.example.settings.featureSettingsModules
 import org.koin.android.ext.koin.androidContext
@@ -17,6 +18,7 @@ class Application : MultiDexApplication() {
 			modules(
 				appModule,
 				coreDataModule,
+				coreDomainModule,
 				featureSettingsModules
 			)
 		}
