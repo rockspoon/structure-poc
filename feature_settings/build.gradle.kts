@@ -9,6 +9,8 @@ android {
 
 	defaultConfig {
 		minSdk = 19
+		multiDexEnabled = true
+
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 	}
 
@@ -39,9 +41,15 @@ dependencies {
 	// DI
 	api("io.insert-koin:koin-android:3.2.0")
 	testImplementation("io.insert-koin:koin-test:3.2.0")
+	testImplementation("io.insert-koin:koin-test-jvm:3.2.0")
 	testImplementation("io.insert-koin:koin-test-junit4:3.2.0")
 
+	// Needs both otherwise the test will miss the style/FragmentScenarioEmptyFragmentActivityTheme
+	debugImplementation("androidx.fragment:fragment-testing:1.4.1")
+
 	testImplementation("junit:junit:4.13.2")
+
+	androidTestImplementation("androidx.test:core-ktx:1.4.0")
 	androidTestImplementation("androidx.test.ext:junit:1.1.3")
 	androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
 	androidTestImplementation("androidx.annotation:annotation:1.3.0")

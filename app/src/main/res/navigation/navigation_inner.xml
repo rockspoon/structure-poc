@@ -15,7 +15,7 @@
         app:moduleName="feature_search" />
 
     <include
-        android:id="@+id/featureSettingsGraphId"
+        android:id="@id/featureSettingsGraphId"
         app:graph="@navigation/navigation_settings" />
 
 </navigation>

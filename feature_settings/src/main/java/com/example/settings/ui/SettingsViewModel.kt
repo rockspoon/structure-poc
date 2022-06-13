@@ -5,12 +5,18 @@ import androidx.lifecycle.viewModelScope
 import com.example.core.domain.base.UseCase
 import com.example.core.domain.preference.ObserveIsNotificationEnabledUseCase
 import com.example.core.domain.preference.ObserveThemeUseCase
+import com.example.poc.core.data.preference.Theme
+import com.example.settings.domain.UpdateIsNotificationEnabledUseCase
+import com.example.settings.domain.UpdateThemeUseCase
 import com.example.settings.ui.SettingsFragment.UiState.Companion.success
 import kotlinx.coroutines.flow.*
+import kotlinx.coroutines.launch
 
 class SettingsViewModel(
     observeIsNotificationEnabledUseCase: ObserveIsNotificationEnabledUseCase,
-    observeThemeUseCase: ObserveThemeUseCase
+    observeThemeUseCase: ObserveThemeUseCase,
+    private val updateThemeUseCase: UpdateThemeUseCase,
+    private val updateIsNotificationEnabledUseCase: UpdateIsNotificationEnabledUseCase
 ) : ViewModel() {
 
     // Prefer not make more than one uiState per view model. If you need more data
@@ -51,5 +57,17 @@ class SettingsViewModel(
             .launchIn(viewModelScope)
 
         // Observe other attributes here...
+    }
+
+    fun setTheme(theme: Theme) {
+        viewModelScope.launch {
+            updateThemeUseCase(theme)
+        }
+    }
+
+    fun setIsNotificationEnabled(isNotificationEnabled: Boolean) {
+        viewModelScope.launch {
+            updateIsNotificationEnabledUseCase(isNotificationEnabled)
+        }
     }
 }

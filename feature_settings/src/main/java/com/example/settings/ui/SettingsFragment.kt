@@ -8,6 +8,7 @@ import com.example.poc.core.data.preference.Theme
 import com.example.settings.R
 import com.example.settings.databinding.SettingsFragmentBinding
 import com.example.settings.loadModules
+import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
@@ -22,12 +23,24 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
+        // Dependency injection
         loadModules()
 
         // Binding
-        val binding = SettingsFragmentBinding.bind(view)
+        val binding = SettingsFragmentBinding.bind(view).apply {
 
-        // Observe UI state
+            themeSwitch.setOnCheckedChangeListener { _, isChecked ->
+                val theme = if(isChecked) Theme.DARK
+                else Theme.SYSTEM
+                viewModel.setTheme(theme)
+            }
+
+            notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
+                viewModel.setIsNotificationEnabled(isChecked)
+            }
+        }
+
+        // UI state
         viewModel.uiState
             .onEach { state -> initView(binding, state) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
@@ -38,16 +51,15 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
     private fun initView(binding: SettingsFragmentBinding, state: UiState) {
 
         when (state) {
-            UiState.None -> {
-            }
+            UiState.None -> {}
             is UiState.Success -> {
-                // Do the binding
+                binding.themeSwitch.isChecked = state.theme == Theme.DARK
                 binding.themeTextView.text = state.theme.name
+                binding.notificationSwitch.isChecked = state.isNotificationEnabled
                 binding.notificationTextView.text = state.isNotificationEnabled.toString()
             }
             is UiState.Error -> {}
-            is UiState.Loading -> {
-            }
+            is UiState.Loading -> {}
         }
     }
 
