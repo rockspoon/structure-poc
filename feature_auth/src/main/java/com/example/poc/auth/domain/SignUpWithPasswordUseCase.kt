@@ -1,6 +1,6 @@
-package com.example.auth.domain
+package com.example.poc.auth.domain
 
-import com.example.auth.domain.SignUpWithPasswordUseCase.*
+import com.example.poc.auth.domain.SignUpWithPasswordUseCase.*
 import com.example.core.domain.base.FlowUseCase
 import com.example.poc.core.data.user.User
 import com.example.poc.core.data.user.UserRepository

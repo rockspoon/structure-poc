@@ -1,8 +1,8 @@
-package com.example.auth.ui.auth
+package com.example.poc.auth.ui.main
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.auth.domain.SignUpWithPasswordUseCase
+import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.core.data.user.User
 import com.example.core.domain.base.UseCase
 import kotlinx.coroutines.Job
@@ -29,7 +29,7 @@ class AuthViewModel(
             .onEach { result ->
                 when (result) {
                     is UseCase.Result.Error -> _uiState.value =
-                        AuthFragment.UiState.Error(throwable = result.exception)
+                        AuthFragment.UiState.Error(exception = result.exception)
                     is UseCase.Result.Loading -> _uiState.value =
                         AuthFragment.UiState.Loading(progress = result.progress)
                     is UseCase.Result.Success -> _uiState.value =

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:dist="http://schemas.android.com/apk/distribution"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.poc.auth">
+
+    <!-- Note that we replace here our delivery to install-time and put on the debug
+    folder so in tests this performs as a monolithic application and avoid non found
+     classes error. Note also that this manifest need to be in `debug` folder rather
+      than `androidTest` folder. See https://stackoverflow.com/questions/26244998/androidmanifest-in-androidtest-directory-being-ignored-->
+    <dist:module
+        dist:instant="false"
+        dist:title="Feature Module Auth Test"
+        tools:node="replace">
+        <dist:delivery>
+            <dist:install-time />
+        </dist:delivery>
+        <dist:fusing dist:include="true" />
+    </dist:module>
+</manifest>

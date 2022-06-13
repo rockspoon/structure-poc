@@ -1,4 +1,4 @@
-package com.example.auth
+package com.example.poc.auth
 
 import org.junit.Test
 

@@ -9,6 +9,7 @@ android {
 
 	defaultConfig {
 		minSdk = 19
+
 		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 	}
 	
@@ -24,6 +25,10 @@ android {
 
 	buildFeatures {
 		viewBinding = true
+	}
+
+	testOptions {
+		animationsDisabled = true
 	}
 }
 

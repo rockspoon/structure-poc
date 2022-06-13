@@ -1,14 +1,14 @@
-package com.example.auth.ui.auth
+package com.example.poc.auth.ui.main
 
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.auth.R
-import com.example.auth.databinding.AuthFragmentBinding
-import com.example.auth.domain.SignUpWithPasswordUseCase
-import com.example.auth.loadModules
+import com.example.poc.auth.R
+import com.example.poc.auth.databinding.AuthFragmentBinding
+import com.example.poc.auth.domain.SignUpWithPasswordUseCase
+import com.example.poc.auth.loadModules
 import com.example.poc.core.data.user.User
 import com.example.poc.ui.MainActivity
 import com.google.android.material.snackbar.Snackbar
@@ -54,7 +54,7 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
                 }
                 is UiState.Error -> {
                     updateProgressIndicator(null)
-                    updateErrorMessages(uiState.throwable)
+                    updateErrorMessages(uiState.exception)
                 }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
@@ -93,10 +93,10 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
         when (t) {
             is SignUpWithPasswordUseCase.UserPasswordTooShortException -> {
                 val message = getText(R.string.error_authentication_password_short)
-                binding.passwordEditText.error = message
+                binding.passwordInputLayout.error = message
             }
             null -> {
-                binding.passwordEditText.error = null
+                binding.passwordInputLayout.error = null
             }
             else -> {
                 val message = getText(R.string.error_authentication_unknown)
@@ -113,6 +113,6 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
         object None : UiState()
         data class Loading(val progress: Int?) : UiState()
         data class Success(val item: User) : UiState()
-        data class Error(val throwable: Throwable) : UiState()
+        data class Error(val exception: Exception) : UiState()
     }
 }

@@ -1,10 +1,12 @@
-package com.example.auth.domain
+package com.example.poc.auth.domain
 
+import com.example.core.domain.base.UseCase
 import com.example.poc.core.data.user.User
 import com.example.poc.core.data.user.UserRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.last
 import kotlinx.coroutines.runBlocking
 import org.junit.Assert
 import org.junit.Test
@@ -46,8 +48,13 @@ class SignUpWithPasswordUseCaseTest {
             val firstEmission = signUpWithPasswordUseCase(
                 parameters = SignUpWithPasswordUseCase.Params(fakeUser)
             ).first()
-            val actualException = (firstEmission as Result.Error).exception
+            val actualLoading = (firstEmission as UseCase.Result.Loading).progress
+            Assert.assertEquals(-1, actualLoading)
 
+            val secondEmission = signUpWithPasswordUseCase(
+                parameters = SignUpWithPasswordUseCase.Params(fakeUser)
+            ).last()
+            val actualException = (secondEmission as UseCase.Result.Error).exception
             Assert.assertTrue(actualException is SignUpWithPasswordUseCase.UserPasswordTooShortException)
         }
 }
