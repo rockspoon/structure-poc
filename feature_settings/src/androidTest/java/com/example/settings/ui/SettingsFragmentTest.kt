@@ -47,7 +47,11 @@ class SettingsFragmentTest {
         startKoin {
             // Add featureSettingsModule but also coreDomainModule because the observe use cases
             // comes from it.
-            modules(testModule, featureSettingsModule, coreDomainModule)
+            modules(
+                coreDomainModule,
+                featureSettingsModule,
+                testModule
+            )
         }
 
         launchFragmentInContainer<SettingsFragment>(
