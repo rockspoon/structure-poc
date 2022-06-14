@@ -112,14 +112,14 @@ class MainActivityTest {
                 click()
             )
 
-            // The app preferences value for notifications should be true now
+            // Check if it's on now.
             onView(
                 withId(com.example.settings.R.id.themeSwitch)
             ).check(
                 matches(isChecked())
             )
 
-            // Check if it's on now.
+            // The app preferences value for theme should be DARK now
             onView(
                 withId(com.example.settings.R.id.themeTextView)
             ).check(
