@@ -8,7 +8,6 @@ import com.example.poc.core.data.preference.Theme
 import com.example.settings.R
 import com.example.settings.databinding.SettingsFragmentBinding
 import com.example.settings.loadModules
-import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel

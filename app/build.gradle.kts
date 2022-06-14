@@ -55,6 +55,10 @@ android {
 	buildFeatures {
 		viewBinding = true
 	}
+
+	testOptions {
+		animationsDisabled = true
+	}
 }
 
 dependencies {
@@ -73,6 +77,8 @@ dependencies {
 	api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
 
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
+	androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2")
+
 	implementation("androidx.multidex:multidex:2.0.1")
 
 	// DI
@@ -87,4 +93,16 @@ dependencies {
 	// Keep this also here otherwise instrumentedTests in feature modules will miss the
 	// style/FragmentScenarioEmptyFragmentActivityTheme in the manifest.
 	debugImplementation("androidx.fragment:fragment-testing:1.4.1")
+
+	androidTestImplementation("androidx.test:core-ktx:1.4.0")
+	androidTestImplementation("androidx.test:runner:1.4.0")
+	androidTestImplementation("androidx.test:rules:1.4.0")
+	androidTestImplementation("androidx.test.ext:junit:1.1.3")
+
+	// Put the feature as dependencies of androidTest so we can use the IDs with Expresso
+	androidTestImplementation(project(":feature_auth"))
+	androidTestImplementation(project(":feature_home"))
+	androidTestImplementation(project(":feature_search"))
+	androidTestImplementation(project(":core_data"))
+
 }
