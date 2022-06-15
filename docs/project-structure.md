@@ -528,9 +528,9 @@ Be aware that many extensions were created in the androidx.core:core-ktx library
 
 Methods should be named with cammelCase.
 
-Test methods should be named with cammelCase and snake_case to separate the target, condition, and result of the test:
+Test methods should be named with cammelCase and snake_case to separate condition, target, and result of the test:
 
-    something_whenSomeCondition_shouldResultInSomething()
+    whenSomeCondition_target_shouldResultInSomething()
 
 
 ## Contributing to this document
