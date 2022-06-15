@@ -6,7 +6,6 @@ import androidx.navigation.NavController
 import androidx.navigation.dynamicfeatures.fragment.DynamicNavHostFragment
 import com.example.poc.R
 import com.example.poc.databinding.MainActivityBinding
-import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class MainActivity : AppCompatActivity() {
 

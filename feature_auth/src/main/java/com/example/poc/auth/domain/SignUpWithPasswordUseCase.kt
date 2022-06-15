@@ -1,10 +1,10 @@
 package com.example.poc.auth.domain
 
 import com.example.poc.auth.domain.SignUpWithPasswordUseCase.*
-import com.example.core.domain.base.FlowUseCase
+import com.example.poc.core.domain.base.FlowUseCase
 import com.example.poc.core.data.user.User
 import com.example.poc.core.data.user.UserRepository
-import com.example.core.domain.base.UseCase
+import com.example.poc.core.domain.base.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow

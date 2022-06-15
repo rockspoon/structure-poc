@@ -12,7 +12,6 @@ import com.example.poc.core.data.preference.PreferenceDataSource
 import com.example.poc.core.data.preference.Theme
 import com.example.poc.core.data.user.*
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
@@ -46,9 +45,9 @@ class MainActivityTest {
             }
 
             // Fake data sources
-            singleOf(::FakeUserDatabaseDataSource) { bind<UserDatabaseDataSource>() }
-            singleOf(::FakeUserNetworkDataSource) { bind<UserNetworkDataSource>() }
-            singleOf(::FakePreferenceDataSource) { bind<PreferenceDataSource>() }
+            singleOf(MainActivityTest::FakeUserDatabaseDataSource) { bind<UserDatabaseDataSource>() }
+            singleOf(MainActivityTest::FakeUserNetworkDataSource) { bind<UserNetworkDataSource>() }
+            singleOf(MainActivityTest::FakePreferenceDataSource) { bind<PreferenceDataSource>() }
 
             single {
                 SignUpWithPasswordUseCase(
@@ -97,7 +96,7 @@ class MainActivityTest {
 
             // We should go to the home page and see a greetings
             val helloString =
-                context.getString(com.example.home.R.string.greetings_template).substring(0..4)
+                context.getString(com.example.poc.home.R.string.greetings_template).substring(0..4)
             onView(withText(containsString(helloString))).check(matches(isDisplayed()))
 
             // Go to settings by clicking in the bottom navigation
@@ -113,28 +112,28 @@ class MainActivityTest {
 
             // Make sure it was off when started
             onView(
-                withId(com.example.settings.R.id.themeSwitch)
+                withId(com.example.poc.settings.R.id.themeSwitch)
             ).check(
                 matches(isNotChecked())
             )
 
             // Click the switch button
             onView(
-                withId(com.example.settings.R.id.themeSwitch)
+                withId(com.example.poc.settings.R.id.themeSwitch)
             ).perform(
                 click()
             )
 
             // Check if it's on now.
             onView(
-                withId(com.example.settings.R.id.themeSwitch)
+                withId(com.example.poc.settings.R.id.themeSwitch)
             ).check(
                 matches(isChecked())
             )
 
             // The app preferences value for theme should be DARK now
             onView(
-                withId(com.example.settings.R.id.themeTextView)
+                withId(com.example.poc.settings.R.id.themeTextView)
             ).check(
                 matches(withText(Theme.DARK.name))
             )

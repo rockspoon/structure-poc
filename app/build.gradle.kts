@@ -11,7 +11,7 @@ android {
 
 	defaultConfig {
 		applicationId = "com.example.poc"
-		minSdk = 19
+		minSdk = 23
 		targetSdk = 32
 		versionCode = 1
 		versionName = "1.0"

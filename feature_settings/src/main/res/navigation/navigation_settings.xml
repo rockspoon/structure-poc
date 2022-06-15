@@ -6,6 +6,6 @@
 
 	<fragment
 		android:id="@+id/settingsFragment"
-		android:name="com.example.settings.ui.SettingsFragment"/>
+		android:name="com.example.poc.settings.ui.SettingsFragment"/>
 
 </navigation>

@@ -1,6 +1,6 @@
 package com.example.poc.auth.domain
 
-import com.example.core.domain.base.UseCase
+import com.example.poc.core.domain.base.UseCase
 import com.example.poc.core.data.user.User
 import com.example.poc.core.data.user.UserRepository
 import kotlinx.coroutines.Dispatchers
