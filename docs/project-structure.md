@@ -509,6 +509,20 @@ Network resources like body responses from servers, when created in the project,
 	UserResource, OrderResource, etc.
 
 
+### Exceptions
+
+Exceptions should have a descriptive name and message. This message is intended for logging and not to be displayed to the user.
+
+	object UserNotFoundException : RuntimeException("User was not found.")
+
+Preferably the message should describe the problem in other words than the name of the exception and given data about the request that causes the error, this may save the developer time from running again with breakpoints to know what data was sent wrongly:
+
+	class UserNotFoundException(val uuid: Long) : RuntimeException("User requested with UUID $id was not found.")
+
+If possible, it should contain a second sentence suggesting a possible solution, anticipating common mistakes. This may save developers time from trying multiple possible solutions:
+
+	class UserNotFoundException(val uuid: Long) : RuntimeException("User requested with UUID $uuid was not found. Check if the UUID provided is the unique sever ID and not the a local database ID.")
+
 ### Extensions
 
 Multiple extensions targeting the same Class should be named after the class ending in Ext:
@@ -516,19 +530,19 @@ Multiple extensions targeting the same Class should be named after the class end
     ViewExt.kt
     DrawableExt.kt
 
-Multiple extension targeting similar Classes should be named with a meaningful class name if not parent class exist and end in Ext:
+Multiple extension targeting similar Classes should be named with a meaningful class name if not parent class exist and also end in Ext:
 
     NetworkExt.kt
     CompatExt.kt
 
-Be aware that many extensions were created in the androidx.core:core-ktx library. Any redundant extension should be deprecated indicating the replacement.
+Be aware that many extensions were created in the androidx.core:core-ktx library. Any redundant extension should be deprecated indicating the replacement with `@ReplaceWith()` annotation so the IDE help with the replacement.
 
 
 ## Methods
 
-Methods should be named with camelCase.
+Methods should be named with `camelCase`.
 
-Test methods should be named with camelCase and snake_case to separate condition, target, and result of the test:
+Test methods should be named with `camelCase` and `snake_case` to separate condition, target, and result of the test:
 
     whenSomeCondition_target_shouldResultInSomething()
 
