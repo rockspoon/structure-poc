@@ -33,7 +33,7 @@ Maybe receivers and providers should not be a core_module as they are not archit
 1. `:app` can access and register a SyncReceiver in `:core_receiver`  to listen to push notification
 2. A sync push notification arrives stating in the message that table `product` should be updated.
 3. `:core_receiver` BroadcastReceiver can access and use UseCase in `:core_domain` to call syncProductTableUseCase();
-4. SyncProductTableUseCase(databaseRepository, networkReppository) can see it's repository dependencies in ":core_data", so it performs the tasks of fetching new data from network and update database. This can also be done in a sync service, but for the sake of example we pretend that there is no sync service;
+4. `SyncProductTableUseCase(databaseRepository, networkRepository)` can see it's repository dependencies in ":core_data", so it performs the tasks of fetching new data from network and update database. This can also be done in a sync service, but for the sake of example we pretend that there is no sync service;
 5. `:datasource_database` ProductDataSource notifies observers of `Flow<List<entity.Product>>` in `:core_data` ProductRepository;
 6. `:core_data` ProductRepository map the Flow to Flow<List<model.Product>> in `:core_domain`, which is observed by ProductsViewModel in ':feature_catalog' since it can see `:core_domain` from `:app` since they are api gradle dependency on `:app`;
 7. `:feature_catalog` ProductsViewModel emits a UiState : StateFlow with a Success(data) message to fragment;
@@ -41,7 +41,7 @@ Maybe receivers and providers should not be a core_module as they are not archit
 
 Note that if a core receiver wants to start a core service, it will have to start it indirectly. In the case of SyncService, this can be accomplished with ContentResolver.syncRequest(), which is the standard way. There is other ways to start services without actually seeing the class, it's not the most elegant, but it is possible and used in some implementations of dynamic feature.
 
-The proof of concept will help clarify definitely where those two should be placed. For now, I believe that they are in the co/rrect place. 
+The proof of concept will help clarify definitely where those two should be placed. For now, I believe that they are in the correct place. 
 ???
 
 ??? 
@@ -53,7 +53,7 @@ Services talk to activities with messages and IBinders, so they don't need to se
 
 As bonus, the prefix core and feature make the alphabetic order also order the modules by importance, with test modules grouped at the end.
 
-Newtwork classes for acesssing Web APIs (including remote resources classes), from the company or not, should be placed in a different project and added as dependency of the module that uses it (preferably with a repository pattern usually in `:core_data`). But these network classes also can be put on `:datasource_thenameoftheapi` module if you want to protect its use.
+Network classes for accessing Web APIs (including remote resources classes), from the company or not, should be placed in a different project and added as dependency of the module that uses it (preferably with a repository pattern usually in `:core_data`). But these network classes also can be put on `:datasource_thenameoftheapi` module if you want to protect its use.
 
 ### app
 
@@ -140,7 +140,7 @@ No subpackage is allowed unless stated otherwise.
 
 ##### commons
 
-Constains classes that are used by multiple packages, like helpers and extensions. Be careful to do not create a helper that should be a UseCase.
+Contains classes that are used by multiple packages, like helpers and extensions. Be careful to do not create a helper that should be a UseCase.
 
 Contains also the dependency injection classes. When possible, the DI classes should be put inside the class that will be injected, at the very bottom of the class, but when not or the class share functionality between different classes, the class should be in this package. Each module should have a di.kt file with the module of the feature.
 
@@ -157,17 +157,17 @@ Contains the classes that implements a business use case, often extended from a 
 
 ##### provider
 
-Contains the Android `Provider` classes and auxiliar classes.
+Contains the Android `Provider` classes and auxiliary classes.
 
 
 ##### receiver
 
-Contains the Android `Receiver` classes and auxiliar classes.
+Contains the Android `Receiver` classes and auxiliary classes.
 
 
 ##### service
 
-Contains the Android `Service` classes and auxiliar classes.
+Contains the Android `Service` classes and auxiliary classes.
 
 
 ##### ui
@@ -232,7 +232,7 @@ See [Android developers microbenchmark](https://developer.android.com/topic/perf
 
 ### test
 
-I am not sure if this is necessary. Tests should be created in the module where the target is while development is happening, with few exceptions. For testing components, It's necessary create and applciation and actvities with those components, therefore why the Rockspoon Design project has a separated module for testing. Micro and macrobenchmarks also need another application to have control over the tests.
+I am not sure if this is necessary. Tests should be created in the module where the target is while development is happening, with few exceptions. For testing components, It's necessary create and application and activities with those components, therefore why the Rockspoon Design project has a separated module for testing. Micro and macrobenchmarks also need another application to have control over the tests.
 
 In the RockSpoon PoS project, it may not be necessary.
 
@@ -439,7 +439,7 @@ Alternatively just the `factory: Pair<Module, InstanceFactory<T>>` (it can be a 
 		MyComponent2.factory
 	}
 
-I think it's a bad idea. Put the factory in di.kt folder makes di.kt the full source of DI classes, which is easy to someone just starting in the project to understand the whole dependency graph. Also, we can use singleOf, viewmodelOf and etc..
+I think it's a bad idea. Put the factory in di.kt folder makes di.kt the full source of DI classes, which is easy to someone just starting in the project to understand the whole dependency graph. Also, we can use singleOf, `viewmodelOf` and etc..
 
 In `Application` class:
 
@@ -459,7 +459,7 @@ In `Application` class:
 		)
 	}
 
-?? P.S.: check how multi module dependency injection works with dynamic modules in Koin. With `dagger-android` is definetelly possible.
+?? P.S.: check how multi module dependency injection works with dynamic modules in Koin. With `dagger-android` is definitely possible.
 
 
 ### UI states
@@ -516,7 +516,7 @@ Multiple extensions targeting the same Class should be named after the class end
     ViewExt.kt
     DrawableExt.kt
 
-Multiple extensiosn targeting similar Classes should be named with a meaninful class name if not parent class exist and end in Ext:
+Multiple extension targeting similar Classes should be named with a meaningful class name if not parent class exist and end in Ext:
 
     NetworkExt.kt
     CompatExt.kt
@@ -526,9 +526,9 @@ Be aware that many extensions were created in the androidx.core:core-ktx library
 
 ## Methods
 
-Methods should be named with cammelCase.
+Methods should be named with camelCase.
 
-Test methods should be named with cammelCase and snake_case to separate condition, target, and result of the test:
+Test methods should be named with camelCase and snake_case to separate condition, target, and result of the test:
 
     whenSomeCondition_target_shouldResultInSomething()
 
