@@ -68,21 +68,32 @@ class MainActivityTest {
 
             // Type the credentials
             val email = "jon.snow@example.com"
-            onView(withId(com.example.poc.auth.R.id.emailEditText)).perform(
+            onView(
+                withId(com.example.poc.auth.R.id.emailEditText)
+            ).perform(
                 clearText(),
                 typeText(email)
             )
             val password = "12345678"
-            onView(withId(com.example.poc.auth.R.id.passwordEditText)).perform(
+            onView(
+                withId(com.example.poc.auth.R.id.passwordEditText)
+            ).perform(
                 clearText(),
                 typeText(password)
             )
 
             // Close the keyboard and click the auth button. It's important
             // to close the keyboard because the button is behind it.
-            onView(withId(com.example.poc.auth.R.id.passwordEditText))
-                .perform(closeSoftKeyboard())
-            onView(withId(com.example.poc.auth.R.id.authButton)).perform(click())
+            onView(
+                withId(com.example.poc.auth.R.id.passwordEditText)
+            ).perform(
+                closeSoftKeyboard()
+            )
+            onView(
+                withId(com.example.poc.auth.R.id.authButton)
+            ).perform(
+                click()
+            )
 
             // We should go to the home page and see a greetings
             val helloString =
@@ -96,7 +107,9 @@ class MainActivityTest {
                     isDescendantOfA(withId(com.example.poc.R.id.bottom_navigation_view)),
                     isDisplayed()
                 )
-            ).perform(click())
+            ).perform(
+                click()
+            )
 
             // Make sure it was off when started
             onView(
