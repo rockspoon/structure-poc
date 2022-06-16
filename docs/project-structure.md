@@ -1,13 +1,53 @@
 # Project structure
-(to be placed in `./docs/contributing` and renamed "Project structure")
 
 This document was based and any omissions should be referred first to the official Android documentation, then language documentation, industry standards, Computer Science literature, and community.
 
+This document describes the concerns of modules, packages, files, classes, and etc. from the project, as well as the architecture.
+
 It was also used as reference for the architectural division the project `nowinandroid` and `iosched`.
+
+## Architecture
+
+The architecture proposed here follows the [Guide to App Architecture ](https://developer.android.com/topic/architecture) by the Android Developers Team.
+
+It divided in three layers:  
+ - Data
+ - Domain
+ - UI, services, providers, receivers
+
+It uses principe of Separation of Concerns (SoC) to further separate the UI layer views classes (activities, fragments, and views) from the view models. 
+
+It also separates repositories and models from data sources classes, like entities and remote resources. 
+
+This architecture is enforced by the modules dependencies and kotlin visibility modifiers.
+
+The pieces of this the architecture are connected to each other using mostly the publish-subscribe pattern, with the implementation done using coroutines, specially `Flow`s, in a *reactive* manner.
+
+The stream of data flows from the data layer to the UI / Service when it's consumed and the opposite when it's inserted.
+
+The top layer, the *data layer*, don't see the other layers, while the *domain layer* don't see the *UI / service layer*.
+
+The ones on the bottom always see the ones on the bottom.
+
+### Objectives of the architecture
+
+The architecture was created keeping in mind the follow objectives:
+
+- Less development errors
+- Less runtime errors
+- Less compile time
+- Easy testing
+- Faster testing
+- Easy project navigation
+- Low learning curve of the project
+- Smaller download size and faster install
+- Less merge conflicts while concurrent developing
+- Smaller maintenance costs
+- Smaller time to market
 
 ## Modules
 
-The modules are separated in core for shared resources and feature modules. Additional modules for testing and benchmarking are also added.
+The modules are separated in *core8 for shared resources and *feature* modules for specific functionalities. Additional modules for testing and benchmarking are also added.
 
 The core resources are divided by architectural layer. This structure guarantee two things: enforce the Separation of Concerns of the architectural layers and make the number of modules stable during the lifetime of the architecture, since the architectural layers are stable.
 

@@ -1,6 +1,11 @@
 package com.example.poc.datasource.network.user
 
-class UserResource {
+data class UserResource(
 
-    val id: Long? = null
-}
+    val id: Long? = null,
+
+    /**
+     *
+     */
+    var email: String? = null
+)

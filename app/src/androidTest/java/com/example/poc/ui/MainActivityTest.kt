@@ -95,8 +95,8 @@ class MainActivityTest {
             )
 
             // We should go to the home page and see a greetings
-            val helloString =
-                context.getString(com.example.poc.home.R.string.greetings_template).substring(0..4)
+            val helloString = context.getString(com.example.poc.home.R.string.greetings_template)
+                .substring(0..4)
             onView(withText(containsString(helloString))).check(matches(isDisplayed()))
 
             // Go to settings by clicking in the bottom navigation

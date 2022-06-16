@@ -10,6 +10,11 @@ data class User(
 	/**
 	 *
 	 */
+	var email: String? = null,
+
+	/**
+	 *
+	 */
 	var givenName: String? = null,
 
 	/**

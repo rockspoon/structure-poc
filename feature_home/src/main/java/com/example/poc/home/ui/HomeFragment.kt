@@ -44,7 +44,7 @@ class HomeFragment : Fragment(R.layout.home_fragment){
     }
 
     private fun updateGreetings(user: User){
-        binding.greetingsTextView.text = getString(R.string.greetings_template, user.givenName)
+        binding.greetingsTextView.text = getString(R.string.greetings_template, user.email)
     }
 
     sealed class UiState {

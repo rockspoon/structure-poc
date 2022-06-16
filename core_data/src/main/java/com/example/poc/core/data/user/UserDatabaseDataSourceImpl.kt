@@ -33,6 +33,9 @@ internal class UserDatabaseDataSourceImpl(
     ): User {
         if (user.id == null) throw UserRepository.UserIdNullException
 
+        // Should we check this again here? Or choose a single layer to make the check and
+        // sanitation of data? Data sources are sometimes accessed without the Repository, so here
+        // it's possible a good place
         val passwordLength = user.password?.length ?: 0
         if (passwordLength < 8) throw UserRepository.UserPasswordShortException
 
@@ -43,13 +46,15 @@ internal class UserDatabaseDataSourceImpl(
 
     private fun UserEntity.toModel() =
         User(
-            id = this.id,
+            id = id,
+            email = email,
             givenName = "",
             familyName = ""
         )
 
     private fun User.toEntity() =
         UserEntity(
-            id = this.id
+            id = this.id,
+            email = email
         )
 }

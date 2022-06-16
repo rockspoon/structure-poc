@@ -33,6 +33,7 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
         binding.passwordEditText.setText(viewModel.user.password)
         binding.authButton.setOnClickListener {
             viewModel.user.password = binding.passwordEditText.text.toString()
+            viewModel.user.email = binding.emailEditText.text.toString()
             viewModel.signUp()
         }
 

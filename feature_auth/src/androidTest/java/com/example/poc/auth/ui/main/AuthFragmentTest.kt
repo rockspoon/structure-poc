@@ -38,7 +38,8 @@ class AuthFragmentTest {
             onView(withId(R.id.passwordEditText)).perform(clearText(), typeText(shortPassword))
 
             // Close the keyboard and click the auth button. It's important
-            // to close the keyboard because the button is behind it.
+            // to close the keyboard because the button is behind it. Bad UX, I know, it's not
+            // the focus in this PoC.
             onView(withId(R.id.passwordEditText)).perform(closeSoftKeyboard())
             onView(withId(R.id.authButton)).perform(click())
 

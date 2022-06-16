@@ -49,6 +49,10 @@ class UserRepositoryImpl(
     /**
      * A sync function that can be used by the sync service.
      */
+    // TODO maybe this logic of syncing and etc should be in the use case. I need to review the
+    // concerns of each. Nop, the suggestion by Android Team is this kind sync thing be here. This
+    // simple app is so simple that the layers end up being redundant, but in more complete apps
+    // the domain may contain complex functions like in a SignUpWithGoogleUseCase.
     override suspend fun syncUser(userId: Long): User {
 
         // Fetch in the server, get the response...
