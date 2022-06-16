@@ -59,6 +59,7 @@ android {
 	testOptions {
 		animationsDisabled = true
 	}
+    dynamicFeatures += setOf(":feature_server")
 }
 
 dependencies {

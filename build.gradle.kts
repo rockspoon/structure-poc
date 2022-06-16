@@ -2,7 +2,7 @@
 plugins {
 	id("com.android.application") version "7.2.1" apply false
 	id("com.android.library") version "7.2.1" apply false
-	id("org.jetbrains.kotlin.android") version "1.6.21" apply false
+	id("org.jetbrains.kotlin.android") version "1.7.0" apply false
 	id("com.android.dynamic-feature") version "7.2.1" apply false
 	id("com.android.test") version "7.2.1" apply false
 	id("androidx.benchmark") version "1.1.0-beta04" apply false
