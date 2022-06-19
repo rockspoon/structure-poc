@@ -7,15 +7,21 @@ import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.os.IBinder
 import android.util.Log
+import com.example.poc.server.domain.ObservePubSubMessagesUseCase
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.routing.*
+import kotlinx.coroutines.GlobalScope
 import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.flowOn
+import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.runBlocking
 import java.io.BufferedReader
 import java.io.IOException
 import java.io.InputStreamReader
 import java.io.PrintWriter
+import java.net.InetAddress
 import java.net.ServerSocket
 import java.util.*
 import java.util.concurrent.TimeUnit
@@ -35,22 +41,19 @@ class ServerService : Service() {
 
     private val serverSocket: ServerSocket by lazy {
         // Initialize a server socket on the next available port.
-        ServerSocket(0).also { socket ->
-            // Store the chosen port.
-            localPort = socket.localPort
-        }
+        ServerSocket(0)
     }
 
     private var serviceName: String? = null
 
-    private var localPort: Int? = null
-
     private var isServerSocketRunning = false
 
-    override fun onBind(intent: Intent?): IBinder? {
-
+    override fun onCreate() {
+        // Do this on create or on bind?
         registerService()
+    }
 
+    override fun onBind(intent: Intent?): IBinder? {
         // TODO return a IBinder so the activity that instantiated it can communicate with it
         TODO()
     }
@@ -81,7 +84,7 @@ class ServerService : Service() {
                     // with the name Android actually used.
                     serviceName = NsdServiceInfo.serviceName
 
-                    initializeServerSocket()
+                    //initializeServerSocket()
                     // or
                     startSeverEngine()
                 }
@@ -98,7 +101,8 @@ class ServerService : Service() {
                 override fun onUnregistrationFailed(serviceInfo: NsdServiceInfo, errorCode: Int) {
                     // Un-registration failed. Put debugging code here to determine why.
                 }
-            })
+            }
+        )
     }
 
     // TODO change this to Ktor implementation and send the data to an Endpoint class to handle it
@@ -147,11 +151,18 @@ class ServerService : Service() {
         }
     }
 
+    /**
+     * Starts the sever engine using Ktor and Netty engine.
+     */
     private fun startSeverEngine() {
+
+        // Use the sever socket just to find a unused port
+        val port = serverSocket.localPort
+        serverSocket.close()
 
         val engine = embeddedServer(
             factory = Netty,
-            port = serverSocket.localPort, // or 80, but may not be available
+            port = port, // or 80, but may not be available
             host = "0.0.0.0"
         ) {
             routing {
@@ -165,6 +176,18 @@ class ServerService : Service() {
         }
 
         engine.start(wait = true)
+
+        // TODO observe the published DataStore messages and notify the clients
+        val observePubSubMessagesUseCase = ObservePubSubMessagesUseCase()
+        // TODO replace global scope for service scope
+        observePubSubMessagesUseCase()
+            .onEach {
+                // Make an API call to the sockets of the clients (push)
+            }
+            .launchIn(GlobalScope)
+
+        val hostName = InetAddress.getLocalHost().hostName
+        Log.i(defaultServiceName, "Sever started at $hostName:$port")
     }
 
     private fun doSomethingWithData(data: String) {
