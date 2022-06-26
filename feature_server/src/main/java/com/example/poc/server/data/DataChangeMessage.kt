@@ -1,6 +1,7 @@
 package com.example.poc.server.data
 
 
+// TODO Put this in non-relational DataStore<DataChangeMessage>.
 data class DataChangeMessage(
 
     var id: Long? = null,
@@ -11,7 +12,6 @@ data class DataChangeMessage(
     var type: Type = Type.ORDER
 
 ) {
-
     enum class Type {
         ORDER
     }

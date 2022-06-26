@@ -7,33 +7,29 @@ import android.net.nsd.NsdManager
 import android.net.nsd.NsdServiceInfo
 import android.os.IBinder
 import android.util.Log
-import com.example.poc.server.domain.ObservePubSubMessagesUseCase
+import com.example.poc.server.loadModules
 import io.ktor.server.engine.*
 import io.ktor.server.netty.*
 import io.ktor.server.routing.*
-import kotlinx.coroutines.GlobalScope
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.flow.flowOn
-import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.onEach
-import kotlinx.coroutines.runBlocking
-import java.io.BufferedReader
-import java.io.IOException
-import java.io.InputStreamReader
-import java.io.PrintWriter
+import org.koin.android.ext.android.inject
+import org.koin.core.component.KoinComponent
 import java.net.InetAddress
 import java.net.ServerSocket
-import java.util.*
 import java.util.concurrent.TimeUnit
 
 /**
- * Service that will receive income data from apps acting as clients.
+ * Service that will receive income data from apps acting as clients. The client apps
+ * will make a https call with authentication tokens and this service will handle
+ * these calls in substitution of online server.
  *
- * The client apps will make a https call, with authentication.
- *
- * This service will work as a catch all sevlet, but Ktor
+ * This service will work as a catch all servlet, but Ktor will handle
+ * the calls using routes endpoints classes.
  */
-class ServerService : Service() {
+class ServerService : Service(), KoinComponent {
+
+    private val orderEndpoint: OrderEndpoint by inject()
+
+    private val subscriptionEndpoint: SubscriptionEndpoint by inject()
 
     private val nsdManager: NsdManager by lazy {
         getSystemService(Context.NSD_SERVICE) as NsdManager
@@ -46,22 +42,25 @@ class ServerService : Service() {
 
     private var serviceName: String? = null
 
-    private var isServerSocketRunning = false
-
     override fun onCreate() {
-        // Do this on create or on bind?
+
+        // Load Koin modules
+        loadModules()
+
+        // TODO Do this on create or on bind?
         registerService()
     }
 
     override fun onBind(intent: Intent?): IBinder? {
-        // TODO return a IBinder so the activity that instantiated it can communicate with it
-        TODO()
+        // TODO return a IBinder so the activity that instantiated it can communicate with it?
+        return null
     }
 
     /**
      * Register the service for network discovering
      *
-     * The port and service type comes from IANA. See [IANA service name for http protocol](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=http)
+     * The port and service type comes from IANA. See
+     * [IANA service name for http protocol](https://www.iana.org/assignments/service-names-port-numbers/service-names-port-numbers.xhtml?search=http)
      */
     private fun registerService(port: Int = 80) {
         // Create the NsdServiceInfo object, and populate it.
@@ -105,52 +104,6 @@ class ServerService : Service() {
         )
     }
 
-    // TODO change this to Ktor implementation and send the data to an Endpoint class to handle it
-    private fun initializeServerSocket() {
-
-        isServerSocketRunning = true
-
-        try {
-            while (isServerSocketRunning) {
-
-                startSeverEngine()
-
-                val socket = serverSocket.accept()
-
-                val input = BufferedReader(InputStreamReader(socket.getInputStream()))
-                val stringData = input.readLine()
-
-                val output = PrintWriter(socket.getOutputStream())
-                output.println("FROM SERVER - " + stringData.uppercase(Locale.getDefault()))
-                output.flush()
-
-                try {
-                    runBlocking {
-                        delay(1000)
-                    }
-                } catch (e: InterruptedException) {
-                    e.printStackTrace()
-                }
-
-                doSomethingWithData(stringData)
-
-                if (stringData.equals("STOP")) {
-                    isServerSocketRunning = false
-                    output.close()
-                    socket.close()
-                    break
-                }
-
-                output.close()
-                socket.close()
-            }
-
-            serverSocket.close()
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-    }
-
     /**
      * Starts the sever engine using Ktor and Netty engine.
      */
@@ -166,8 +119,8 @@ class ServerService : Service() {
             host = "0.0.0.0"
         ) {
             routing {
-                // List of endpoints
-                orderEndpoint()
+                orderEndpoint
+                subscriptionEndpoint
             }
         }
 
@@ -177,21 +130,8 @@ class ServerService : Service() {
 
         engine.start(wait = true)
 
-        // TODO observe the published DataStore messages and notify the clients
-        val observePubSubMessagesUseCase = ObservePubSubMessagesUseCase()
-        // TODO replace global scope for service scope
-        observePubSubMessagesUseCase()
-            .onEach {
-                // Make an API call to the sockets of the clients (push)
-            }
-            .launchIn(GlobalScope)
-
         val hostName = InetAddress.getLocalHost().hostName
         Log.i(defaultServiceName, "Sever started at $hostName:$port")
-    }
-
-    private fun doSomethingWithData(data: String) {
-        Log.i(serviceName, data)
     }
 
     companion object {
