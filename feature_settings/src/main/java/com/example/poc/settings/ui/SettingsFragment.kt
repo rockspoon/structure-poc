@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
-import com.example.poc.core.data.preference.Theme
+import com.example.poc.core.data.preferences.Theme
 import com.example.poc.settings.R
 import com.example.poc.settings.databinding.SettingsFragmentBinding
 import com.example.poc.settings.loadModules

@@ -10,8 +10,8 @@ import androidx.test.espresso.matcher.ViewMatchers.withId
 import androidx.test.espresso.matcher.ViewMatchers.withText
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.poc.core.domain.coreDomainModule
-import com.example.poc.core.data.preference.PreferenceDataSource
-import com.example.poc.core.data.preference.Theme
+import com.example.poc.core.data.preferences.PreferencesDataSource
+import com.example.poc.core.data.preferences.Theme
 import com.example.poc.settings.R
 import com.example.poc.settings.featureSettingsModule
 import com.google.android.material.switchmaterial.SwitchMaterial
@@ -39,8 +39,8 @@ class SettingsFragmentTest {
 
         val testModule = module {
             // We fake a data source for our preferences.
-            single<PreferenceDataSource> {
-                FakePreferenceDataSource()
+            single<PreferencesDataSource> {
+                FakePreferencesDataSource()
             }
         }
 
@@ -87,7 +87,7 @@ class SettingsFragmentTest {
 
     // A simple implementation of PreferenceDataSource that uses MutableStateFlow
     // to mimic the data store behavior
-    class FakePreferenceDataSource : PreferenceDataSource {
+    class FakePreferencesDataSource : PreferencesDataSource {
 
         private var theme: MutableStateFlow<Theme> = MutableStateFlow(Theme.SYSTEM)
 

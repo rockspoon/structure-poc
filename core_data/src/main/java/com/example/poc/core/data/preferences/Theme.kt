@@ -1,4 +1,4 @@
-package com.example.poc.core.data.preference
+package com.example.poc.core.data.preferences
 
 /**
  * Represents the available UI themes in the application preferences.

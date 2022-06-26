@@ -10,15 +10,15 @@ val coreDomainModule = module {
 
     single {
         ObserveIsNotificationEnabledUseCase(
-            coroutineDispatcher = Dispatchers.IO,
-            preferenceDataSource = get()
+            coroutineDispatcher = get(),
+            preferencesDataSource = get()
         )
     }
 
     single {
         ObserveThemeUseCase(
-            coroutineDispatcher = Dispatchers.IO,
-            preferenceDataSource = get()
+            coroutineDispatcher = get(),
+            preferencesDataSource = get()
         )
     }
 }

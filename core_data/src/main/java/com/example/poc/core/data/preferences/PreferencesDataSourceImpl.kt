@@ -1,4 +1,4 @@
-package com.example.poc.core.data.preference
+package com.example.poc.core.data.preferences
 
 import android.content.Context
 import android.os.Build
@@ -9,8 +9,8 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.core.stringPreferencesKey
 import androidx.datastore.preferences.preferencesDataStore
-import com.example.poc.core.data.preference.PreferenceDataSourceImpl.PreferencesKeys.NOTIFICATION
-import com.example.poc.core.data.preference.PreferenceDataSourceImpl.PreferencesKeys.THEME
+import com.example.poc.core.data.preferences.PreferencesDataSourceImpl.PreferencesKeys.NOTIFICATION
+import com.example.poc.core.data.preferences.PreferencesDataSourceImpl.PreferencesKeys.THEME
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -18,9 +18,9 @@ import kotlinx.coroutines.flow.map
  * Class to set and retrieve the application preferences values using
  * a DataStore<Preference>.
  */
-class PreferenceDataSourceImpl(
+class PreferencesDataSourceImpl(
     private val dataStore: DataStore<Preferences>
-) : PreferenceDataSource {
+) : PreferencesDataSource {
 
     override fun observeTheme(): Flow<Theme> = dataStore.data.map { preferences ->
         preferences[THEME]?.let { Theme.valueOf(it) }

@@ -8,13 +8,16 @@ import androidx.test.espresso.matcher.ViewMatchers.*
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import com.example.poc.auth.domain.SignUpWithPasswordUseCase
-import com.example.poc.core.data.preference.PreferenceDataSource
-import com.example.poc.core.data.preference.Theme
+import com.example.poc.core.data.preferences.PreferencesDataSource
+import com.example.poc.core.data.preferences.Theme
 import com.example.poc.core.data.user.*
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.ExperimentalCoroutinesApi
+import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
+import kotlinx.coroutines.test.*
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.containsString
 import org.junit.Test
@@ -30,24 +33,21 @@ import org.koin.dsl.module
  *
  * See [testing documentation](http://d.android.com/tools/testing).
  */
+@OptIn(ExperimentalCoroutinesApi::class)
 @RunWith(AndroidJUnit4::class)
 class MainActivityTest {
 
+    // runTest() is equivalent to TestScope().runTest(). If necessary, we can create a TestScope
+    // customised and run instead ourCustomizedCoroutineScope.runTest() instead.
     @Test
-    fun case_changeThemeToDark() {
+    fun case_changeThemeToDark() = runTest {
 
         val testModule = module {
-
-            // TODO change all the dispatchers to coroutine TestDispatcher so we can
-            // sync the interface actions and the data flow on the tests.
-            single {
-                Dispatchers.IO
-            }
 
             // Fake data sources
             singleOf(MainActivityTest::FakeUserDatabaseDataSource) { bind<UserDatabaseDataSource>() }
             singleOf(MainActivityTest::FakeUserNetworkDataSource) { bind<UserNetworkDataSource>() }
-            singleOf(MainActivityTest::FakePreferenceDataSource) { bind<PreferenceDataSource>() }
+            singleOf(MainActivityTest::FakePreferencesDataSource) { bind<PreferencesDataSource>() }
 
             single {
                 SignUpWithPasswordUseCase(
@@ -59,6 +59,10 @@ class MainActivityTest {
                 )
             }
         }
+
+        // TODO It's not working as expected. I expected this to run all coroutines
+        // in order so the test checks only be called after the coroutines finishes.
+        Dispatchers.setMain(StandardTestDispatcher())
 
         loadKoinModules(testModule)
 
@@ -94,9 +98,13 @@ class MainActivityTest {
                 click()
             )
 
+            // Wait for coroutines to finish
+            advanceUntilIdle()
+
             // We should go to the home page and see a greetings
-            val helloString = context.getString(com.example.poc.home.R.string.greetings_template)
-                .substring(0..4)
+            val helloString =
+                context.getString(com.example.poc.home.R.string.greetings_template)
+                    .substring(0..4)
             onView(withText(containsString(helloString))).check(matches(isDisplayed()))
 
             // Go to settings by clicking in the bottom navigation
@@ -137,13 +145,12 @@ class MainActivityTest {
             ).check(
                 matches(withText(Theme.DARK.name))
             )
-
         }
     }
 
     // A simple implementation of PreferenceDataSource that uses MutableStateFlow
     // to mimic the data store behavior
-    private class FakePreferenceDataSource : PreferenceDataSource {
+    private class FakePreferencesDataSource : PreferencesDataSource {
 
         private var theme: MutableStateFlow<Theme> = MutableStateFlow(Theme.SYSTEM)
 
@@ -177,8 +184,8 @@ class MainActivityTest {
         }
 
         override suspend fun insertUser(user: User): User {
-            // TODO make the tests working with Dispatchers.Main
-            //delay(3000)
+            // Simulate a insert
+            delay(3000)
             userTable[user.id ?: 1] = user
             return userTable[user.id ?: 1]!!
         }
@@ -204,4 +211,5 @@ class MainActivityTest {
             return user
         }
     }
+
 }
