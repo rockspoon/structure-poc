@@ -1,15 +1,13 @@
 package com.example.poc.auth.domain
 
 import com.example.poc.auth.domain.SignUpWithPasswordUseCase.*
-import com.example.poc.core.domain.base.FlowUseCase
 import com.example.poc.core.data.user.User
 import com.example.poc.core.data.user.UserRepository
+import com.example.poc.core.domain.base.FlowUseCase
 import com.example.poc.core.domain.base.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.flow.flowOn
 
 /**
  *
@@ -20,8 +18,8 @@ import kotlinx.coroutines.flow.flowOn
  * @throws UserPasswordTooShortException
  */
 class SignUpWithPasswordUseCase(
-    coroutineDispatcher: CoroutineDispatcher,
-    private val userRepository: UserRepository
+    private val userRepository: UserRepository,
+    coroutineDispatcher: CoroutineDispatcher
 ) : FlowUseCase<Params, User>(coroutineDispatcher) {
 
     override fun execute(parameters: Params): Flow<UseCase.Result<User>> = flow {

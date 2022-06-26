@@ -11,10 +11,6 @@ import org.koin.dsl.module
 
 val featureSettingsModule = module {
 
-    single {
-        Dispatchers.IO
-    }
-
     singleOf(::UpdateIsNotificationEnabledUseCase)
 
     singleOf(::UpdateThemeUseCase)

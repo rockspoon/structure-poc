@@ -1,11 +1,10 @@
 package com.example.poc.core.domain.preference
 
 import com.example.poc.core.domain.base.FlowUseCase
-import com.example.poc.core.data.preference.PreferenceDataSource
-import com.example.poc.core.data.preference.Theme
+import com.example.poc.core.data.preferences.PreferencesDataSource
+import com.example.poc.core.data.preferences.Theme
 import com.example.poc.core.domain.base.UseCase
 import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 
@@ -13,11 +12,11 @@ import kotlinx.coroutines.flow.map
 // implementation and there is no need to extra logic that would be in repository, like the sync
 // implementation in the UserRepository.
 class ObserveThemeUseCase(
-    private val preferenceDataSource: PreferenceDataSource,
-    coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
+    private val preferencesDataSource: PreferencesDataSource,
+    coroutineDispatcher: CoroutineDispatcher
 ) : FlowUseCase<Unit, Theme>(coroutineDispatcher) {
 
-    override fun execute(parameters: Unit): Flow<UseCase.Result<Theme>> = preferenceDataSource
+    override fun execute(parameters: Unit): Flow<UseCase.Result<Theme>> = preferencesDataSource
         .observeTheme()
         .map {
             UseCase.Result.Success(data = it)

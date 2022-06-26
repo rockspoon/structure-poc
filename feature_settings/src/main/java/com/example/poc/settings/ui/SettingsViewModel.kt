@@ -5,7 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.poc.core.domain.base.UseCase
 import com.example.poc.core.domain.preference.ObserveIsNotificationEnabledUseCase
 import com.example.poc.core.domain.preference.ObserveThemeUseCase
-import com.example.poc.core.data.preference.Theme
+import com.example.poc.core.data.preferences.Theme
 import com.example.poc.settings.domain.UpdateIsNotificationEnabledUseCase
 import com.example.poc.settings.domain.UpdateThemeUseCase
 import com.example.poc.settings.ui.SettingsFragment.UiState.Companion.success

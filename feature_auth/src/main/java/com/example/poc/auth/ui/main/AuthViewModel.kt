@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
-class AuthViewModel(
+class AuthViewModel constructor(
     private val signUpWithPasswordUseCase: SignUpWithPasswordUseCase
 ) : ViewModel() {
 

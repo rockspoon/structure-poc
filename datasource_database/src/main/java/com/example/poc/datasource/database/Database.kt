@@ -5,7 +5,7 @@ import com.example.poc.datasource.database.user.UserDao
 import com.example.poc.datasource.database.user.UserEntity
 
 @androidx.room.Database(
-    version = 1,
+    version = 2,
     entities = [
         UserEntity::class
     ]

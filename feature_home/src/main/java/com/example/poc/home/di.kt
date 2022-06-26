@@ -11,7 +11,7 @@ val featureHomeModules = module {
 
     single {
         ObserveUserUseCase(
-            coroutineDispatcher = Dispatchers.IO,
+            coroutineDispatcher = get(),
             userRepository = get()
         )
     }
