@@ -10,14 +10,16 @@ import com.example.poc.auth.databinding.AuthFragmentBinding
 import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.auth.loadModules
 import com.example.poc.core.data.user.User
-import com.example.poc.ui.MainActivity
+import com.example.poc.ui.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-
 class AuthFragment : Fragment(R.layout.auth_fragment) {
+
+    private val mainViewModel: MainViewModel by sharedViewModel()
 
     private val viewModel: AuthViewModel by viewModel()
 
@@ -101,13 +103,26 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
             }
             else -> {
                 val message = getText(R.string.error_authentication_unknown)
-                Snackbar.make(requireView(), message, Snackbar.LENGTH_INDEFINITE).show()
+                Snackbar.make(requireView(), message, Snackbar.LENGTH_LONG).show()
             }
         }
     }
 
     private fun notifyOnAuthSuccess() {
-        (activity as MainActivity).onAuthSuccess()
+        // TODO Maybe use a view model to coordinate this or create a listener interface so any
+        //      activity be able to be notified. IOsched uses a .receiveAsFlow and a Channel to
+        //      receive events related to navigation. I can maybe put ond like them on the
+        //      MainActivity view model and publish a 'on auth' event that will trigger the
+        //      MainActivity to make the navigation.
+
+        // Note that we don't navigate to home screen. A feature module should be complete ignorant
+        // about the reasons why it was invoked, this includes knowing what it will be done with
+        // it's results, so make it call a function with explicitly naming indicating where to go
+        // next would break this paradigm. Instead the feature only call a function indicating that
+        // it's job is completed. The reason is because the feature should be treated as if it can
+        // be invoked for multiple reasons. Now we are invoking authentication for the home screen,
+        // but we could invoked it for seeing a credit card info, for example.
+        mainViewModel.onAction(MainViewModel.Action.AuthenticationCompleted)
     }
 
     sealed class UiState {

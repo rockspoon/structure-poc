@@ -1,8 +1,8 @@
-package com.example.poc.core.data.preference
+package com.example.poc.core.data.preferences
 
 import kotlinx.coroutines.flow.Flow
 
-interface PreferenceDataSource {
+interface PreferencesDataSource {
 
     fun observeTheme(): Flow<Theme>
     suspend fun setTheme(theme: Theme)

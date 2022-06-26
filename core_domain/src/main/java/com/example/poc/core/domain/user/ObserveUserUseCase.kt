@@ -12,7 +12,7 @@ import kotlinx.coroutines.flow.map
 // Use cases like this that are used by more than one module should be put here, in :core_domain.
 class ObserveUserUseCase(
     private val userRepository: UserRepository,
-    coroutineDispatcher: CoroutineDispatcher = Dispatchers.IO
+    coroutineDispatcher: CoroutineDispatcher
 ) : FlowUseCase<ObserveUserUseCase.Params, User>(coroutineDispatcher) {
 
     override fun execute(parameters: Params): Flow<UseCase.Result<User>> = userRepository

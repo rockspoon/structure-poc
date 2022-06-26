@@ -1,5 +1,6 @@
 package com.example.poc.auth
 
+import com.example.poc.Qualifiers
 import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.auth.ui.main.AuthViewModel
 import kotlinx.coroutines.Dispatchers
@@ -10,13 +11,9 @@ import org.koin.dsl.module
 
 private val featureAuthModule = module {
 
-    single(named("IO")) {
-        Dispatchers.IO
-    }
-
     single {
         SignUpWithPasswordUseCase(
-            coroutineDispatcher = get(named("IO")),
+            coroutineDispatcher = get(Qualifiers.dispatcherIO),
             userRepository = get()
         )
     }
