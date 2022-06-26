@@ -19,6 +19,12 @@ android {
             )
         }
     }
+
+    packagingOptions {
+        resources {
+            resources.excludes.add("META-INF/*")
+        }
+    }
 }
 
 dependencies {

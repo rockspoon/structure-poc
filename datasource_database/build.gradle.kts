@@ -1,9 +1,8 @@
-import org.jetbrains.kotlin.kapt3.base.Kapt.kapt
-
 plugins {
 	id("com.android.library")
 	id("org.jetbrains.kotlin.android")
 	kotlin("kapt")
+	id("com.google.devtools.ksp")
 }
 
 android {
@@ -55,9 +54,9 @@ dependencies {
 	val roomVersion = "2.4.2"
 	api("androidx.room:room-runtime:$roomVersion")
 	annotationProcessor("androidx.room:room-compiler:$roomVersion")
-	kapt("androidx.room:room-compiler:$roomVersion")
+	//kapt("androidx.room:room-compiler:$roomVersion")
 	// To use Kotlin Symbolic Processing (KSP)
-	//ksp("androidx.room:room-compiler:$roomVersion")
+	ksp("androidx.room:room-compiler:$roomVersion")
 	api("androidx.room:room-ktx:$roomVersion")
 	testImplementation("androidx.room:room-testing:$roomVersion")
 

@@ -1,6 +1,7 @@
 package com.example.poc.datasource.database.user
 
 import androidx.room.Entity
+import androidx.room.Ignore
 import androidx.room.PrimaryKey
 
 @Entity

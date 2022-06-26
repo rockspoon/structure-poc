@@ -44,14 +44,14 @@ android {
         jvmTarget = "1.8"
     }
 
-	setDynamicFeatures(
-		setOf(
-			":feature_auth",
-			":feature_home",
-			":feature_search",
-			":feature_server"
-		)
-	)
+    setDynamicFeatures(
+        setOf(
+            ":feature_auth",
+            ":feature_home",
+            ":feature_search",
+            ":feature_server"
+        )
+    )
 
     buildFeatures {
         viewBinding = true
@@ -59,6 +59,12 @@ android {
 
     testOptions {
         animationsDisabled = true
+    }
+
+    packagingOptions {
+        resources {
+            resources.excludes.add("META-INF/*")
+        }
     }
 }
 
