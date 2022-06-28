@@ -43,6 +43,8 @@ dependencies {
 
     // Both libraries are necessary to their dependants to work with their class types
     api("androidx.datastore:datastore:1.0.0")
+    // We use the java instead of kotlin because I couldn't make it work with Kotlin yet when
+    // using the Kotlin DSL gradle, when Kotlin DSL becomes stable, I'll try again.
     api("com.google.protobuf:protobuf-javalite:3.21.2")
 
     testImplementation("junit:junit:4.13.2")
