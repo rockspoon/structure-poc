@@ -38,7 +38,7 @@ class PublishDataChangeUseCase(
     ) : CoroutineWorker(appContext, workerParams) {
 
         override suspend fun doWork(): Result {
-             // TODO Pseudo code
+            // TODO Pseudo code
 //            val response = PublishApiService.request(
 //                httpRequest = POST,
 //                url = subscriber.webhook,

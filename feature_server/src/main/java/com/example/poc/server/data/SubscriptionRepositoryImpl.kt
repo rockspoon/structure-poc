@@ -4,7 +4,7 @@ import kotlinx.coroutines.flow.Flow
 
 class SubscriptionRepositoryImpl(
     private val subscriptionDataSource: SubscriptionDataSource
-): SubscriptionRepository {
+) : SubscriptionRepository {
 
     override fun insertSubscription(subscription: Subscription) {
         subscriptionDataSource.insertSubscription(subscription)

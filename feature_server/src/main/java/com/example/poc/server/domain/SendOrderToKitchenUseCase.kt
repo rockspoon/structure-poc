@@ -8,7 +8,7 @@ class SendOrderToKitchenUseCase(
     private val publishDataChangeUseCase: PublishDataChangeUseCase
 ) {
 
-    suspend operator fun invoke(orderId: Long) : Order {
+    suspend operator fun invoke(orderId: Long): Order {
         val order = orderRepository.getOrder(orderId)
 
         // Some checking and business logic

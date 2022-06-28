@@ -42,7 +42,6 @@ class ServerService : Service(), KoinComponent {
 
     private val subscriptionEndpoint: SubscriptionEndpoint by inject()
 
-
     override fun onCreate() {
 
         // Load Koin modules

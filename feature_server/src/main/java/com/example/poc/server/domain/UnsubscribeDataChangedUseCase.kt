@@ -1,6 +1,5 @@
 package com.example.poc.server.domain
 
-import com.example.poc.server.data.Subscription
 import com.example.poc.server.data.SubscriptionRepository
 
 /**
