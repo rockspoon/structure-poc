@@ -4,7 +4,6 @@ import androidx.room.Dao
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy.REPLACE
 import androidx.room.Query
-import com.example.poc.datasource.serverdatabase.user.UserEntity
 import kotlinx.coroutines.flow.Flow
 
 @Dao

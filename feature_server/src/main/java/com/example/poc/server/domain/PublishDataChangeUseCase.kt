@@ -5,7 +5,7 @@ import androidx.work.CoroutineWorker
 import androidx.work.OneTimeWorkRequestBuilder
 import androidx.work.WorkManager
 import androidx.work.WorkerParameters
-import com.example.poc.server.data.EntityType
+import com.example.poc.server.data.Subscription
 import com.example.poc.server.data.SubscriptionRepository
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.flowOn
@@ -22,7 +22,7 @@ class PublishDataChangeUseCase(
         val workManager = WorkManager.getInstance(context)
         subscriptionRepository.listSubscriptions(
             entityId = entityId,
-            entityType = EntityType.ORDER
+            entityType = Subscription.Type.ORDER
         ).onEach {
 
             val publishWorkRequest = OneTimeWorkRequestBuilder<PublishWorker>()

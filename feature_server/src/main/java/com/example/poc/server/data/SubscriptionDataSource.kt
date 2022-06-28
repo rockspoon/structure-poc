@@ -4,10 +4,9 @@ import kotlinx.coroutines.flow.Flow
 
 interface SubscriptionDataSource {
 
-    suspend fun deleteSubscription(id: Long)
-
     suspend fun insertSubscription(subscription: Subscription)
 
-    fun listSubscriptions(entityId: Long, entityType: EntityType): Flow<Subscription>
+    suspend fun deleteSubscription(id: Long)
 
+    fun listSubscriptions(entityId: Long, entityType: Subscription.Type): Flow<Subscription>
 }

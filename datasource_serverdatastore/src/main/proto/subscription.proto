@@ -5,5 +5,7 @@ option java_multiple_files = true;
 
 message SubscriptionProto {
   int64 id = 1;
-  string webhook = 2;
+  int64 entityId = 2;
+  string entityType = 3;
+  string webhook = 4;
 }
