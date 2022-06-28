@@ -13,7 +13,9 @@ The architecture proposed here follows the [Guide to App Architecture ](https://
 It divided in three layers:  
  - Data
  - Domain
- - UI, services, providers, receivers
+ - UI / services
+
+NOTE: provider and receivers were a mistake. They are components of the Data layer, not layers themselves.
 
 It uses principe of Separation of Concerns (SoC) to further separate the UI layer views classes (activities, fragments, and views) from the view models. 
 
@@ -56,8 +58,6 @@ The final package structure is as follow:
     :app
     :core_data
     :core_domain
-    :core_provider
-    :core_receiver
     :core_service
     :core_ui
     :datasource_database
@@ -111,15 +111,6 @@ Contains models and repositories, but not data classes auxiliary to the UI or do
 
 Contains the shared use cases classes, auxiliary classes, and extensions, including the abstract and open UseCase base classes.
 
-
-### core_provider
-
-Contains the shared Android `Provider` classes and auxiliary classes and extensions.
-
-### core_receiver
-
-Contains the shared Android `Receiver` classes and auxiliary classes and extensions.
-
 ### core_service
 
 Contains the shared Android `Service` classes and auxiliary classes and extensions.
@@ -164,8 +155,6 @@ The main packages of each feature module are divided also by the architectural l
     commons
     data
     domain
-    provider
-    receiver
     service
     ui
 
@@ -187,23 +176,11 @@ Contains also the dependency injection classes. When possible, the DI classes sh
 
 ##### data
 
-Contains the classes related to structured data, like entities, DAOs, repositories, and etc but not data classes auxiliar to the UI or domain layers.
-
+Contains the classes related to structured data, like entities, DAOs, repositories, providers, receivers, and etc but not data classes auxiliar to the UI or domain layers.
 
 ##### domain
 
 Contains the classes that implements a business use case, often extended from a base `UseCase` from module `core_domain`.
-
-
-##### provider
-
-Contains the Android `Provider` classes and auxiliary classes.
-
-
-##### receiver
-
-Contains the Android `Receiver` classes and auxiliary classes.
-
 
 ##### service
 
@@ -292,8 +269,6 @@ digraph {
       ":core_data" [fillcolor="#f7ff94"];
       # Use cases
       ":core_domain" [fillcolor="#f7ff94"];
-      ":core_provider" [fillcolor="#f7ff94"];
-      ":core_receiver" [fillcolor="#f7ff94"];
       ":core_service" [fillcolor="#f7ff94"];
       # Components and styles
       ":core_ui" [fillcolor="#f7ff94"];
@@ -324,8 +299,6 @@ digraph {
 
       ":app" -> ":core_data"
       ":app" -> ":core_domain"
-      ":app" -> ":core_provider" 
-      ":app" -> ":core_receiver"
       ":app" -> ":core_service"
       ":app" -> ":core_ui"
       # Data sources can be used directly by features, like a small APIs calls, but with caution and adhering to the repository pattern. 
@@ -339,8 +312,6 @@ digraph {
       ":core_ui" -> ":core_domain" [style=dotted]
       ":core_ui" -> ":core_data" [style=dotted]
       ":core_ui" -> ":ui_library1"
-      ":core_provider" -> ":core_domain" [style=dotted]
-      ":core_provider" -> ":core_data" [style=dotted]
       ":core_receiver" -> ":core_domain" [style=dotted]
       ":core_receiver" -> ":core_data" [style=dotted]
       ":core_service" -> ":core_domain" [style=dotted]
@@ -489,8 +460,6 @@ In `Application` class:
 			appModule,
 			coreDataModule,
 			coreDomainModule,
-			coreProviderModule,
-			coreReceiverModule,
 			coreServiceModule,
 			coreUiModule,
 			featureFeatureName1Module,

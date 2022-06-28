@@ -80,8 +80,6 @@ dependencies {
 
     api(project(":core_data"))
     api(project(":core_domain"))
-    api(project(":core_provider"))
-    api(project(":core_receiver"))
     api(project(":core_service"))
     api(project(":core_ui"))
     implementation(project(":feature_settings"))
