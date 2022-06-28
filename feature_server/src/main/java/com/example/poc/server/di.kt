@@ -32,11 +32,11 @@ val featureServerModule = module {
             .build()
     }
 
-    single {
+    factory {
         get<Database>().orderDao()
     }
 
-    single {
+    factory {
         get<Database>().userDao()
     }
 
