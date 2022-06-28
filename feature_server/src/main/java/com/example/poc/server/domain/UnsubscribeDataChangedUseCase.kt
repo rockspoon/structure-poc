@@ -10,7 +10,7 @@ class UnsubscribeDataChangedUseCase(
     private val subscriptionRepository: SubscriptionRepository
 ) {
 
-    operator fun invoke(id: Long) {
+    suspend operator fun invoke(id: Long) {
         subscriptionRepository.deleteSubscription(id)
     }
 

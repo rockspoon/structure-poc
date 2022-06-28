@@ -11,7 +11,7 @@ class SubscribeDataChangedUseCase(
     private val subscriptionRepository: SubscriptionRepository
 ) {
 
-    operator fun invoke(subscription: Subscription) {
+    suspend operator fun invoke(subscription: Subscription) {
         subscriptionRepository.insertSubscription(subscription)
     }
 
