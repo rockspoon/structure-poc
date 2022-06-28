@@ -18,13 +18,13 @@ val featureServerModule = module {
 
     // Subscription DataStore
     single {
-        androidApplication().applicationContext.subscriptionDataStore
+        androidApplication().subscriptionDataStore
     }
 
     // Database
     single {
         Room.databaseBuilder(
-            androidApplication().applicationContext,
+            androidApplication(),
             Database::class.java,
             "main"
         )
@@ -69,7 +69,7 @@ val featureServerModule = module {
     // Use cases
     single {
         PublishDataChangeUseCase(
-            context = androidApplication().applicationContext,
+            context = androidApplication(),
             subscriptionRepository = get()
         )
     }

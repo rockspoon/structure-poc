@@ -17,7 +17,7 @@ val coreDataModule = module {
     // Database
     single {
         Room.databaseBuilder(
-            androidApplication().applicationContext,
+            androidApplication(),
             Database::class.java,
             "main"
         )
