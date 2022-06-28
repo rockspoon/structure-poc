@@ -19,6 +19,8 @@
             <option value="$PROJECT_DIR$/core_ui" />
             <option value="$PROJECT_DIR$/datasource_database" />
             <option value="$PROJECT_DIR$/datasource_network" />
+            <option value="$PROJECT_DIR$/datasource_serverdatabase" />
+            <option value="$PROJECT_DIR$/datasource_serverdatastore" />
             <option value="$PROJECT_DIR$/feature_auth" />
             <option value="$PROJECT_DIR$/feature_home" />
             <option value="$PROJECT_DIR$/feature_search" />

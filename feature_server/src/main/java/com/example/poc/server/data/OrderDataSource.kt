@@ -5,6 +5,6 @@ interface OrderDataSource {
 
     suspend fun getOrder(id: Long): Order
 
-    suspend fun updateOrder(order: Order) : Order
+    suspend fun updateOrder(order: Order) : Long
 
 }

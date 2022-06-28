@@ -28,8 +28,8 @@ class MainViewModel : ViewModel() {
     private val _destinations = Channel<Destination>(capacity = Channel.CONFLATED)
     val destinations = _destinations.receiveAsFlow()
 
-    private val _actions = Channel<Action>(capacity = Channel.CONFLATED)
-    val actions = _actions.receiveAsFlow()
+    private val _events = Channel<Event>(capacity = Channel.CONFLATED)
+    private val events = _events.receiveAsFlow()
 
     /**
      * Navigate to home screen.
@@ -62,9 +62,9 @@ class MainViewModel : ViewModel() {
      * It's
      */
     // I need somehow pass here a follow up, like a callback
-    private fun startAuth(): Flow<Action> {
+    private fun startAuth(): Flow<Event> {
         _destinations.trySend(Destination(resId = R.id.featureAuthGraphId))
-        return actions.filter { it is Action.AuthenticationCompleted }
+        return events.filter { it is Event.AuthenticationCompleted }
     }
 
     // TODO This will scale better. When we have thousands of features, we will have thousands of
@@ -72,9 +72,9 @@ class MainViewModel : ViewModel() {
     /**
      * Universal listener for completion actions from features.
      */
-    fun onAction(action: Action) {
+    fun onEvent(event: Event) {
         // Notify the ones interested.
-        _actions.trySend(action)
+        _events.trySend(event)
     }
 
     data class Destination(
@@ -84,13 +84,20 @@ class MainViewModel : ViewModel() {
         val navigatorExtras: Navigator.Extras? = null
     )
 
-    // Action, or Event, or Result?
-    sealed class Action {
-        object AuthenticationCompleted : Action()
-        data class NavigationItemSelected(@IdRes val itemId: Int) : Action()
+    /**
+     * A class representing events from feature modules UI. The :app module observe this events
+     * to coordinate the features.
+     */
+    // This could be individual methods, but like this scale better. the downside is that it does
+    // not return nothing to observe, which is okay because all the coordination is done by
+    // the :app module classes.
+    // This is navigation events only, i think other events does not need this
+    sealed class Event {
+        object AuthenticationCompleted : Event()
+        data class NavigationItemSelected(@IdRes val itemId: Int) : Event()
         // This cannot be separated by feature since two features may result in the same action,
         // like home and search may send an OrderSelected action
-        data class OrderSelected(val order: Order) : Action()
+        data class OrderSelected(val order: Order) : Event()
     }
 
 }

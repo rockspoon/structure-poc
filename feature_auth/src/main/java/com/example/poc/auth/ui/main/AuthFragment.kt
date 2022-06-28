@@ -122,7 +122,7 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
         // it's job is completed. The reason is because the feature should be treated as if it can
         // be invoked for multiple reasons. Now we are invoking authentication for the home screen,
         // but we could invoked it for seeing a credit card info, for example.
-        mainViewModel.onAction(MainViewModel.Action.AuthenticationCompleted)
+        mainViewModel.onEvent(MainViewModel.Event.AuthenticationCompleted)
     }
 
     sealed class UiState {

@@ -7,8 +7,11 @@ pluginManagement {
 
     resolutionStrategy {
         eachPlugin {
-            if(requested.id.id == "dagger.hilt.android.plugin") {
+            if (requested.id.id == "dagger.hilt.android.plugin") {
                 useModule("com.google.dagger:hilt-android-gradle-plugin:${requested.version}")
+            }
+            if (requested.id.id == "com.google.protobuf") {
+                useModule("com.google.protobuf:protobuf-gradle-plugin:${requested.version}")
             }
         }
     }
@@ -32,6 +35,7 @@ include(":app")
 include(":feature_auth")
 include(":feature_home")
 include(":feature_search")
+include(":feature_server")
 include(":feature_settings")
 include(":core_data")
 include(":core_domain")
@@ -40,7 +44,8 @@ include(":core_receiver")
 include(":core_service")
 include(":core_ui")
 include(":datasource_database")
+include(":datasource_network")
+include(":datasource_serverdatabase")
+include(":datasource_serverdatastore")
 include(":macrobenchmark")
 include(":microbenchmark")
-include(":datasource_network")
-include(":feature_server")

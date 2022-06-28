@@ -1,8 +1,11 @@
+import com.google.protobuf.gradle.protobuf
+import com.google.protobuf.gradle.protoc
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
-    //id("dagger.hilt.android.plugin")
+//    id("dagger.hilt.android.plugin")
 }
 
 android {
@@ -83,10 +86,18 @@ dependencies {
     api(project(":core_ui"))
     implementation(project(":feature_settings"))
 
+    api("androidx.datastore:datastore:1.0.0")
+    implementation("com.google.protobuf:protobuf-javalite:3.21.2")
 
     // TODO put it as implementation and put in feature modules
     api("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
     api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+
+    // Work runtime need to be here in :app module. It can't be just in the feature module.
+    // See: https://stackoverflow.com/questions/51353180/android-resource-linking-failed-due-to-missing-boolean-resource-values-using-jet
+    api("androidx.work:work-runtime-ktx:2.7.1")
+
+    implementation("androidx.datastore:datastore:1.0.0")
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
     androidTestImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2")
@@ -115,11 +126,9 @@ dependencies {
     androidTestImplementation("androidx.test:rules:1.4.0")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
 
-
     // Put the feature as dependencies of androidTest so we can use the IDs with Expresso
     androidTestImplementation(project(":feature_auth"))
     androidTestImplementation(project(":feature_home"))
     androidTestImplementation(project(":feature_search"))
     androidTestImplementation(project(":core_data"))
-
 }

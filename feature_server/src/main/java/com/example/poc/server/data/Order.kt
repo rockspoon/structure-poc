@@ -4,6 +4,8 @@ data class Order(
 
     var id: Long? = null,
 
+    // Simple implementation. In a production application I would have a list to log
+    // all changes in status, with their timestamp and etc.
     var status: Status
 
 ) {
@@ -17,6 +19,16 @@ data class Order(
 
         IN_TRANSIT,
 
-        DELIVERED
+        /**
+         * Represent orders that were not delivered but cancelled.
+         */
+        CANCELLED,
+
+        DELIVERED,
+
+        /**
+         * Represent orders that were delivered but returned because of defect.
+         */
+        RETURNED
     }
 }

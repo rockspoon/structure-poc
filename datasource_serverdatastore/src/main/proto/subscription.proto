@@ -1,0 +1,9 @@
+syntax = "proto3";
+
+option java_package = "com.example.poc.datasource.serverdatastore.subscription";
+option java_multiple_files = true;
+
+message SubscriptionProto {
+  int64 id = 1;
+  string webhook = 2;
+}

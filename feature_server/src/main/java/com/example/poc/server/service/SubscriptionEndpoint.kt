@@ -1,6 +1,5 @@
 package com.example.poc.server.service
 
-import com.example.poc.server.data.Order
 import com.example.poc.server.data.Subscription
 import com.example.poc.server.domain.SubscribeDataChangedUseCase
 import com.example.poc.server.domain.UnsubscribeDataChangedUseCase
@@ -27,6 +26,7 @@ class SubscriptionEndpoint(
 
         post {
             // TODO auth
+            // TODO enforce subscription with webhook to the origin request URL
             // TODO handle errors
             val subscription = call.receive<Subscription>()
             this@SubscriptionEndpoint.subscribeDataChangedUseCase(subscription)
@@ -38,12 +38,16 @@ class SubscriptionEndpoint(
 
         delete("{id?}") {
             // TODO auth
+            // TODO enforce un-subscription with webhook to the origin request URL
             // TODO handle errors
             val id = call.parameters["id"]?.toLong() ?: return@delete call.respond(
                 HttpStatusCode.BadRequest
             )
             this@SubscriptionEndpoint.unsubscribeDataChangedUseCase(id)
-            call.respondText("Subscription removed correctly", status = HttpStatusCode.Accepted)
+            call.respondText(
+                text = "Subscription removed correctly.",
+                status = HttpStatusCode.Accepted
+            )
         }
 
     }

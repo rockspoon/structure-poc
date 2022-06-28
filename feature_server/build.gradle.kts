@@ -29,6 +29,9 @@ android {
 
 dependencies {
     implementation(project(":app"))
+    implementation(project(":datasource_serverdatabase"))
+    implementation(project(":datasource_serverdatastore"))
+
     implementation("androidx.core:core-ktx:1.7.0")
     testImplementation("junit:junit:4.13.2")
 
@@ -37,11 +40,9 @@ dependencies {
     implementation("io.ktor:ktor-server-content-negotiation:2.0.2")
     implementation("io.ktor:ktor-serialization-kotlinx-json:2.0.2")
 
-    implementation("androidx.datastore:datastore:1.0.0")
-
     implementation("androidx.work:work-runtime-ktx:2.7.1")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
-    androidTestImplementation("androidx.annotation:annotation:1.4.0")
+    androidTestImplementation("androidx.annotation:annotation:1.3.0")
 }

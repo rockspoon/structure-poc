@@ -9,7 +9,8 @@ class OrderRepositoryImpl(
     }
 
     override suspend fun updateOrder(order: Order): Order {
-        return orderDataSource.updateOrder(order)
+        val orderId = orderDataSource.updateOrder(order)
+        return orderDataSource.getOrder(orderId)
     }
 
     /**
@@ -19,7 +20,8 @@ class OrderRepositoryImpl(
         val order = orderDataSource.getOrder(orderId)
         // some checking and business logic
         order.status = newStatus
-        return orderDataSource.updateOrder(order)
+        orderDataSource.updateOrder(order)
+        return orderDataSource.getOrder(orderId)
     }
 
 

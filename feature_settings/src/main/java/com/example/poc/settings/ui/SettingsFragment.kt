@@ -8,7 +8,9 @@ import com.example.poc.core.data.preferences.Theme
 import com.example.poc.settings.R
 import com.example.poc.settings.databinding.SettingsFragmentBinding
 import com.example.poc.settings.loadModules
+import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
+import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
@@ -41,6 +43,11 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
         // UI state
         viewModel.uiState
+            .onEach { state -> initView(binding, state) }
+            .launchIn(viewLifecycleOwner.lifecycleScope)
+
+        viewModel.uiState
+            .filter { it is UiState.Error }
             .onEach { state -> initView(binding, state) }
             .launchIn(viewLifecycleOwner.lifecycleScope)
     }
