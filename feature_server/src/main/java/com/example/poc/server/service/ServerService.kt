@@ -27,10 +27,6 @@ import java.util.concurrent.TimeUnit
  */
 class ServerService : Service(), KoinComponent {
 
-    private val orderEndpoint: OrderEndpoint by inject()
-
-    private val subscriptionEndpoint: SubscriptionEndpoint by inject()
-
     private val nsdManager: NsdManager by lazy {
         getSystemService(Context.NSD_SERVICE) as NsdManager
     }
@@ -41,6 +37,11 @@ class ServerService : Service(), KoinComponent {
     }
 
     private var serviceName: String? = null
+
+    private val orderEndpoint: OrderEndpoint by inject()
+
+    private val subscriptionEndpoint: SubscriptionEndpoint by inject()
+
 
     override fun onCreate() {
 

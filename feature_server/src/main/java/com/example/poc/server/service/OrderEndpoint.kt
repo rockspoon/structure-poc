@@ -70,8 +70,8 @@ class OrderEndpoint(
 
                 val orderUpdated = when (body.status) {
                     Order.Status.OPEN -> {
+                        // Not sure if order should be re-opened.
                         TODO()
-                        // Not sure if order can be update to open.
                     }
                     Order.Status.PREPARING -> {
                         this@OrderEndpoint.sendOrderToKitchenUseCase(orderId)
