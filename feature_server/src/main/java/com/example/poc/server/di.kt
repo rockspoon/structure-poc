@@ -5,6 +5,7 @@ import com.example.poc.datasource.serverdatabase.Database
 import com.example.poc.datasource.serverdatastore.subscription.SubscriptionSerializer.subscriptionDataStore
 import com.example.poc.server.data.*
 import com.example.poc.server.domain.GetOrderUseCase
+import com.example.poc.server.domain.InsertOrderUseCase
 import com.example.poc.server.domain.PublishDataChangeUseCase
 import com.example.poc.server.domain.SendOrderToKitchenUseCase
 import com.example.poc.server.service.OrderEndpoint
@@ -80,6 +81,12 @@ val featureServerModule = module {
     }
 
     single {
+        InsertOrderUseCase(
+            orderRepository = get()
+        )
+    }
+
+    single {
         SendOrderToKitchenUseCase(
             orderRepository = get(),
             publishDataChangeUseCase = get()
@@ -90,7 +97,8 @@ val featureServerModule = module {
     single {
         OrderEndpoint(
             getOrderUseCase = get(),
-            sendOrderToKitchenUseCase = get()
+            sendOrderToKitchenUseCase = get(),
+            insertOrderUseCase = get()
         )
     }
 
