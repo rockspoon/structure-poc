@@ -20,6 +20,7 @@
             <option value="$PROJECT_DIR$/datasource_serverdatabase" />
             <option value="$PROJECT_DIR$/datasource_serverdatastore" />
             <option value="$PROJECT_DIR$/feature_auth" />
+            <option value="$PROJECT_DIR$/feature_client" />
             <option value="$PROJECT_DIR$/feature_home" />
             <option value="$PROJECT_DIR$/feature_search" />
             <option value="$PROJECT_DIR$/feature_server" />
