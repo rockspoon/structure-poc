@@ -4,7 +4,7 @@ class MessageRepositoryImpl(
     private val messageDataSource: MessageDataSource
 ) : MessageRepository {
 
-    override suspend fun insertMessage(message: Message) {
-        messageDataSource.insertMessage(message)
+    override suspend fun sendMessage(message: Message) {
+        messageDataSource.sendMessage(message)
     }
 }

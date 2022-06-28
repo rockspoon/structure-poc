@@ -11,13 +11,7 @@ data class Message(
     /**
      * This is used together with the ID to create topics on our the pub sub pattern.
      */
-    var entityType: Type = Type.ORDER,
-
-    /**
-     * An http url to notify the user about the status change
-     */
-    var webHook: String? = null
-
+    var entityType: Type = Type.ORDER
 ) {
     enum class Type {
         ORDER
