@@ -50,6 +50,7 @@ android {
     setDynamicFeatures(
         setOf(
             ":feature_auth",
+            ":feature_client",
             ":feature_home",
             ":feature_search",
             ":feature_server"

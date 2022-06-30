@@ -1,11 +1,11 @@
 package com.example.poc.core.data.user
 
-import com.example.poc.datasource.network.GitHubApiClient
+import com.example.poc.datasource.remoteclientapi.RemoteClientApiClient
 import kotlinx.coroutines.delay
 
 
 internal class UserNetworkDataSourceImpl(
-    private val apiClient: GitHubApiClient
+    private val apiClient: RemoteClientApiClient
 ) : UserNetworkDataSource {
 
     // Mock a server

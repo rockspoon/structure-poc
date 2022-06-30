@@ -6,7 +6,7 @@ import com.example.poc.core.data.preferences.PreferencesDataSourceImpl
 import com.example.poc.core.data.preferences.PreferencesDataSourceImpl.Companion.preferencesDataStore
 import com.example.poc.core.data.user.*
 import com.example.poc.datasource.database.Database
-import com.example.poc.datasource.network.GitHubApiClient
+import com.example.poc.datasource.remoteclientapi.RemoteClientApiClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
@@ -27,7 +27,7 @@ val coreDataModule = module {
 
     // ApiClient
     single {
-        GitHubApiClient()
+        RemoteClientApiClient()
     }
 
     // DataSource<Preferences>

@@ -40,7 +40,8 @@ dependencies {
 	// Notice that we use implementation rather than api, so databases classes can't be accessed
 	// by any other module.
 	implementation(project(":datasource_database"))
-	implementation(project(":datasource_network"))
+	implementation(project(":datasource_remoteclientapi"))
+	implementation(project(":datasource_localclientapi"))
 
 	implementation("androidx.datastore:datastore:1.0.0")
 	implementation("androidx.datastore:datastore-preferences:1.0.0")

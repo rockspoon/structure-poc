@@ -5,6 +5,7 @@ import com.example.poc.home.ui.HomeViewModel
 import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.GlobalContext
+import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val featureHomeModules = module {
@@ -19,6 +20,8 @@ val featureHomeModules = module {
     viewModelOf(::HomeViewModel)
 }
 
+
+// Maybe I can make a delegate for this and just call by LoadModulesDelegate
 private val lazyLoadModules = lazy {
     GlobalContext.loadKoinModules(featureHomeModules)
 }

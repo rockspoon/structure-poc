@@ -21,12 +21,19 @@ class MessageEndpoint(
 
     init {
 
+        // TODO I should request Sync service from here, and sync service should call
+        //  syncLocalOrderUseCase which would call repository sync local order.
+        //      Now I will have to define how to store a local order.
+        // TODO feature_client needs a client
         post {
             // TODO auth
             // TODO enforce subscription with webhook to the origin request URL
             // TODO handle errors
+
             val message = call.receive<Message>()
-            this@MessageEndpoint.notifyDataChangedUseCase(message)
+
+            // TODO invoke request sync
+
             call.respondText(
                 text = "Message received.",
                 status = HttpStatusCode.Created

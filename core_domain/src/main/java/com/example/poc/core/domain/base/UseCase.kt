@@ -51,6 +51,7 @@ abstract class UseCase<in P, R>(private val coroutineDispatcher: CoroutineDispat
         data class Success<out T>(val data: T) : Result<T>()
         data class Error(val exception: Exception) : Result<Nothing>()
         data class Loading(val progress: Int? = null) : Result<Nothing>()
+        data class Retrying(val timeInMillisUntilRetry: Long? = null) : Result<Nothing>(0)
 
         companion object {
             /**

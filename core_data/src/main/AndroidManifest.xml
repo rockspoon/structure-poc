@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-	package="com.example.poc.core.data">
+    package="com.example.poc.core.data">
+
+    <application>
+
+        <receiver
+            android:name="com.example.poc.receiver.LocalSeverSyncReceiver"
+            android:exported="true">
+            <intent-filter>
+                <action android:name="com.example.poc.action.LOCAL_SERVER_DATA_CHANGED" />
+            </intent-filter>
+        </receiver>
+
+    </application>
 
 </manifest>
