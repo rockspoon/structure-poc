@@ -34,7 +34,7 @@ class ClientService : Service(), KoinComponent {
 
     private var serviceName: String? = null
 
-    private val messageEndpoint: MessageEndpoint by inject()
+    private val syncEndpoint: SyncEndpoint by inject()
 
     override fun onCreate() {
 
@@ -112,7 +112,7 @@ class ClientService : Service(), KoinComponent {
             host = "0.0.0.0"
         ) {
             routing {
-                messageEndpoint
+                syncEndpoint
             }
         }
 

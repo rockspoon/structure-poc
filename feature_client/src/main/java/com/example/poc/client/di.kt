@@ -6,7 +6,7 @@ import com.example.poc.client.data.MessageDataSourceImpl
 import com.example.poc.client.data.MessageRepository
 import com.example.poc.client.data.MessageRepositoryImpl
 import com.example.poc.client.domain.NotifyDataChangedUseCase
-import com.example.poc.client.service.MessageEndpoint
+import com.example.poc.client.service.SyncEndpoint
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.context.GlobalContext
 import org.koin.dsl.module
@@ -41,7 +41,7 @@ val featureClientModule = module {
 
     // Endpoints
     single {
-        MessageEndpoint(
+        SyncEndpoint(
             notifyDataChangedUseCase = get()
         )
     }

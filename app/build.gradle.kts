@@ -103,6 +103,11 @@ dependencies {
 
     implementation("androidx.multidex:multidex:2.0.1")
 
+    api("io.ktor:ktor-server-core:2.0.2")
+    api("io.ktor:ktor-server-netty:2.0.2")
+    api("io.ktor:ktor-server-content-negotiation:2.0.2")
+    api("io.ktor:ktor-serialization-kotlinx-json:2.0.2")
+
     // DI
 //    api("com.google.dagger:hilt-android:2.40.5")
 //    kapt("com.google.dagger:hilt-android-compiler:2.40.5")

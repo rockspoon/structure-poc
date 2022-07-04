@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.flow
  */
 // We don't know here which datasource the repository will use to sync the data. I am not sure
 // if this is the intended behaviour.
+/// If this do not depend on the datasource, this could be at the core module.
 class SyncOrderUseCase(
     private val orderRepository: OrderRepository,
     coroutineDispatcher: CoroutineDispatcher
@@ -44,7 +45,7 @@ class SyncOrderUseCase(
 
             // Try again. TODO make the number of attempts customisable with while loop
             orderRepository.syncOrder(parameters)
-                ?: throw RetryFailedException()
+                ?: throw OrderRepository.OrderRemoteNotFoundException(parameters)
 
         } catch (e: Exception) {
             // Don't emit here, it's violation of transparency. The FlowUseCase class handles the

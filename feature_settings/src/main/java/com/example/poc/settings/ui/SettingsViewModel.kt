@@ -38,6 +38,7 @@ class SettingsViewModel(
                     }
                     is UseCase.Result.Error -> _uiState.value =
                         SettingsFragment.UiState.Error(exception = result.exception)
+                    is UseCase.Result.Retrying -> {}
                 }
             }
             .launchIn(viewModelScope)
@@ -52,6 +53,7 @@ class SettingsViewModel(
                     }
                     is UseCase.Result.Error -> _uiState.value =
                         SettingsFragment.UiState.Error(exception = result.exception)
+                    is UseCase.Result.Retrying -> {}
                 }
             }
             .launchIn(viewModelScope)

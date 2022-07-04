@@ -1,7 +1,7 @@
 package com.example.poc.client.service
 
 import com.example.poc.client.data.Message
-import com.example.poc.client.domain.NotifyDataChangedUseCase
+import com.example.poc.client.domain.SyncOrderUseCase
 import io.ktor.http.*
 import io.ktor.server.application.*
 import io.ktor.server.request.*
@@ -10,14 +10,16 @@ import io.ktor.server.routing.*
 
 /**
  * An endpoint for the push handlers on a local network that will be using to subscribe
- * the application acting as a client.
+ * the application acting as a client. The message received here will always be a sync
+ * request, but the entity type may vary.
  */
-class MessageEndpoint(
-    private val notifyDataChangedUseCase: NotifyDataChangedUseCase,
+class SyncEndpoint(
+    private val syncOrderUseCase: SyncOrderUseCase,
 ) : Route(
     parent = null,
-    selector = RootRouteSelector("/push")
+    selector = RootRouteSelector("/sync")
 ) {
+
 
     init {
 
@@ -30,9 +32,13 @@ class MessageEndpoint(
             // TODO enforce subscription with webhook to the origin request URL
             // TODO handle errors
 
+            // Invoke request sync
             val message = call.receive<Message>()
-
-            // TODO invoke request sync
+            when (message.entityType) {
+                Message.Type.ORDER -> {
+                    this@SyncEndpoint.syncOrderUseCase(parameters = message.entityId)
+                }
+            }
 
             call.respondText(
                 text = "Message received.",

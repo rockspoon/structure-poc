@@ -33,11 +33,6 @@ dependencies {
     implementation("androidx.core:core-ktx:1.7.0")
     testImplementation("junit:junit:4.13.2")
 
-    implementation("io.ktor:ktor-server-core:2.0.2")
-    implementation("io.ktor:ktor-server-netty:2.0.2")
-    implementation("io.ktor:ktor-server-content-negotiation:2.0.2")
-    implementation("io.ktor:ktor-serialization-kotlinx-json:2.0.2")
-
     implementation("androidx.work:work-runtime-ktx:2.7.1")
 
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
