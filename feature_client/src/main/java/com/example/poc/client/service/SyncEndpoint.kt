@@ -36,6 +36,7 @@ class SyncEndpoint(
             val message = call.receive<Message>()
             when (message.entityType) {
                 Message.Type.ORDER -> {
+                    // I can request a sync service and the sync service call syncOrderUseCase.
                     this@SyncEndpoint.syncOrderUseCase(parameters = message.entityId)
                 }
             }

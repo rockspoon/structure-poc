@@ -12,14 +12,13 @@ import kotlinx.coroutines.flow.flowOn
 import kotlinx.coroutines.flow.onEach
 
 class PublishDataChangeUseCase(
-    private val context: Context,
+    private val workManager: WorkManager,
     private val subscriptionRepository: SubscriptionRepository
 ) {
 
     operator fun invoke(entityId: Long) {
         // TODO log notifications??
 
-        val workManager = WorkManager.getInstance(context)
         subscriptionRepository.listSubscriptions(
             entityId = entityId,
             entityType = Subscription.Type.ORDER

@@ -1,6 +1,7 @@
 package com.example.poc.client
 
 import androidx.room.Room
+import androidx.work.WorkManager
 import com.example.poc.datasource.serverdatabase.Database
 import com.example.poc.datasource.serverdatastore.subscription.SubscriptionSerializer.subscriptionDataStore
 import com.example.poc.client.data.*
@@ -67,9 +68,13 @@ val featureServerModule = module {
     }
 
     // Use cases
+    factory {
+        WorkManager.getInstance(androidApplication())
+    }
+
     single {
         PublishDataChangeUseCase(
-            context = androidApplication(),
+            workManager = get(),
             subscriptionRepository = get()
         )
     }
