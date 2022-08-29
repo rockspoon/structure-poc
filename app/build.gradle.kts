@@ -1,11 +1,16 @@
-import com.google.protobuf.gradle.protobuf
-import com.google.protobuf.gradle.protoc
-
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
     kotlin("kapt")
-//    id("dagger.hilt.android.plugin")
+    //id("dagger.hilt.android.plugin")
+}
+
+allprojects {
+    android {
+        packagingOptions {
+            resources.excludes.add("META-INF/*")
+        }
+    }
 }
 
 android {
@@ -25,7 +30,8 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -34,7 +40,11 @@ android {
         create("benchmark") {
             signingConfig = signingConfigs.getByName("debug")
             matchingFallbacks += listOf("release")
-            isDebuggable = false
+            //isDebuggable = false
+            proguardFiles(
+                getDefaultProguardFile("proguard-android-optimize.txt"),
+                "benchmark-rules.pro"
+            )
         }
     }
 
@@ -64,12 +74,6 @@ android {
     testOptions {
         animationsDisabled = true
     }
-
-    packagingOptions {
-        resources {
-            resources.excludes.add("META-INF/*")
-        }
-    }
 }
 
 // Allow references to generated code
@@ -89,8 +93,8 @@ dependencies {
     implementation("com.google.protobuf:protobuf-javalite:3.21.2")
 
     // TODO put it as implementation and put in feature modules
-    api("androidx.lifecycle:lifecycle-livedata-ktx:2.4.1")
-    api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.4.1")
+    api("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
+    api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
 
     // Work runtime need to be here in :app module. It can't be just in the feature module.
     // See: https://stackoverflow.com/questions/51353180/android-resource-linking-failed-due-to-missing-boolean-resource-values-using-jet
@@ -116,13 +120,13 @@ dependencies {
     testImplementation("io.insert-koin:koin-test:3.2.0")
     testImplementation("io.insert-koin:koin-test-junit4:3.2.0")
 
-    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.5.0-rc02")
+    implementation("androidx.navigation:navigation-dynamic-features-fragment:2.5.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     // Keep this also here otherwise instrumentedTests in feature modules will miss the
     // style/FragmentScenarioEmptyFragmentActivityTheme in the manifest.
-    debugImplementation("androidx.fragment:fragment-testing:1.4.1")
+    debugImplementation("androidx.fragment:fragment-testing:1.5.2")
 
     implementation("androidx.test:runner:1.4.0")
     androidTestImplementation("androidx.test:core-ktx:1.4.0")

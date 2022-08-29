@@ -10,7 +10,7 @@ class RemoteClientApiClient(
         .build()
 ) {
 
-    var order: OrderService = retrofit.create(OrderService::class.java)
+    val order: OrderService = retrofit.create(OrderService::class.java)
 
-    var user: UserService = retrofit.create(UserService::class.java)
+    val user: UserService = retrofit.create(UserService::class.java)
 }

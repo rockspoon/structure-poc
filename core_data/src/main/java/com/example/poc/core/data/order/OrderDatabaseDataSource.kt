@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 // :datasource modules. The reason is that we not always will have a :datasource module, most of the
 // time the :datasource module is an external library, this classes serves as representations of
 // them. The :datasource modules also can't access our models.
-interface OrderDatabaseDataSource {
+internal interface OrderDatabaseDataSource {
     suspend fun getOrder(id: Long): Order?
     fun observeOrder(id: Long): Flow<Order?>
     suspend fun insertOrder(user: Order): Order

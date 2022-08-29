@@ -1,5 +1,7 @@
 package com.example.poc.macrobenchmark
 
+import androidx.benchmark.macro.BaselineProfileMode
+import androidx.benchmark.macro.CompilationMode
 import androidx.benchmark.macro.StartupMode
 import androidx.benchmark.macro.StartupTimingMetric
 import androidx.benchmark.macro.junit4.MacrobenchmarkRule
@@ -30,10 +32,16 @@ class ExampleStartupBenchmark {
     fun startup() = benchmarkRule.measureRepeated(
         packageName = "com.example.poc",
         metrics = listOf(StartupTimingMetric()),
+        compilationMode = CompilationMode.Partial(
+            baselineProfileMode = BaselineProfileMode.Disable,
+            warmupIterations = 1
+        ),
         iterations = 5,
-        startupMode = StartupMode.COLD
+        startupMode = StartupMode.COLD,
+        setupBlock = {
+            pressHome()
+        }
     ) {
-        pressHome()
         startActivityAndWait()
     }
 }

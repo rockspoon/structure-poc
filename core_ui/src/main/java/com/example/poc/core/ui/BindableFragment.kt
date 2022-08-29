@@ -12,7 +12,7 @@ import androidx.viewbinding.ViewBinding
 abstract class BindableFragment<T : ViewBinding> : Fragment() {
 
     private var _binding: T? = null
-    val binding = _binding!!
+    val binding by lazy { _binding!! }
 
     /**
      * Override this with the T.inflate(LayoutInflater) method.

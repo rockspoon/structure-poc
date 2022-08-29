@@ -24,7 +24,7 @@ class ApplicationTest : Application() {
                 Dispatchers.Main
             }
 
-            single<CoroutineDispatcher>(Qualifiers.dispatcherIO) {
+            single<CoroutineDispatcher>(CoroutineQualifiers.IO_DISPATCHER) {
                 Dispatchers.Main
             }
 

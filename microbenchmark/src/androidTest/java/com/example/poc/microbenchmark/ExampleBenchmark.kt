@@ -22,8 +22,10 @@ class ExampleBenchmark {
 
 	@Test
 	fun log() {
+		Log.d("ExampleBenchmark", "The benchmark loop will start.")
 		benchmarkRule.measureRepeated {
 			Log.d("LogBenchmark", "the cost of writing this log method will be measured")
 		}
+		Log.d("ExampleBenchmark", "The benchmark loop stopped.")
 	}
 }

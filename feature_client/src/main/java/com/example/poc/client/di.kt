@@ -1,11 +1,12 @@
 package com.example.poc.client
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
+import com.example.poc.CoroutineQualifiers
 import com.example.poc.client.data.MessageDataSource
 import com.example.poc.client.data.MessageDataSourceImpl
 import com.example.poc.client.data.MessageRepository
 import com.example.poc.client.data.MessageRepositoryImpl
-import com.example.poc.client.domain.NotifyDataChangedUseCase
+import com.example.poc.client.domain.SyncOrderUseCase
 import com.example.poc.client.service.SyncEndpoint
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.context.GlobalContext
@@ -34,15 +35,16 @@ val featureClientModule = module {
 
     // Use cases
     single {
-        NotifyDataChangedUseCase(
-            messageRepository = get()
+        SyncOrderUseCase(
+            orderRepository = get(),
+            coroutineDispatcher = get(CoroutineQualifiers.IO_DISPATCHER)
         )
     }
 
     // Endpoints
     single {
         SyncEndpoint(
-            notifyDataChangedUseCase = get()
+            syncOrderUseCase = get()
         )
     }
 }

@@ -52,7 +52,7 @@ dependencies {
 	testImplementation("io.insert-koin:koin-test:3.2.0")
 	testImplementation("io.insert-koin:koin-test-junit4:3.2.0")
 
-	implementation("androidx.core:core-ktx:1.7.0")
+	implementation("androidx.core:core-ktx:1.8.0")
 
 	testImplementation("junit:junit:4.13.2")
 	androidTestImplementation("androidx.test.ext:junit:1.1.3")

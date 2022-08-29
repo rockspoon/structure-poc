@@ -7,7 +7,7 @@ import kotlinx.coroutines.flow.Flow
 // remote data source returning whatever I want and I will not need to make calls to remote server
 // and I still can test my logic implementation regarding the database synchronization, like in the
 // insert method.
-class OrderRepositoryImpl(
+internal class OrderRepositoryImpl(
     private val orderDatabaseDataSource: OrderDatabaseDataSource,
     private val orderRemoteServerDataSource: OrderRemoteServerDataSource,
     private val orderLocalServerDataSource: OrderLocalServerDataSource
