@@ -5,4 +5,7 @@
     <string name="error_authentication_password_short">Ops… The password is too short, it needs to be at least 8 characters long.</string>
     <string name="email">Email</string>
     <string name="password">Password</string>
+    <string name="error_invalid_email">Verify the email inputed. Emails should contain \'@\' symbol.</string>
+    <string name="error_blank_email">Email field is mandatory.</string>
+    <string name="error_unknown">Something weird happened.</string>
 </resources>

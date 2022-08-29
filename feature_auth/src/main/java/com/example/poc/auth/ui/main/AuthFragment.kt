@@ -1,6 +1,7 @@
 package com.example.poc.auth.ui.main
 
 import android.os.Bundle
+import android.util.Log
 import android.view.View
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
@@ -32,6 +33,11 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
 
         // Setup UI
         binding = AuthFragmentBinding.bind(view)
+        // When the input lose focus we check if he wrote garbage. We can also use the
+        // input listener to refine this behaviour.
+        binding.emailInputLayout.onFocusChangeListener = View.OnFocusChangeListener { _, hasFocus ->
+            if (!hasFocus) viewModel.validateEmail(binding.emailEditText.text.toString())
+        }
         binding.passwordEditText.setText(viewModel.user.password)
         binding.authButton.setOnClickListener {
             viewModel.user.password = binding.passwordEditText.text.toString()
@@ -58,6 +64,7 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
                 is UiState.Error -> {
                     updateProgressIndicator(null)
                     updateErrorMessages(uiState.exception)
+                    updateEmailError(uiState.emailInputException)
                 }
             }
         }.launchIn(viewLifecycleOwner.lifecycleScope)
@@ -84,6 +91,23 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
         }
     }
 
+    private fun updateEmailError(e: Exception? = null) {
+        when (e) {
+            is ValidateEmailUseCase.InvalidEmailException -> {
+                binding.emailInputLayout.error = getText(R.string.error_invalid_email)
+            }
+            is ValidateEmailUseCase.BlankEmailException -> {
+                binding.emailInputLayout.error = getText(R.string.error_blank_email)
+            }
+            null -> binding.emailInputLayout.error = null
+            else -> {
+                // This should never happen. Log the error and show it on the snackbar instead
+                Log.e("AuthFragment", e.message ?: "")
+                updateErrorMessages(e)
+            }
+        }
+    }
+
     private fun updateErrorMessages(t: Throwable? = null) {
 
         // It concerns to the UI layer, specifically activities and fragments, translate the message
@@ -99,6 +123,7 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
                 binding.passwordInputLayout.error = message
             }
             null -> {
+                binding.emailInputLayout.error = null
                 binding.passwordInputLayout.error = null
             }
             else -> {
@@ -129,6 +154,11 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
         object None : UiState()
         data class Loading(val progress: Int?) : UiState()
         data class Success(val item: User) : UiState()
-        data class Error(val exception: Exception) : UiState()
+        data class Error(
+            // The fragment can have errors in multiple parts at the same time, so we create
+            // multiple fields for it so one error do not erase the other.
+            val emailInputException: Exception? = null,
+            val exception: Exception? = null
+        ) : UiState()
     }
 }
