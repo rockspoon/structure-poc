@@ -65,7 +65,7 @@ class AuthFragment : BindableFragment<AuthFragmentBinding>() {
     }
 
     /**
-     * Progress equals to 0 means indeterminate, null means hide it, and between 0 and 100 means
+     * Progress equals to -1 means INDETERMINATE, null means hide it, and between 0 and 100 means
      * executing.
      */
     private fun updateProgressIndicator(progress: Int?) {
