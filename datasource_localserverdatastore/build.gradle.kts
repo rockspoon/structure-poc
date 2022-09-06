@@ -35,7 +35,7 @@ android {
 
 // TODO The Kotlin DSL for proto buffers is not working well, so we import the Groovy version.
 //      Change later when Kotlin DSL for proto buffers leaves the beta.
-apply(from = "${project.rootDir}/datasource_serverdatastore/protobuf.gradle")
+apply(from = "${project.rootDir}/datasource_localserverdatastore/protobuf.gradle")
 
 dependencies {
 

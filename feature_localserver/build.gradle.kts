@@ -29,8 +29,8 @@ android {
 
 dependencies {
     implementation(project(":app"))
-    implementation(project(":datasource_serverdatabase"))
-    implementation(project(":datasource_serverdatastore"))
+    implementation(project(":datasource_localserverdatabase"))
+    implementation(project(":datasource_localserverdatastore"))
 
     implementation("androidx.core:core-ktx:1.7.0")
     testImplementation("junit:junit:4.13.2")

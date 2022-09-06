@@ -40,10 +40,10 @@ dependencies {
 	// Notice that we use implementation rather than api, so databases classes can't be accessed
 	// by any other module.
 	implementation(project(":datasource_database"))
-	implementation(project(":datasource_remoteclientapi"))
-	implementation(project(":datasource_localclientapi"))
+	implementation(project(":datasource_remoteclient"))
+	implementation(project(":datasource_localclient"))
 
-	implementation("androidx.datastore:datastore:1.0.0")
+    implementation("androidx.datastore:datastore:1.0.0")
 	implementation("androidx.datastore:datastore-preferences:1.0.0")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 

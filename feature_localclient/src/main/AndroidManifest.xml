@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:dist="http://schemas.android.com/apk/distribution"
-    package="com.example.poc.server">
+    package="com.example.poc.client">
 
     <dist:module
         dist:instant="false"
-        dist:title="@string/title_feature_server">
+        dist:title="@string/title_feature_localserver">
         <dist:delivery>
             <!-- Change this later to on-demand -->
             <dist:install-time />
