@@ -69,21 +69,10 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
      * executing.
      */
     private fun updateProgressIndicator(progress: Int?) {
-        when (progress) {
-            null -> {
-                binding.progressIndicator.isVisible = false
-                binding.authButton.isVisible = true
-            }
-            UseCase.Result.Loading.INDETERMINATE -> {
-                binding.progressIndicator.isVisible = true
-                binding.progressIndicator.isIndeterminate = true
-            }
-            else -> {
-                binding.progressIndicator.isVisible = true
-                binding.progressIndicator.progress = progress
-                binding.progressIndicator.isIndeterminate = false
-            }
-        }
+        binding.authButton.isEnabled = progress == null
+        binding.progressIndicator.isVisible = progress != null
+        binding.progressIndicator.isIndeterminate = progress == UseCase.Result.Loading.INDETERMINATE
+        binding.progressIndicator.progress = progress ?: 0
     }
 
     private fun updateErrorMessages(t: Throwable? = null) {
