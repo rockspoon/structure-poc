@@ -3,7 +3,6 @@ package com.example.poc.auth.ui.main
 import android.os.Bundle
 import android.view.View
 import androidx.core.view.isVisible
-import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.poc.auth.R
 import com.example.poc.auth.databinding.AuthFragmentBinding
