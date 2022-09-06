@@ -22,7 +22,7 @@ internal class UserNetworkDataSourceImpl(
         val password = user.password?.length ?: 0
         if (password < 8) throw UserRepository.UserPasswordShortException
 
-        delay(2000)
+        delay(3000)
 
         users[user.id!!] = user
         return user

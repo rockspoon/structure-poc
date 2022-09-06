@@ -10,6 +10,7 @@ import com.example.poc.auth.databinding.AuthFragmentBinding
 import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.auth.loadModules
 import com.example.poc.core.data.user.User
+import com.example.poc.core.domain.base.UseCase
 import com.example.poc.ui.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -73,11 +74,12 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
                 binding.progressIndicator.isVisible = false
                 binding.authButton.isVisible = true
             }
-            0 -> {
-                binding.progressIndicator.progress = progress
+            UseCase.Result.Loading.INDETERMINATE -> {
+                binding.progressIndicator.isVisible = true
                 binding.progressIndicator.isIndeterminate = true
             }
             else -> {
+                binding.progressIndicator.isVisible = true
                 binding.progressIndicator.progress = progress
                 binding.progressIndicator.isIndeterminate = false
             }

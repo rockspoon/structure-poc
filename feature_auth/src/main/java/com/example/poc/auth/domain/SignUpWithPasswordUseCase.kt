@@ -23,7 +23,7 @@ class SignUpWithPasswordUseCase(
 ) : FlowUseCase<Params, User>(coroutineDispatcher) {
 
     override fun execute(parameters: Params): Flow<UseCase.Result<User>> = flow {
-        emit(UseCase.Result.Loading(-1))
+        emit(UseCase.Result.Loading(UseCase.Result.Loading.INDETERMINATE))
         try {
             val user = userRepository.insertUser(parameters.user)
 
