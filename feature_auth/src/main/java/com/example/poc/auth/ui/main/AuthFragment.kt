@@ -11,6 +11,7 @@ import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.auth.loadModules
 import com.example.poc.core.data.user.User
 import com.example.poc.core.domain.base.UseCase
+import com.example.poc.core.ui.BindableFragment
 import com.example.poc.ui.MainViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -18,13 +19,13 @@ import kotlinx.coroutines.flow.onEach
 import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class AuthFragment : Fragment(R.layout.auth_fragment) {
+class AuthFragment : BindableFragment<AuthFragmentBinding>() {
 
     private val mainViewModel: MainViewModel by sharedViewModel()
 
     private val viewModel: AuthViewModel by viewModel()
 
-    private lateinit var binding: AuthFragmentBinding
+    override fun viewBindingInflate() = AuthFragmentBinding.inflate(layoutInflater)
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
@@ -32,7 +33,6 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
         loadModules()
 
         // Setup UI
-        binding = AuthFragmentBinding.bind(view)
         binding.passwordEditText.setText(viewModel.user.password)
         binding.authButton.setOnClickListener {
             viewModel.user.password = binding.passwordEditText.text.toString()
