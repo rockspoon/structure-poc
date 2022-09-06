@@ -86,8 +86,8 @@ class AuthFragment : Fragment(R.layout.auth_fragment) {
         // that we should fix or indicating how to insert valid inputs.
         when (t) {
             is SignUpWithPasswordUseCase.UserPasswordTooShortException -> {
-                val message = getText(R.string.error_authentication_password_short)
-                binding.passwordInputLayout.error = message
+                binding.passwordInputLayout.error =
+                    getText(R.string.error_authentication_password_short)
             }
             null -> {
                 binding.passwordInputLayout.error = null
