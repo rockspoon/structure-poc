@@ -1,22 +1,36 @@
 pluginManagement {
+
     repositories {
         gradlePluginPortal()
         google()
         mavenCentral()
+        maven(url = "https://jitpack.io")
     }
 
     resolutionStrategy {
         eachPlugin {
             when (requested.id.id) {
-                "dagger.hilt.android.plugin" -> {
-                    useModule("com.google.dagger:hilt-android-gradle-plugin:${requested.version}")
-                }
                 "com.google.protobuf" -> {
                     useModule("com.google.protobuf:protobuf-gradle-plugin:${requested.version}")
+                }
+                "dagger.hilt.android.plugin" -> {
+                    useModule("com.google.dagger:hilt-android-gradle-plugin:${requested.version}")
                 }
             }
         }
     }
+}
+
+plugins {
+    id("com.android.application") version "7.2.2" apply false
+    id("com.android.library") version "7.2.2" apply false
+    id("org.jetbrains.kotlin.android") version "1.7.0" apply false
+    id("com.android.dynamic-feature") version "7.2.2" apply false
+    id("com.android.test") version "7.2.2" apply false
+    id("androidx.benchmark") version "1.2.0-alpha01" apply false
+    id("com.google.devtools.ksp") version "1.7.0-1.0.6" apply false
+    id("com.google.protobuf") version "0.8.17" apply false
+    //id("dagger.hilt.android.plugin") version "2.40.5" apply false
 }
 
 dependencyResolutionManagement {
@@ -25,29 +39,29 @@ dependencyResolutionManagement {
 
     repositories {
         google()
-        maven(url = "https://jitpack.io")
         mavenCentral()
+        maven(url = "https://jitpack.io")
         mavenLocal()
     }
 }
 
 rootProject.name = "PoC"
 
-include(":app")
-include(":core_data")
-include(":core_domain")
-include(":core_service")
-include(":core_ui")
-include(":feature_auth")
-include(":feature_localclient")
-include(":feature_home")
-include(":feature_localserver")
-include(":feature_search")
-include(":feature_settings")
-include(":datasource_database")
-include(":datasource_localclient")
-include(":datasource_localserverdatabase")
-include(":datasource_localserverdatastore")
-include(":datasource_remoteclient")
-include(":macrobenchmark")
-include(":microbenchmark")
+include(":app:poc")
+include(":core:data")
+include(":core:domain")
+include(":core:service")
+include(":core:ui")
+include(":feature:auth")
+include(":feature:local_client")
+include(":feature:home")
+include(":feature:local_server")
+include(":feature:search")
+include(":feature:settings")
+include(":datasource:database")
+include(":datasource:local_client")
+include(":datasource:local_server_database")
+include(":datasource:local_server_datastore")
+include(":datasource:remote_client")
+include(":test:macrobenchmark")
+include(":test:microbenchmark")

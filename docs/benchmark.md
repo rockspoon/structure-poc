@@ -19,6 +19,10 @@ To work with the microbenchmark, make sure first that its module build variant i
 
 Before running the tests you need to install the application using the run or debug ":app", otherwise the benchmark will not find the application launcher.
 
+## Debugging
+
+A lot of problems of benchmarking will not be logged in the run or debug console, it will just cancel the tests and show a grey symbol. But the error are still logged in the LogCat.
+
 ## Road map
 
 It's intended that after refactoring of the project structure [include JIRA epic here] and implementation of unit and instrumented tests [include epic maybe], benchmarks be implemented in multiple components of the application ([include JIRA tasks here])
