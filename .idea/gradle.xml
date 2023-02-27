@@ -13,6 +13,7 @@
             <option value="$PROJECT_DIR$/app" />
             <option value="$PROJECT_DIR$/app/poc" />
             <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/common" />
             <option value="$PROJECT_DIR$/core/data" />
             <option value="$PROJECT_DIR$/core/domain" />
             <option value="$PROJECT_DIR$/core/service" />
@@ -31,6 +32,8 @@
             <option value="$PROJECT_DIR$/feature/search" />
             <option value="$PROJECT_DIR$/feature/settings" />
             <option value="$PROJECT_DIR$/test" />
+            <option value="$PROJECT_DIR$/test/common" />
+            <option value="$PROJECT_DIR$/test/data" />
             <option value="$PROJECT_DIR$/test/macrobenchmark" />
             <option value="$PROJECT_DIR$/test/microbenchmark" />
           </set>

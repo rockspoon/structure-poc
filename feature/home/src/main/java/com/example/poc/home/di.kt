@@ -2,10 +2,8 @@ package com.example.poc.home
 
 import com.example.poc.core.domain.user.ObserveUserUseCase
 import com.example.poc.home.ui.HomeViewModel
-import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.GlobalContext
-import org.koin.core.module.Module
 import org.koin.dsl.module
 
 val featureHomeModules = module {

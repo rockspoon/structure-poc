@@ -3,7 +3,7 @@ package com.example.poc.client.data
 import android.content.Intent
 import androidx.core.os.bundleOf
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.example.poc.receiver.ACTION_LOCAL_SERVER_DATA_CHANGED
+import com.example.poc.data.ACTION_LOCAL_SERVER_DATA_CHANGED
 
 class MessageDataSourceImpl(
     private val localBroadcastManager: LocalBroadcastManager

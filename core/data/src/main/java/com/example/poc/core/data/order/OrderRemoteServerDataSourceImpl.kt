@@ -10,15 +10,11 @@ internal class OrderRemoteServerDataSourceImpl(
 
     // Probably put a try and catch here and convert the remote exception to an app exception
     override suspend fun getOrder(id: Long): Order? {
-        return apiClient.order.get(id).execute()
-            .body()
-            ?.toModel()
+        return apiClient.order.get(id).toModel()
     }
 
     override suspend fun insertOrder(order: Order): Order {
-        return apiClient.order.insert(order.toResource()).execute()
-            .body()
-            .toModel()
+        return apiClient.order.insert(order.toResource()).toModel()
     }
 
     private fun OrderResource.toModel() =

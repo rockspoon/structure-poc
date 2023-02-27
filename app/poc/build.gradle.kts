@@ -83,10 +83,11 @@ android {
 
 dependencies {
 
-    api(project(":core:data"))
-    api(project(":core:domain"))
-    api(project(":core:service"))
-    api(project(":core:ui"))
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+    implementation(project(":core:service"))
+    implementation(project(":core:ui"))
     implementation(project(":feature:settings"))
 
     api("androidx.datastore:datastore:1.0.0")
@@ -94,10 +95,11 @@ dependencies {
 
     // TODO put it as implementation and put in feature modules
     api("androidx.lifecycle:lifecycle-livedata-ktx:2.5.1")
-    api("androidx.lifecycle:lifecycle-viewmodel-ktx:2.5.1")
 
     // Work runtime need to be here in :app module. It can't be just in the feature module.
     // See: https://stackoverflow.com/questions/51353180/android-resource-linking-failed-due-to-missing-boolean-resource-values-using-jet
+    api("androidx.work:work-runtime-ktx:2.7.1")
+
     api("androidx.work:work-runtime-ktx:2.7.1")
 
     implementation("androidx.datastore:datastore:1.0.0")
@@ -137,6 +139,6 @@ dependencies {
     androidTestImplementation(project(":feature:home"))
     androidTestImplementation(project(":feature:search"))
 
-    // Put the feature as dependencies of androidTest so we can use the IDs with Expresso
+    // Put the module as dependencies of androidTest so we can use the IDs with Expresso
     androidTestImplementation(project(":core:data"))
 }

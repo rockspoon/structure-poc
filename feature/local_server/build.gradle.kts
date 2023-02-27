@@ -29,8 +29,12 @@ android {
 
 dependencies {
     implementation(project(":app:poc"))
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
     implementation(project(":datasource:local_server_database"))
     implementation(project(":datasource:local_server_datastore"))
+
 
     implementation("androidx.core:core-ktx:1.7.0")
     testImplementation("junit:junit:4.13.2")

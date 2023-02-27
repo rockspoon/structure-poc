@@ -19,6 +19,8 @@ abstract class BindableFragment<T : ViewBinding> : Fragment() {
 
     /**
      * Override this with the T.inflate(LayoutInflater) method.
+     *
+     * e.g.: MyFragmentBinding.inflate(layoutInflater)
      */
     abstract fun viewBindingInflate(): T
 

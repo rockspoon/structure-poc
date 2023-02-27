@@ -30,6 +30,11 @@ android {
 dependencies {
 
 	implementation(project(":app:poc"))
+	implementation(project(":core:common"))
+	implementation(project(":core:data"))
+	implementation(project(":core:domain"))
+	implementation(project(":core:ui"))
+
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 	testImplementation("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.2")
 

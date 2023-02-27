@@ -29,7 +29,7 @@
 		</activity>
 
 		<receiver
-			android:name="com.example.poc.receiver.LocalSeverSyncReceiver"
+			android:name="com.example.poc.data.LocalSeverSyncReceiver"
 			android:exported="true">
 			<intent-filter>
 				<action android:name="com.example.poc.action.LOCAL_SERVER_DATA_CHANGED" />

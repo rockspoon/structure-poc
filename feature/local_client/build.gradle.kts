@@ -30,6 +30,12 @@ android {
 dependencies {
 
     implementation(project(":app:poc"))
+    implementation(project(":core:common"))
+    implementation(project(":core:data"))
+    implementation(project(":core:domain"))
+
+    implementation("androidx.localbroadcastmanager:localbroadcastmanager:1.1.0")
+
     implementation("androidx.core:core-ktx:1.7.0")
     testImplementation("junit:junit:4.13.2")
 

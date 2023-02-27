@@ -34,6 +34,8 @@ android {
 
 dependencies {
 
+	implementation(project(":core:common"))
+
 	implementation("androidx.core:core-ktx:1.7.0")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 	api("com.squareup.retrofit:retrofit:2.0.0-beta2")
