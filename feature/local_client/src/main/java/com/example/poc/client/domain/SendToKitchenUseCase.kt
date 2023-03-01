@@ -75,7 +75,4 @@ class SendToKitchenUseCase(
     class BadRequestException : RuntimeException()
 
     class ServerUnavailableException : RuntimeException()
-
-    // TODO Improve this
-    class RetryFailedException : RuntimeException()
 }
