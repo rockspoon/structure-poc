@@ -22,12 +22,14 @@ import org.koin.dsl.module
 class ApplicationTest : MultiDexApplication() {
 
     override fun onCreate() {
+        super.onCreate()
+
         initDependencyInjection()
+
     }
 
     private fun initDependencyInjection() {
 
-        // Start dependency injection
         startKoin {
             androidContext(this@ApplicationTest)
             modules(

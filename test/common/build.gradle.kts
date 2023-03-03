@@ -37,7 +37,7 @@ android {
 
 dependencies {
 
-    implementation(":core:ui")
+    implementation(project(":core:ui"))
 
     api("org.mockito:mockito-core:3.12.4")
     api("com.nhaarman:mockito-kotlin-kt1.1:1.6.0")

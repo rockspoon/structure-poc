@@ -11,6 +11,9 @@ import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
+/**
+ * Application class override to initialize dependency injection and logger.
+ */
 class Application : MultiDexApplication() {
 
     override fun onCreate() {
@@ -22,7 +25,7 @@ class Application : MultiDexApplication() {
     }
 
     private fun initDependencyInjection() {
-        // Start dependency injection with Koin
+        // Init dependency injection with Koin
         startKoin {
             androidContext(this@Application)
             modules(
@@ -37,7 +40,7 @@ class Application : MultiDexApplication() {
     }
 
     private fun initLogger() {
-        // Init Koin with Timber
+        // Init logger with Timber
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {

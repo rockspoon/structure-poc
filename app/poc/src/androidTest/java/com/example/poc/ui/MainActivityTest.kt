@@ -17,7 +17,10 @@ import kotlinx.coroutines.delay
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.flow
-import kotlinx.coroutines.test.*
+import kotlinx.coroutines.test.StandardTestDispatcher
+import kotlinx.coroutines.test.advanceUntilIdle
+import kotlinx.coroutines.test.runTest
+import kotlinx.coroutines.test.setMain
 import org.hamcrest.Matchers.allOf
 import org.hamcrest.Matchers.containsString
 import org.junit.Test
@@ -46,7 +49,7 @@ class MainActivityTest {
 
             // Fake data sources
             singleOf(MainActivityTest::FakeUserDatabaseDataSource) { bind<UserDatabaseDataSource>() }
-            singleOf(MainActivityTest::FakeUserRemoteDataSource) { bind<UserRemoteDataSource>() }
+            singleOf(MainActivityTest::EightDigitPasswordUserRemoteDataSource) { bind<UserRemoteDataSource>() }
             singleOf(MainActivityTest::FakePreferencesDataSource) { bind<PreferencesDataSource>() }
 
             single {
@@ -54,7 +57,7 @@ class MainActivityTest {
                     coroutineDispatcher = get(),
                     userRepository = UserRepositoryImpl(
                         userDatabaseDataSource = get(),
-                        userNetworkDataSource = get()
+                        userRemoteDataSource = get()
                     )
                 )
             }
@@ -192,13 +195,17 @@ class MainActivityTest {
 
     }
 
-    private class FakeUserRemoteDataSource : UserRemoteDataSource {
+    private class EightDigitPasswordUserRemoteDataSource : UserRemoteDataSource {
 
         // Mock a server
         private val users = mutableMapOf<Long, User>()
 
-        override suspend fun getUser(id: Long): User? {
-            return users[id]
+        override suspend fun getUser(id: Long?): User {
+            return users[id]!!
+        }
+
+        override suspend fun updateUser(user: User): User {
+            TODO("Not yet implemented")
         }
 
         override suspend fun insertUser(user: User): User {
@@ -209,6 +216,16 @@ class MainActivityTest {
 
             users[user.id!!] = user
             return user
+        }
+
+        override suspend fun listUsers(
+            name: String,
+            profileIds: List<Long>,
+            pageSize: Int,
+            next: String,
+            previous: String
+        ): List<User> {
+            TODO("Not yet implemented")
         }
     }
 
