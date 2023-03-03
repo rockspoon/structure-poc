@@ -54,7 +54,7 @@ class SettingsFragmentTest {
             // Add featureSettingsModule but also coreDomainModule because the observe use cases
             // comes from it.
             modules(
-                coreDomainModule,
+                coreDomainModule(),
                 featureSettingsModule,
                 testModule
             )

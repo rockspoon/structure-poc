@@ -9,8 +9,9 @@ import com.example.poc.auth.databinding.AuthFragmentBinding
 import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.auth.loadModules
 import com.example.poc.core.data.user.User
-import com.example.poc.core.ui.BindableFragment
-import com.example.poc.ui.MainViewModel
+import com.example.poc.core.ui.common.BindableFragment
+import com.example.poc.core.ui.event.AuthEvent
+import com.example.poc.core.ui.event.EventViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -19,9 +20,9 @@ import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class AuthFragment : BindableFragment<AuthFragmentBinding>() {
 
-    private val mainViewModel: MainViewModel by sharedViewModel()
-
     private val viewModel: AuthViewModel by viewModel()
+
+    private val eventViewModel: EventViewModel by sharedViewModel()
 
     override fun viewBindingInflate() = AuthFragmentBinding.inflate(layoutInflater)
 
@@ -98,12 +99,6 @@ class AuthFragment : BindableFragment<AuthFragmentBinding>() {
     }
 
     private fun notifyOnAuthSuccess() {
-        // TODO Maybe use a view model to coordinate this or create a listener interface so any
-        //      activity be able to be notified. IOsched uses a .receiveAsFlow and a Channel to
-        //      receive events related to navigation. I can maybe put ond like them on the
-        //      MainActivity view model and publish a 'on auth' event that will trigger the
-        //      MainActivity to make the navigation.
-
         // Note that we don't navigate to home screen. A feature module should be complete ignorant
         // about the reasons why it was invoked, this includes knowing what it will be done with
         // it's results, so make it call a function with explicitly naming indicating where to go
@@ -111,7 +106,9 @@ class AuthFragment : BindableFragment<AuthFragmentBinding>() {
         // it's job is completed. The reason is because the feature should be treated as if it can
         // be invoked for multiple reasons. Now we are invoking authentication for the home screen,
         // but we could invoked it for seeing a credit card info, for example.
-        mainViewModel.onEvent(MainViewModel.Event.AuthenticationCompleted)
+        eventViewModel.onEvent(
+            AuthEvent.OnAuthenticationCompleted("fake_token")
+        )
     }
 
     sealed class UiState {

@@ -2,36 +2,42 @@ package com.example.poc
 
 import android.util.Log
 import androidx.multidex.MultiDexApplication
-import com.example.poc.BuildConfig
+import com.example.poc.core.common.coreCommonModule
 import com.example.poc.core.data.coreDataModule
 import com.example.poc.core.domain.coreDomainModule
+import com.example.poc.core.ui.coreUiModule
 import com.example.poc.settings.featureSettingsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
 
-open class Application : MultiDexApplication() {
+class Application : MultiDexApplication() {
 
     override fun onCreate() {
         super.onCreate()
-        initKoin()
+
+        initDependencyInjection()
+
         initLogger()
     }
 
-    private fun initKoin() {
-        // Start dependency injection
+    private fun initDependencyInjection() {
+        // Start dependency injection with Koin
         startKoin {
             androidContext(this@Application)
             modules(
-                appModule,
-                coreDataModule,
-                coreDomainModule,
-                featureSettingsModule
+                appPocModule(),
+                coreCommonModule(),
+                coreDataModule(),
+                coreDomainModule(),
+                coreUiModule(),
+                featureSettingsModule()
             )
         }
     }
 
     private fun initLogger() {
+        // Init Koin with Timber
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {
@@ -40,7 +46,7 @@ open class Application : MultiDexApplication() {
     }
 
     /** A tree which logs important information for crash reporting.  */
-    private class CrashReportingTree() : Timber.Tree() {
+    private class CrashReportingTree : Timber.Tree() {
 
         override fun log(
             priority: Int,

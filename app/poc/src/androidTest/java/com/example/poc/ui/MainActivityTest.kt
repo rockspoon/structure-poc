@@ -46,7 +46,7 @@ class MainActivityTest {
 
             // Fake data sources
             singleOf(MainActivityTest::FakeUserDatabaseDataSource) { bind<UserDatabaseDataSource>() }
-            singleOf(MainActivityTest::FakeUserNetworkDataSource) { bind<UserNetworkDataSource>() }
+            singleOf(MainActivityTest::FakeUserRemoteDataSource) { bind<UserRemoteDataSource>() }
             singleOf(MainActivityTest::FakePreferencesDataSource) { bind<PreferencesDataSource>() }
 
             single {
@@ -192,7 +192,7 @@ class MainActivityTest {
 
     }
 
-    private class FakeUserNetworkDataSource : UserNetworkDataSource {
+    private class FakeUserRemoteDataSource : UserRemoteDataSource {
 
         // Mock a server
         private val users = mutableMapOf<Long, User>()

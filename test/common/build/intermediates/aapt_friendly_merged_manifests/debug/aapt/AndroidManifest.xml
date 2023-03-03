@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.rockspoon.test.common" >
+    package="com.example.test.common" >
 
     <uses-sdk
-        android:minSdkVersion="24"
-        android:targetSdkVersion="29" />
+        android:minSdkVersion="23"
+        android:targetSdkVersion="32" />
 
 </manifest>

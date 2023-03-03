@@ -1,8 +1,7 @@
 package com.rockspoon.test.data.user
 
-import com.rockspoon.merchant.core.data.common.Phone
-import com.rockspoon.merchant.core.data.user.User
-import com.rockspoon.merchant.core.data.user.UserRemoteDataSource
+import com.example.poc.core.data.user.User
+import com.example.poc.core.data.user.UserRemoteDataSource
 
 class TestUserRemoteDataSource(
     private val initialItems: List<User> = INITIAL_ITEMS
@@ -10,7 +9,7 @@ class TestUserRemoteDataSource(
 
     private val items: MutableList<User> = initialItems.toMutableList()
 
-    override suspend fun getUser(id: String?): User {
+    override suspend fun getUser(id: Long?): User {
         return if (id == null) initialItems.first()
         else initialItems.find { it.id == id }!!
     }
@@ -23,9 +22,14 @@ class TestUserRemoteDataSource(
         return user
     }
 
+    override suspend fun insertUser(user: User): User {
+        items.add(user)
+        return user
+    }
+
     override suspend fun listUsers(
         name: String,
-        profileIds: List<String>,
+        profileIds: List<Long>,
         pageSize: Int,
         next: String,
         previous: String
@@ -36,24 +40,21 @@ class TestUserRemoteDataSource(
     companion object {
         val INITIAL_ITEMS = listOf(
             User(
-                id = "1",
-                firstName = "Adam",
-                lastName = "Smith",
-                phone = Phone("44", "01632960028"),
+                id = 1,
+                givenName = "Adam",
+                familyName = "Smith",
                 email = "adam.smith@example.com"
             ),
             User(
-                id = "2",
-                firstName = "Jacques",
-                lastName = "Cousteau",
-                phone = Phone("33", "934313992"),
+                id = 2,
+                givenName = "Jacques",
+                familyName = "Cousteau",
                 email = "jacques.cousteau@example.com"
             ),
             User(
-                id = "3",
-                firstName = "Ernest",
-                lastName = "Hemingway",
-                phone = Phone("1", "2025550105"),
+                id = 3,
+                givenName = "Ernest",
+                familyName = "Hemingway",
                 email = "ernest.hemingway@example.com"
             )
         )

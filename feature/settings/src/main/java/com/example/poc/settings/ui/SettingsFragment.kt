@@ -5,13 +5,15 @@ import android.view.View
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.poc.core.data.preferences.Theme
+import com.example.poc.core.ui.event.EventViewModel
+import com.example.poc.core.ui.event.SettingsEvent
 import com.example.poc.settings.R
 import com.example.poc.settings.databinding.SettingsFragmentBinding
 import com.example.poc.settings.loadModules
 import kotlinx.coroutines.flow.filter
 import kotlinx.coroutines.flow.launchIn
-import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.flow.onEach
+import org.koin.androidx.viewmodel.ext.android.sharedViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 /**
@@ -22,6 +24,8 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
 
     private val viewModel: SettingsViewModel by viewModel()
 
+    private val eventViewModel: EventViewModel by sharedViewModel()
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
 
         // Dependency injection
@@ -31,7 +35,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
         val binding = SettingsFragmentBinding.bind(view).apply {
 
             themeSwitch.setOnCheckedChangeListener { _, isChecked ->
-                val theme = if(isChecked) Theme.DARK
+                val theme = if (isChecked) Theme.DARK
                 else Theme.SYSTEM
                 viewModel.setTheme(theme)
             }
@@ -64,7 +68,9 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                 binding.notificationSwitch.isChecked = state.isNotificationEnabled
                 binding.notificationTextView.text = state.isNotificationEnabled.toString()
             }
-            is UiState.Error -> {}
+            is UiState.Error -> {
+                eventViewModel.onEvent(SettingsEvent.OnPermissionRequested)
+            }
             is UiState.Loading -> {}
         }
     }

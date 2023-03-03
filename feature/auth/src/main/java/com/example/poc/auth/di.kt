@@ -1,8 +1,8 @@
 package com.example.poc.auth
 
-import com.example.poc.CoroutineQualifiers
 import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.auth.ui.main.AuthViewModel
+import com.example.poc.core.common.di.CoroutineQualifiers
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.GlobalContext
 import org.koin.dsl.module

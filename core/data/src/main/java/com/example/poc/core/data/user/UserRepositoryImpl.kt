@@ -9,7 +9,7 @@ import kotlinx.coroutines.flow.Flow
 // insert method.
 class UserRepositoryImpl(
     private val userDatabaseDataSource: UserDatabaseDataSource,
-    private val userNetworkDataSource: UserNetworkDataSource
+    private val userRemoteDataSource: UserRemoteDataSource
 ) : UserRepository {
 
     override suspend fun getUser(id: Long): User? {
@@ -39,7 +39,7 @@ class UserRepositoryImpl(
         if (passwordLength < 8) throw UserRepository.UserPasswordShortException
 
         // Insert in the server, get the response...
-        val remoteUser = userNetworkDataSource.insertUser(user)
+        val remoteUser = userRemoteDataSource.insertUser(user)
 
         // ...then insert in our database before returning it, preserving local database as single
         // source of truth.
@@ -56,7 +56,7 @@ class UserRepositoryImpl(
     override suspend fun syncUser(userId: Long): User {
 
         // Fetch in the server, get the response...
-        val remoteUser = userNetworkDataSource.getUser(userId)
+        val remoteUser = userRemoteDataSource.getUser(userId)
             ?: throw UserRepository.UserRemoteNotFoundException(userId)
 
         // ...then insert in our database before returning it, preserving local database as single

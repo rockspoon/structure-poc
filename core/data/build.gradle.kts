@@ -37,6 +37,7 @@ android {
 
 dependencies {
 
+	implementation(project(":core:common"))
 	implementation(project(":datasource:database"))
 	implementation(project(":datasource:remote_client"))
 	implementation(project(":datasource:local_client"))

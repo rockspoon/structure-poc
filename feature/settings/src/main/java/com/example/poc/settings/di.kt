@@ -9,7 +9,7 @@ import org.koin.core.context.GlobalContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-val featureSettingsModule = module {
+fun featureSettingsModule() = module {
 
     singleOf(::UpdateIsNotificationEnabledUseCase)
 
@@ -20,7 +20,7 @@ val featureSettingsModule = module {
 
 // Use lazy to only call it once
 private val lazyLoadModules = lazy {
-    GlobalContext.loadKoinModules(featureSettingsModule)
+    GlobalContext.loadKoinModules(featureSettingsModule())
 }
 
 fun loadModules() {

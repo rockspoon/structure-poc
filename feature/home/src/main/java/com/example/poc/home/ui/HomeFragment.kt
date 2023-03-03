@@ -4,7 +4,7 @@ import android.os.Bundle
 import android.view.View
 import androidx.lifecycle.lifecycleScope
 import com.example.poc.core.data.user.User
-import com.example.poc.core.ui.BindableFragment
+import com.example.poc.core.ui.common.BindableFragment
 import com.example.poc.home.R
 import com.example.poc.home.databinding.HomeFragmentBinding
 import com.example.poc.home.loadModules

@@ -3,7 +3,7 @@
     package="com.rockspoon.test.data" >
 
     <uses-sdk
-        android:minSdkVersion="24"
-        android:targetSdkVersion="29" />
+        android:minSdkVersion="23"
+        android:targetSdkVersion="32" />
 
 </manifest>

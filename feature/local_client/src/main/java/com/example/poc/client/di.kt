@@ -1,13 +1,13 @@
 package com.example.poc.client
 
 import androidx.localbroadcastmanager.content.LocalBroadcastManager
-import com.example.poc.CoroutineQualifiers
 import com.example.poc.client.data.MessageDataSource
 import com.example.poc.client.data.MessageDataSourceImpl
 import com.example.poc.client.data.MessageRepository
 import com.example.poc.client.data.MessageRepositoryImpl
 import com.example.poc.client.domain.SyncOrderUseCase
 import com.example.poc.client.service.SyncEndpoint
+import com.example.poc.core.common.di.CoroutineQualifiers
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.context.GlobalContext
 import org.koin.dsl.module

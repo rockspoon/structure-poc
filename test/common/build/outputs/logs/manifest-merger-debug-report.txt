@@ -1,25 +1,25 @@
 -- Merging decision tree log ---
 manifest
-ADDED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml:1:1-49
-INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml:1:1-49
-INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml:1:1-49
+ADDED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml:1:1-47
+INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml:1:1-47
+INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml:1:1-47
 	package
-		ADDED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml:1:11-46
-		INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
-		INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
+		ADDED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml:1:11-44
+		INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
+		INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
 	xmlns:android
-		ADDED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml:1:1-49
+		ADDED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml:1:1-47
 uses-sdk
-INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml reason: use-sdk injection requested
-INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
-INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
-INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
-INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
+INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml reason: use-sdk injection requested
+INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
+INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
+INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
+INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
 	android:targetSdkVersion
-		INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
-		ADDED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
-		INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
+		INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
+		ADDED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
+		INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
-		ADDED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
-		INJECTED from /Users/allanveloso/Developer/Rockspoon/rockspoon-pos/test/common_new/src/main/AndroidManifest.xml
+		INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
+		ADDED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml
+		INJECTED from /Users/allanveloso/Developer/Training/structure-poc/test/common/src/main/AndroidManifest.xml

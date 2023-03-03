@@ -12,7 +12,7 @@ import org.koin.core.module.dsl.bind
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-val coreDataModule = module {
+fun coreDataModule() = module {
 
     // Database
     single {
@@ -39,7 +39,7 @@ val coreDataModule = module {
 
     // User
     singleOf(::UserDatabaseDataSourceImpl) { bind<UserDatabaseDataSource>() }
-    singleOf(::UserNetworkDataSourceImpl) { bind<UserNetworkDataSource>() }
+    singleOf(::UserRemoteDataSourceImpl) { bind<UserRemoteDataSource>() }
     singleOf(::UserRepositoryImpl) { bind<UserRepository>() }
 
 }

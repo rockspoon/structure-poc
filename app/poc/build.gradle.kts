@@ -129,8 +129,9 @@ dependencies {
     // Keep this also here otherwise instrumentedTests in feature modules will miss the
     // style/FragmentScenarioEmptyFragmentActivityTheme in the manifest.
     debugImplementation("androidx.fragment:fragment-testing:1.5.2")
-
     implementation("androidx.test:runner:1.4.0")
+
+    androidTestImplementation(project(":test:data"))
     androidTestImplementation("androidx.test:core-ktx:1.4.0")
     androidTestImplementation("androidx.test:runner:1.4.0")
     androidTestImplementation("androidx.test:rules:1.4.0")

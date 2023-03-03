@@ -6,7 +6,7 @@ import kotlinx.coroutines.Dispatchers
 import org.koin.dsl.module
 
 
-val coreDomainModule = module {
+fun coreDomainModule() = module {
 
     single {
         ObserveIsNotificationEnabledUseCase(
