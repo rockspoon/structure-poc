@@ -55,7 +55,7 @@ internal fun SearchScreen(
             error = uiState.error
         )
 
-        val lazyPagingItems = uiState.productsPager?.flow?.collectAsLazyPagingItems()
+        val lazyPagingItems = uiState.productsPagingData?.collectAsLazyPagingItems()
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
