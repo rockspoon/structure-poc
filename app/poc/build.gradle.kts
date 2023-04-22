@@ -5,26 +5,17 @@ plugins {
     //id("dagger.hilt.android.plugin")
 }
 
-allprojects {
-    android {
-        packagingOptions {
-            resources.excludes.add("META-INF/*")
-        }
-    }
+apply {
+    from("${project.rootDir}/script-android-version.gradle")
 }
 
 android {
 
-    compileSdk = 32
-
     defaultConfig {
         applicationId = "com.example.poc"
-        minSdk = 23
-        targetSdk = 32
         versionCode = 1
         versionName = "1.0"
         multiDexEnabled = true
-
         testInstrumentationRunner = "com.example.poc.ApplicationTestRunner"
     }
 
@@ -46,15 +37,6 @@ android {
                 "benchmark-rules.pro"
             )
         }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 
     setDynamicFeatures(

@@ -3,9 +3,9 @@
 3    package="com.rockspoon.test.data" >
 4
 5    <uses-sdk
-6        android:minSdkVersion="23"
+6        android:minSdkVersion="24"
 6-->/Users/allanveloso/Developer/Training/structure-poc/test/data/src/main/AndroidManifest.xml
-7        android:targetSdkVersion="32" />
+7        android:targetSdkVersion="33" />
 7-->/Users/allanveloso/Developer/Training/structure-poc/test/data/src/main/AndroidManifest.xml
 8
 9</manifest>

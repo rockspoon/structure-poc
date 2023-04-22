@@ -3,17 +3,12 @@ plugins {
 	id("org.jetbrains.kotlin.android")
 }
 
+apply {
+	from("${project.rootDir}/script-android-version.gradle")
+	from("${project.rootDir}/script-viewbinding.gradle")
+}
+
 android {
-
-	compileSdk = 32
-
-	defaultConfig {
-		minSdk = 23
-
-		testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-//		testInstrumentationRunnerArguments["clearPackageData"] = "true"
-
-	}
 	
 	buildTypes {
 		release {
@@ -23,10 +18,6 @@ android {
 					"proguard-rules.pro"
 			)
 		}
-	}
-
-	buildFeatures {
-		viewBinding = true
 	}
 
 	testOptions {

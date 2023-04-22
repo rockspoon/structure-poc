@@ -1,0 +1,17 @@
+package com.example.poc.search.data
+
+import kotlinx.coroutines.flow.Flow
+
+class ProductRepository(
+    private val productLocalDataSourceImpl: ProductLocalDataSource = ProductLocalDataSourceImpl()
+) {
+
+    val products: Flow<List<Product>> = productLocalDataSourceImpl.products
+
+    suspend fun list(
+        query: String? = null,
+        pageSize: Int? = null,
+        cursorId: Long = 0
+    ): List<Product> = productLocalDataSourceImpl.list(query, pageSize, cursorId)
+}
+

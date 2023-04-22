@@ -4,38 +4,12 @@ plugins {
     id("com.google.protobuf")
 }
 
-android {
-    compileSdk = 32
-
-    defaultConfig {
-        minSdk = 23
-        targetSdk = 32
-
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        consumerProguardFiles("consumer-rules.pro")
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
-}
-
-// TODO The Kotlin DSL for proto buffers is not working well, so we import the Groovy version.
+apply {
+    from("${project.rootDir}/script-android-version.gradle")
+    // TODO The Kotlin DSL for proto buffers is not working well, so we import the Groovy version.
 //      Change later when Kotlin DSL for proto buffers leaves the beta.
-apply(from = "${project.rootDir}/datasource/local_server_datastore/protobuf.gradle")
+    from("${project.rootDir}/datasource/local_server_datastore/protobuf.gradle")
+}
 
 dependencies {
 

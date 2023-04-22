@@ -4,23 +4,14 @@ plugins {
 	id("org.jetbrains.kotlin.android")
 }
 
+apply {
+	from("${project.rootDir}/script-android-version.gradle")
+}
+
 android {
 	namespace = "com.example.poc.microbenchmark"
-	compileSdk = 32
-
-	compileOptions {
-		sourceCompatibility = JavaVersion.VERSION_1_8
-		targetCompatibility = JavaVersion.VERSION_1_8
-	}
-
-	kotlinOptions {
-		jvmTarget = "1.8"
-	}
 
 	defaultConfig {
-		minSdk = 23
-		targetSdk = 32
-
 		testInstrumentationRunner = "androidx.benchmark.junit4.AndroidBenchmarkRunner"
 		testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] = "EMULATOR,LOW-BATTERY,UNLOCKED"
 		testInstrumentationRunnerArguments["androi'x.benchmark.profiling.mode"] = "None"

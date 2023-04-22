@@ -2,29 +2,10 @@ plugins {
     id("com.android.dynamic-feature")
     id("org.jetbrains.kotlin.android")
 }
-android {
-    compileSdk = 32
 
-    defaultConfig {
-        minSdk = 23
-        testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-    }
-
-    buildTypes {
-        release {
-            isMinifyEnabled = false
-            proguardFiles(
-                getDefaultProguardFile("proguard-android-optimize.txt"),
-                "proguard-rules.pro"
-            )
-        }
-    }
-
-    packagingOptions {
-        resources {
-            resources.excludes.add("META-INF/*")
-        }
-    }
+apply {
+    from("${project.rootDir}/script-android-version.gradle")
+    from("${project.rootDir}/script-viewbinding.gradle")
 }
 
 dependencies {

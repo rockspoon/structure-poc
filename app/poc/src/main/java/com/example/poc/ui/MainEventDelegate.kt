@@ -20,24 +20,16 @@ internal class MainEventDelegateImpl : MainEventDelegate {
 
     override fun onMainEvent(mainEvent: MainEvent) {
         when (mainEvent) {
-            is MainEvent.OnMainStarted -> onMainStarted()
+            MainEvent.OnMainStarted -> navigateToLaunchScreen()
+            MainEvent.OnMainReady -> navigateToMainScreen()
         }
     }
 
-    private fun onMainStarted() {
-        navigateToAuthOrMain()
+    private fun navigateToLaunchScreen() {
+        _mainDestinations.trySend(MainViewModel.Destination(resId = R.id.splashFragment))
     }
 
-    // This is fake. We should store the authenticated user account in the Android
-    // account manager and to check if the user is authenticated retrieve it, together
-    // with the OAuth token.
-    private var isUserAuthenticated = false
-
-    private fun navigateToAuthOrMain() {
-        // Main screen requires user to be authenticated.
-        val destinationId = if (!isUserAuthenticated) R.id.featureAuthGraphId
-        else R.id.mainFragment
-
-        _mainDestinations.trySend(MainViewModel.Destination(resId = destinationId))
+    private fun navigateToMainScreen(){
+        _mainDestinations.trySend(MainViewModel.Destination(resId = R.id.mainFragment))
     }
 }

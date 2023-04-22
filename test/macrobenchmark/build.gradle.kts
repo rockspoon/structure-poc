@@ -3,14 +3,13 @@ plugins {
     id("org.jetbrains.kotlin.android")
 }
 
+apply {
+    from("${project.rootDir}/script-android-version.gradle")
+}
+
 android {
 
-    compileSdk = 32
-
     defaultConfig {
-        minSdk = 23
-        targetSdk = 32
-
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
         testInstrumentationRunnerArguments["androidx.benchmark.suppressErrors"] =
             "DEBUGGABLE,NOT-PROFILEABLE"
@@ -25,15 +24,6 @@ android {
             signingConfig = getByName("debug").signingConfig
             matchingFallbacks += listOf("release")
         }
-    }
-
-    compileOptions {
-        sourceCompatibility = JavaVersion.VERSION_1_8
-        targetCompatibility = JavaVersion.VERSION_1_8
-    }
-
-    kotlinOptions {
-        jvmTarget = "1.8"
     }
 
     targetProjectPath = ":app:poc"

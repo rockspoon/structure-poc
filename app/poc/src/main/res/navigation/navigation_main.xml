@@ -2,7 +2,11 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/mainGraphId"
-	app:startDestination="@id/mainFragment">
+	app:startDestination="@id/splashFragment">
+
+	<fragment
+		android:id="@+id/splashFragment"
+		android:name="com.example.poc.ui.SplashFragment" />
 
 	<fragment
 		android:id="@+id/mainFragment"

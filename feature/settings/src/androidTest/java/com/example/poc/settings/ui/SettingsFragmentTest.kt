@@ -55,7 +55,7 @@ class SettingsFragmentTest {
             // comes from it.
             modules(
                 coreDomainModule(),
-                featureSettingsModule,
+                featureSettingsModule(),
                 testModule
             )
         }
