@@ -8,7 +8,8 @@ import android.widget.Toast
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.fragment.app.Fragment
-import com.example.poc.search.loadModules
+import androidx.paging.compose.collectAsLazyPagingItems
+import com.example.poc.search.loadModule
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 
@@ -28,11 +29,13 @@ class SearchFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        loadModules()
+        loadModule()
 
         return ComposeView(requireContext()).apply {
             setViewCompositionStrategy(ViewCompositionStrategy.DisposeOnViewTreeLifecycleDestroyed)
             setContent {
+                // This could also be put in SearchScreen.kt as the body of a new composable
+                // function that takes viewModel and context as parameter.
                 SearchScreen(
                     uiState = viewModel.uiState,
                     onQueryChanged = { query ->

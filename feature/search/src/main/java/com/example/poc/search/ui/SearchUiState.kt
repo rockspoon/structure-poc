@@ -5,8 +5,7 @@ import com.example.poc.search.data.Product
 import kotlinx.coroutines.flow.Flow
 
 data class SearchUiState(
-    val productsPagingData: Flow<PagingData<Product>>? = null,
-    val products: List<Product> = emptyList(),
+    val products: Flow<PagingData<Product>>? = null,
     val isLoading: Boolean = true,
     val error: Throwable? = null
 )

@@ -9,7 +9,7 @@ import org.koin.core.context.GlobalContext
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 
-val featureSearchModules = module {
+fun featureSearchModule() = module {
 
     singleOf<ProductLocalDataSource>(::ProductLocalDataSourceImpl)
 
@@ -18,10 +18,10 @@ val featureSearchModules = module {
     viewModelOf(::SearchViewModel)
 }
 
-private val lazyLoadModules = lazy {
-    GlobalContext.loadKoinModules(featureSearchModules)
+private val lazyLoadModule = lazy {
+    GlobalContext.loadKoinModules(featureSearchModule())
 }
 
-fun loadModules() {
-    lazyLoadModules.value
+fun loadModule() {
+    lazyLoadModule.value
 }

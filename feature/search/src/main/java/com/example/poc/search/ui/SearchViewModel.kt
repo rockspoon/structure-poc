@@ -7,8 +7,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.cachedIn
 import com.example.poc.search.data.ProductRepository
-import kotlinx.coroutines.Job
-import kotlinx.coroutines.launch
 
 internal class SearchViewModel(
     private val productRepository: ProductRepository = ProductRepository()
@@ -18,35 +16,16 @@ internal class SearchViewModel(
         private set
 
     init {
-        // List or load initial list
-//        listProducts()
         loadProducts()
     }
 
-    private var listProductsJob: Job? = null
-
-    fun listProducts(query: String = "") {
-        listProductsJob?.cancel()
-        listProductsJob = viewModelScope.launch {
-            uiState = try {
-                val items = productRepository.list(query)
-                uiState.copy(
-                    products = items,
-                    isLoading = false
-                )
-            } catch (e: Exception) {
-                uiState.copy(
-                    error = e,
-                    isLoading = false
-                )
-            }
-        }
-    }
-
+    /**
+     * Updates the UI state with a paging data of products for lazy loading.
+     */
     fun loadProducts(query: String = "", pageSize: Int = 10) {
         uiState = try {
             uiState.copy(
-                productsPagingData = productRepository.getPagingData(
+                products = productRepository.getPagingData(
                     query = query,
                     pageSize = pageSize
                 ).cachedIn(viewModelScope),

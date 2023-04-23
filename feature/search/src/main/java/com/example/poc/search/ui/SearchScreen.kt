@@ -23,10 +23,12 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.paging.PagingData
 import androidx.paging.compose.collectAsLazyPagingItems
 import androidx.paging.compose.items
 import com.example.poc.search.R
 import com.example.poc.search.data.Product
+import kotlinx.coroutines.flow.flowOf
 
 @Composable
 internal fun SearchScreen(
@@ -55,7 +57,7 @@ internal fun SearchScreen(
             error = uiState.error
         )
 
-        val lazyPagingItems = uiState.productsPagingData?.collectAsLazyPagingItems()
+        val lazyPagingItems = uiState.products?.collectAsLazyPagingItems()
         LazyColumn(
             modifier = Modifier
                 .fillMaxWidth()
@@ -137,20 +139,25 @@ private fun SearchTextField(
 private fun SearchScreenLoadingPreview() {
     SearchScreen(
         uiState = SearchUiState(
-            products = listOf(),
             isLoading = true
         )
     )
 }
 
+// Note: Paging preview only works in interactive mode
+// See https://issuetracker.google.com/issues/194544557
 @Preview(showBackground = true)
 @Composable
 private fun SearchScreenNotEmptyListPreview() {
     SearchScreen(
         uiState = SearchUiState(
-            products = listOf(
-                Product(1, "Test"),
-                Product(2, "Also a test")
+            products = flowOf(
+                PagingData.from(
+                    listOf(
+                        Product(1, "Test"),
+                        Product(2, "Also a test")
+                    )
+                )
             ),
             isLoading = false
         )
@@ -162,9 +169,13 @@ private fun SearchScreenNotEmptyListPreview() {
 private fun SearchScreenErrorPreview() {
     SearchScreen(
         uiState = SearchUiState(
-            products = listOf(
-                Product(1, "Test"),
-                Product(2, "Also a test")
+            products = flowOf(
+                PagingData.from(
+                    listOf(
+                        Product(1, "Test"),
+                        Product(2, "Also a test")
+                    )
+                )
             ),
             isLoading = false,
             error = RuntimeException("Invalid query exception.")
