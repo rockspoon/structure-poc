@@ -1,13 +1,17 @@
 package com.example.poc.search.ui
 
+import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -18,6 +22,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
@@ -69,14 +74,9 @@ internal fun SearchScreen(
                     items = lazyItems
                 ) { item ->
                     item?.let {
-                        Text(
-                            modifier = Modifier
-                                .clickable {
-                                    onItemClickedListener?.invoke(it)
-                                }
-                                .fillParentMaxWidth()
-                                .padding(16.dp),
-                            text = "${it.id} ${it.title}"
+                        ProductListItem(
+                            item = it,
+                            onItemClickedListener = onItemClickedListener
                         )
                     }
                 }
@@ -98,7 +98,60 @@ internal fun SearchScreen(
     }
 }
 
-// Local component. In reality, a search text field would be a global component
+// Local component
+@Composable
+private fun ProductListItem(
+    item: Product,
+    modifier: Modifier = Modifier,
+    onItemClickedListener: ((item: Product) -> Unit)? = null,
+) {
+    Row(
+        modifier = modifier
+            .clickable { onItemClickedListener?.invoke(item) }
+            .padding(8.dp)
+            .fillMaxWidth()
+    ) {
+        Image(
+            modifier = Modifier
+                .height(48.dp)
+                .width(48.dp),
+            imageVector = Icons.Default.AccountCircle,
+            contentDescription = "Coca-cola"
+        )
+        Column(
+            Modifier
+                .align(Alignment.CenterVertically)
+                .padding(horizontal = 8.dp)
+                .fillMaxWidth()
+        ) {
+            Text(
+                modifier = Modifier
+                    .padding()
+                    .fillMaxWidth(),
+                text = item.title,
+                style = MaterialTheme.typography.titleMedium
+            )
+            Text(
+                modifier = Modifier
+                    .padding()
+                    .fillMaxWidth(),
+                text = "ID ${item.id}",
+                style = MaterialTheme.typography.labelSmall
+            )
+        }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ProductListItemPreview() {
+
+    ProductListItem(
+        item = Product(1, "Coca-cola")
+    )
+}
+
+// In reality, a search text field would be a global component
 // provided by the Design library, but if was not, like it usually the case of components
 // that extends Cards, here would be the place to put.
 @Composable
