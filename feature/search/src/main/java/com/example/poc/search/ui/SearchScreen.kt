@@ -11,7 +11,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.AccountCircle
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Button
 import androidx.compose.material3.ButtonDefaults
@@ -24,6 +23,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.TextFieldValue
 import androidx.compose.ui.tooling.preview.Preview
@@ -73,12 +73,10 @@ internal fun SearchScreen(
                 items(
                     items = lazyItems
                 ) { item ->
-                    item?.let {
-                        ProductListItem(
-                            item = it,
-                            onItemClickedListener = onItemClickedListener
-                        )
-                    }
+                    ProductListItem(
+                        item = item ?: Product(0, "Placeholder"),
+                        onItemClickedListener = onItemClickedListener
+                    )
                 }
             }
         }
@@ -114,9 +112,10 @@ private fun ProductListItem(
         Image(
             modifier = Modifier
                 .height(48.dp)
-                .width(48.dp),
-            imageVector = Icons.Default.AccountCircle,
-            contentDescription = "Coca-cola"
+                .width(48.dp)
+                .padding(4.dp),
+            painter = painterResource(id = item.drawableId),
+            contentDescription = item.title
         )
         Column(
             Modifier
@@ -235,6 +234,3 @@ private fun SearchScreenErrorPreview() {
         )
     )
 }
-
-
-
