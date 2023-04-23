@@ -39,7 +39,6 @@ class SearchFragment : Fragment() {
                 SearchScreen(
                     uiState = viewModel.uiState,
                     onQueryChanged = { query ->
-//                        viewModel.listProducts(query = query)
                         viewModel.loadProducts(query = query)
                     },
                     onItemClickedListener = { product ->
