@@ -29,7 +29,7 @@ internal class FeatureAuthEventDelegateImpl : FeatureAuthEventDelegate {
     private fun onAuthSuccess(token: String) {
         _featureAuthDestinations.trySend(
             MainViewModel.Destination(
-                resId = R.id.mainFragment,
+                resId = R.id.containerFragment,
                 args = bundleOf("TOKEN" to token)
             )
         )

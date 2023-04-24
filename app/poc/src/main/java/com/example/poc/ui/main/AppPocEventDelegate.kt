@@ -20,16 +20,16 @@ internal class AppPocEventDelegateImpl : AppPocEventDelegate {
 
     override fun onAppPocEvent(event: AppPocEvent) {
         when (event) {
-            AppPocEvent.OnAppPocStarted -> navigateToLaunchScreen()
-            AppPocEvent.OnAppPocReady -> navigateToMainScreen()
+            AppPocEvent.OnAppPocStarted -> navigateToLoadingScreen()
+            AppPocEvent.OnAppPocReady -> navigateToContainerScreen()
         }
     }
 
-    private fun navigateToLaunchScreen() {
-        _appPosDestinations.trySend(MainViewModel.Destination(resId = R.id.splashFragment))
+    private fun navigateToLoadingScreen() {
+        _appPosDestinations.trySend(MainViewModel.Destination(resId = R.id.loadingFragment))
     }
 
-    private fun navigateToMainScreen(){
-        _appPosDestinations.trySend(MainViewModel.Destination(resId = R.id.mainFragment))
+    private fun navigateToContainerScreen(){
+        _appPosDestinations.trySend(MainViewModel.Destination(resId = R.id.containerFragment))
     }
 }

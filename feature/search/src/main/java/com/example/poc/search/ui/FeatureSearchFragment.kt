@@ -26,6 +26,8 @@ import org.koin.androidx.viewmodel.ext.android.activityViewModel
  * for compose to fetch items filtered by a user query.
  *
  * The page consist of a list and a search text field to look up, as well as a detail page.
+ *
+ * The product list screen also has an action button to navigate to the settings feature.
  */
 class FeatureSearchFragment : Fragment() {
 

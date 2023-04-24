@@ -2,14 +2,14 @@
 <navigation xmlns:android="http://schemas.android.com/apk/res/android"
 	xmlns:app="http://schemas.android.com/apk/res-auto"
 	android:id="@+id/mainGraphId"
-	app:startDestination="@id/splashFragment">
+	app:startDestination="@id/loadingFragment">
 
 	<fragment
-		android:id="@+id/splashFragment"
+		android:id="@+id/loadingFragment"
 		android:name="com.example.poc.ui.loading.LoadingFragment" />
 
 	<fragment
-		android:id="@+id/mainFragment"
+		android:id="@+id/containerFragment"
 		android:name="com.example.poc.ui.container.ContainerFragment" />
 
 	<include-dynamic
