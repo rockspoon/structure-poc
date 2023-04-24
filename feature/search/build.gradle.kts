@@ -16,6 +16,9 @@ dependencies {
 	implementation(project(":core:domain"))
 	implementation(project(":core:ui"))
 
+	runtimeOnly("io.insert-koin:koin-androidx-compose:3.4.4")
+
+
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 
 

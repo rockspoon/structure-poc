@@ -10,7 +10,7 @@ import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.auth.loadModules
 import com.example.poc.core.data.user.User
 import com.example.poc.core.ui.common.BindableFragment
-import com.example.poc.core.ui.event.AuthEvent
+import com.example.poc.core.ui.event.FeatureAuthEvent
 import com.example.poc.core.ui.event.EventViewModel
 import com.google.android.material.snackbar.Snackbar
 import kotlinx.coroutines.flow.launchIn
@@ -106,8 +106,8 @@ class AuthFragment : BindableFragment<AuthFragmentBinding>() {
         // it's job is completed. The reason is because the feature should be treated as if it can
         // be invoked for multiple reasons. Now we are invoking authentication for the home screen,
         // but we could invoked it for seeing a credit card info, for example.
-        eventViewModel.onEvent(
-            AuthEvent.OnAuthenticationCompleted("fake_token")
+        eventViewModel.postEvent(
+            FeatureAuthEvent.OnAuthenticationCompleted("fake_token")
         )
     }
 

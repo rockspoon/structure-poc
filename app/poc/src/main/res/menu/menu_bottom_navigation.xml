@@ -8,12 +8,12 @@
 
 	<item
 		android:id="@id/featureSearchGraphId"
-		android:icon="@drawable/ic_dashboard_black_24dp"
+		android:icon="@drawable/ic_search"
 		android:title="@string/title_feature_search" />
 
 	<item
 		android:id="@id/featureSettingsGraphId"
-		android:icon="@drawable/ic_notifications_black_24dp"
+		android:icon="@drawable/ic_settings"
 		android:title="@string/title_feature_settings" />
 
 </menu>

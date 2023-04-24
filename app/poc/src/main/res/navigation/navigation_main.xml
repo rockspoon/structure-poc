@@ -6,11 +6,11 @@
 
 	<fragment
 		android:id="@+id/splashFragment"
-		android:name="com.example.poc.ui.SplashFragment" />
+		android:name="com.example.poc.ui.loading.LoadingFragment" />
 
 	<fragment
 		android:id="@+id/mainFragment"
-		android:name="com.example.poc.ui.MainFragment" />
+		android:name="com.example.poc.ui.container.ContainerFragment" />
 
 	<include-dynamic
 		android:id="@+id/featureAuthGraphId"

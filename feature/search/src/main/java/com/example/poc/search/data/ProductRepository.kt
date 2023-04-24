@@ -8,16 +8,18 @@ import androidx.paging.PagingState
 import kotlinx.coroutines.flow.Flow
 
 class ProductRepository(
-    private val productLocalDataSourceImpl: ProductLocalDataSource = ProductLocalDataSourceImpl()
+    private val productLocalDataSource: ProductLocalDataSource
 ) {
 
-    val products: Flow<List<Product>> = productLocalDataSourceImpl.products
+    val products: Flow<List<Product>> = productLocalDataSource.products
+
+    fun get(productId: Long): Flow<Product> = productLocalDataSource.get(productId)
 
     suspend fun list(
         query: String? = null,
         pageSize: Int? = null,
         cursorId: Long = 0
-    ): List<Product> = productLocalDataSourceImpl.list(query, pageSize, cursorId)
+    ): List<Product> = productLocalDataSource.list(query, pageSize, cursorId)
 
     /**
      * Returns a [Flow] of [PagingData] for products.
@@ -39,6 +41,7 @@ class ProductRepository(
         ).flow
     }
 
+    // Putting nested and private avoid exposing the paging source implementation.
     private class ProductPagingSource(
         private val productRepository: ProductRepository,
         private val query: String?,

@@ -19,7 +19,13 @@ class EventViewModel : ViewModel() {
      */
     val events = _events.receiveAsFlow()
 
-    fun onEvent(event: Event) {
+    fun postEvent(event: Event) {
         _events.trySend(event)
     }
+
+    /**
+     * Represents an UI event. This should be used only for events that need to be handled by the
+     * activity.
+     */
+    interface Event
 }

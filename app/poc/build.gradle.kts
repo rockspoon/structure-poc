@@ -96,14 +96,6 @@ dependencies {
     api("io.ktor:ktor-server-content-negotiation:2.0.2")
     api("io.ktor:ktor-serialization-kotlinx-json:2.0.2")
 
-    // DI
-//    api("com.google.dagger:hilt-android:2.40.5")
-//    kapt("com.google.dagger:hilt-android-compiler:2.40.5")
-    api("javax.inject:javax.inject:1")
-    api("io.insert-koin:koin-android:3.2.0")
-    testImplementation("io.insert-koin:koin-test:3.2.0")
-    testImplementation("io.insert-koin:koin-test-junit4:3.2.0")
-
     implementation("androidx.navigation:navigation-dynamic-features-fragment:2.5.1")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation("androidx.test.ext:junit:1.1.3")

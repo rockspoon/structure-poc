@@ -11,6 +11,7 @@ import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.core.data.preferences.PreferencesDataSource
 import com.example.poc.core.data.preferences.Theme
 import com.example.poc.core.data.user.*
+import com.example.poc.ui.main.MainActivity
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.delay

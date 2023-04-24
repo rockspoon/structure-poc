@@ -6,6 +6,8 @@ interface ProductLocalDataSource {
 
     val products: Flow<List<Product>>
 
+    fun get(productId: Long): Flow<Product>
+
     suspend fun list(
         query: String? = null,
         pageSize: Int? = null,

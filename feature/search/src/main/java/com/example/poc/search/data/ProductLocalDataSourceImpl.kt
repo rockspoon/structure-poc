@@ -3,11 +3,19 @@ package com.example.poc.search.data
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flowOf
 
+/**
+ * Fake data for testing
+ */
 class ProductLocalDataSourceImpl(
-    private val initialProducts: List<Product> = INITIAL_ITEMS
+    private val initialItems: List<Product> = INITIAL_ITEMS
 ) : ProductLocalDataSource {
 
-    override val products: Flow<List<Product>> = flowOf(initialProducts)
+    override val products: Flow<List<Product>> = flowOf(initialItems)
+
+    override fun get(productId: Long): Flow<Product> {
+        val product = initialItems.first { it.id == productId }
+        return flowOf(product)
+    }
 
     override suspend fun list(
         query: String?,
@@ -15,7 +23,7 @@ class ProductLocalDataSourceImpl(
         cursorId: Long
     ): List<Product> {
         // simulates a SQL like query
-        return initialProducts
+        return initialItems
             .filter { it.id > cursorId }
             .searchLike(query ?: "")
             .let { if (pageSize != null) it.take(pageSize) else it }
@@ -54,9 +62,14 @@ class ProductLocalDataSourceImpl(
             Product(2, "RedBull"),
             Product(3, "Sushi"),
             Product(4, "King fish"),
-            Product(5, "Burger"),
+            Product(
+                id = 5,
+                title = "Big Mac",
+                drawableId = com.example.poc.core.ui.R.drawable.ic_fastfood,
+                description = "The Big Mac is a hamburger sold by the international fast food restaurant chain McDonald's. It was introduced in the Greater Pittsburgh area in 1967 and across the United States in 1968. It is one of the company's flagship products and signature dishes. The Big Mac contains two beef patties, cheese, shredded lettuce, pickles, minced onions, and a Thousand Island-type dressing advertised as \"special sauce\", on a three-slice sesame-seed bun. "
+            ),
             Product(6, "Fries"),
-            Product(7, "Pizza", com.example.poc.core.ui.R.drawable.ic_local_pizza),
+            Product(7, "Pizza Pasta", com.example.poc.core.ui.R.drawable.ic_local_pizza),
             Product(8, "Ramen", com.example.poc.core.ui.R.drawable.ic_ramen_dining),
             Product(9, "Food"),
             Product(10, "Food"),

@@ -6,7 +6,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
 import com.example.poc.core.data.preferences.Theme
 import com.example.poc.core.ui.event.EventViewModel
-import com.example.poc.core.ui.event.SettingsEvent
+import com.example.poc.core.ui.event.FeatureSettingsEvent
 import com.example.poc.settings.R
 import com.example.poc.settings.databinding.SettingsFragmentBinding
 import com.example.poc.settings.loadModules
@@ -69,7 +69,7 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                 binding.notificationTextView.text = state.isNotificationEnabled.toString()
             }
             is UiState.Error -> {
-                eventViewModel.onEvent(SettingsEvent.OnPermissionRequested)
+                eventViewModel.postEvent(FeatureSettingsEvent.OnPermissionRequired)
             }
             is UiState.Loading -> {}
         }
