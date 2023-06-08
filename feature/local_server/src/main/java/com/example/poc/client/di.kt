@@ -55,8 +55,8 @@ val featureServerModule = module {
     }
 
     // Repositories
-    single<OrderRepository> {
-        OrderRepositoryImpl(
+    single {
+        OrderRepository(
             orderDataSource = get()
         )
     }

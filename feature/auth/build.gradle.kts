@@ -33,6 +33,8 @@ dependencies {
 	implementation(project(":core:domain"))
 	implementation(project(":core:ui"))
 
+	implementation("io.realm.kotlin:library-sync:1.8.0")
+
 	androidTestImplementation(project(":app:poc"))
 
 

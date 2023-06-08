@@ -11,7 +11,6 @@ dependencies {
 
 	implementation(project(":core:common"))
 	implementation(project(":core:data"))
-    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 
 	// DI
 	implementation("io.insert-koin:koin-android:3.2.0")

@@ -11,11 +11,11 @@ dependencies {
 
     implementation(project(":core:ui"))
 
+    api("org.jetbrains.kotlin:kotlin-test-junit:1.8.10")
     api("org.mockito:mockito-core:3.12.4")
     api("com.nhaarman:mockito-kotlin-kt1.1:1.6.0")
     api("io.mockk:mockk:1.12.3")
-    api("junit:junit:4.13.2")
-    api("org.jetbrains.kotlin:kotlin-test-junit:1.8.0")
+    api("org.jetbrains.kotlin:kotlin-test-junit:1.8.10")
     api("org.jetbrains.kotlinx:kotlinx-coroutines-test:1.6.4")
     api("androidx.test.espresso:espresso-core:3.5.1")
     api("androidx.test.espresso:espresso-contrib:3.5.0") {

@@ -1,7 +1,9 @@
 package com.example.poc.core.data.order
 
 data class Order(
-    var id: Long? = null,
+
+    var id: String? = null,
+
     val status: Status = Status.CREATED
 ) {
     enum class Status {

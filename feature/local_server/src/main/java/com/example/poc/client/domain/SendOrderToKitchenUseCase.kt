@@ -16,7 +16,7 @@ class SendOrderToKitchenUseCase(
             throw NonOpenOrderSentToKitchenException(order.status)
         }
 
-        val orderUpdated = orderRepository.updateOrderStatus(orderId, Order.Status.PREPARING)
+        val orderUpdated = orderRepository.updateOrder(order.copy(status = Order.Status.PREPARING))
 
         // Publish message to eventually notify subscribers about data change
         publishDataChangeUseCase(orderId)

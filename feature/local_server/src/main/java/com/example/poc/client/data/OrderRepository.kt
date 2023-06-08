@@ -1,14 +1,16 @@
 package com.example.poc.client.data
 
-interface OrderRepository {
+class OrderRepository(
+    private val orderDataSource: OrderDataSource
+) {
 
-    suspend fun getOrder(id: Long): Order
+     suspend fun getOrder(id: Long): Order {
+        return orderDataSource.getOrder(id)
+    }
 
-    /**
-     * Update order.
-     */
-    suspend fun updateOrder(order: Order): Order
-
-    suspend fun updateOrderStatus(orderId: Long, newStatus: Order.Status): Order
+     suspend fun updateOrder(order: Order): Order {
+        val orderId = orderDataSource.updateOrder(order)
+        return orderDataSource.getOrder(orderId)
+    }
 
 }

@@ -39,7 +39,7 @@ internal class OrderRepositoryImpl(
 
         // ...then insert in our database before returning it, preserving local database as single
         // source of truth.
-        return orderDatabaseDataSource.insertOrder(remoteOrder)
+        return orderDatabaseDataSource.saveOrder(remoteOrder)
     }
 
     /**
@@ -68,7 +68,7 @@ internal class OrderRepositoryImpl(
 
         // ...then insert in our database before returning it, preserving local database as single
         // source of truth.
-        return orderDatabaseDataSource.insertOrder(order)
+        return orderDatabaseDataSource.saveOrder(order)
     }
 
     /**
@@ -90,6 +90,6 @@ internal class OrderRepositoryImpl(
 
         // ...then insert in our database before returning it, preserving local database as single
         // source of truth.
-        return orderDatabaseDataSource.insertOrder(order)
+        return orderDatabaseDataSource.saveOrder(order)
     }
 }

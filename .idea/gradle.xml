@@ -20,10 +20,13 @@
             <option value="$PROJECT_DIR$/core/ui" />
             <option value="$PROJECT_DIR$/datasource" />
             <option value="$PROJECT_DIR$/datasource/database" />
+            <option value="$PROJECT_DIR$/datasource/datastore" />
             <option value="$PROJECT_DIR$/datasource/local_client" />
             <option value="$PROJECT_DIR$/datasource/local_server_database" />
             <option value="$PROJECT_DIR$/datasource/local_server_datastore" />
             <option value="$PROJECT_DIR$/datasource/remote_client" />
+            <option value="$PROJECT_DIR$/datasource/rockspoon_merchant" />
+            <option value="$PROJECT_DIR$/datasource/streaming_realm" />
             <option value="$PROJECT_DIR$/feature" />
             <option value="$PROJECT_DIR$/feature/auth" />
             <option value="$PROJECT_DIR$/feature/home" />

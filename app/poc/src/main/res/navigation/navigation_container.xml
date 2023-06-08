@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/innerGraphId"
+    app:startDestination="@id/featureHomeGraphId">
+
+    <include-dynamic
+        android:id="@+id/featureHomeGraphId"
+        app:graphResName="navigation_home"
+        app:moduleName="home" />
+
+<!--    <navigation>-->
+
+<!--        <fragment-->
+<!--            android:id="@+id/settingsFragment"-->
+<!--            android:name="com.example.poc.settings.ui.SettingsFragment" />-->
+<!--        -->
+<!--        <include-dynamic-->
+<!--            android:id="@+id/homeFragment"-->
+<!--            android:name="com.example.poc.home.ui.HomeFragment"-->
+<!--            app:moduleName="home"/>-->
+
+<!--    </navigation>-->
+
+    <include-dynamic
+        android:id="@+id/featureSearchGraphId"
+        app:graphResName="navigation_search"
+        app:moduleName="search" />
+
+    <include
+        android:id="@id/featureSettingsGraphId"
+        app:graph="@navigation/navigation_settings" />
+
+</navigation>

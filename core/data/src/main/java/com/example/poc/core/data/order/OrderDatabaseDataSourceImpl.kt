@@ -16,7 +16,7 @@ internal class OrderDatabaseDataSourceImpl(
         return database.orderDao().get(id).toModel()
     }
 
-    override fun observeOrder(id: Long): Flow<Order?> {
+    override fun observeOrder(id: Long): Flow<Order> {
         // Add here a call to Database that returns a Flow so we can observe changes to the "order"
         // database table. Notice that we just need to map the entity to model because Room has
         // first class support for coroutines. In case a library do not return coroutines Flow
@@ -27,7 +27,7 @@ internal class OrderDatabaseDataSourceImpl(
         }
     }
 
-    override suspend fun insertOrder(
+    override suspend fun saveOrder(
         order: Order
     ): Order {
         val entity = order.toEntity()
@@ -37,11 +37,11 @@ internal class OrderDatabaseDataSourceImpl(
 
     private fun OrderEntity.toModel() =
         Order(
-            id = id
+            id = id.toString()
         )
 
     private fun Order.toEntity() =
         OrderEntity(
-            id = id
+            id = id?.toLong()
         )
 }

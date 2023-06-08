@@ -10,7 +10,21 @@ import kotlinx.coroutines.flow.Flow
 // time the :datasource module is an external library, this classes serves as representations of
 // them. The :datasource modules also can't access our models.
 internal interface OrderDatabaseDataSource {
-    suspend fun getOrder(id: Long): Order?
-    fun observeOrder(id: Long): Flow<Order?>
-    suspend fun insertOrder(user: Order): Order
+
+    /**
+     * Get an order.
+     */
+    suspend fun getOrder(id: Long): Order
+
+    /**
+     * Observe an order.
+     */
+    fun observeOrder(id: Long): Flow<Order>
+
+    /**
+     * Update or insert an order in the data source.
+     */
+    suspend fun saveOrder(model: Order): Order
+
+    class OrderNotFoundException(id: Long) : IllegalArgumentException("Order with ID $id was not found in the data source.")
 }

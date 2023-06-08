@@ -3,7 +3,6 @@ package com.example.poc.core.data.order
 import com.example.poc.datasource.remoteclientapi.RemoteClientApiClient
 import com.example.poc.datasource.remoteclientapi.order.OrderResource
 
-// TODO Should I only have one interface for local and remote?
 internal class OrderRemoteServerDataSourceImpl(
     private val apiClient: RemoteClientApiClient
 ) : OrderRemoteServerDataSource {
@@ -19,11 +18,11 @@ internal class OrderRemoteServerDataSourceImpl(
 
     private fun OrderResource.toModel() =
         Order(
-            id = id
+            id = id.toString()
         )
 
     private fun Order.toResource() =
         OrderResource(
-            id = id
+            id = id?.toLong()
         )
 }

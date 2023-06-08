@@ -196,9 +196,4 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
             .let { it as NavHostFragment }
             .navController
     }
-
-    companion object {
-        const val DEEP_LINK = "DEEP_LINK"
-        const val FEATURE_PROFILE_LINK = "app://rockspoon.com/app/android/pos/reset-pin"
-    }
 }
