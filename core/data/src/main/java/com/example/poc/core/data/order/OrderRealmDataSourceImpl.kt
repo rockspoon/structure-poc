@@ -32,10 +32,12 @@ internal class OrderRealmDataSourceImpl(
     }
 
     private fun OrderEntity.toModel() = Order(
-        id = id?.toHexString()
+        id = id?.toHexString(),
+        name = name ?: ""
     )
 
     private fun Order.toEntity() = OrderEntity().apply {
         this.id = this@toEntity.id?.let { ObjectId(it) } ?: ObjectId()
+        this.name = this@toEntity.name
     }
 }

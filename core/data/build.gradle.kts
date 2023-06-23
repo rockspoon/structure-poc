@@ -28,6 +28,7 @@ dependencies {
 	implementation("androidx.datastore:datastore-preferences:1.0.0")
 	implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
 	implementation("com.jakewharton.retrofit:retrofit2-kotlinx-serialization-converter:0.8.0")
+	implementation("androidx.lifecycle:lifecycle-livedata-ktx:2.6.1")
 
 	api("androidx.work:work-runtime-ktx:2.8.1")
 

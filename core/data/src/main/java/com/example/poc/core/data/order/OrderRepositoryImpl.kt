@@ -1,6 +1,22 @@
 package com.example.poc.core.data.order
 
+import android.content.Context
+import androidx.lifecycle.asFlow
+import androidx.work.Constraints
+import androidx.work.CoroutineWorker
+import androidx.work.Data
+import androidx.work.ExistingWorkPolicy
+import androidx.work.NetworkType
+import androidx.work.OneTimeWorkRequestBuilder
+import androidx.work.OutOfQuotaPolicy
+import androidx.work.WorkInfo
+import androidx.work.WorkManager
+import androidx.work.WorkerParameters
+import androidx.work.workDataOf
+import com.example.poc.core.common.concurrency.WorkDataKeys
 import kotlinx.coroutines.flow.Flow
+import retrofit2.HttpException
+import timber.log.Timber
 
 
 // By having the REST API and database calls in data sources, I can, for example, just mock my
@@ -8,8 +24,9 @@ import kotlinx.coroutines.flow.Flow
 // and I still can test my logic implementation regarding the database synchronization, like in the
 // insert method.
 internal class OrderRepositoryImpl(
+    private val workManager: WorkManager,
     private val orderDatabaseDataSource: OrderDatabaseDataSource,
-    private val orderRemoteServerDataSource: OrderRemoteServerDataSource,
+    private val remoteServerDataSource: OrderRemoteServerDataSource,
     private val orderLocalServerDataSource: OrderLocalServerDataSource
 ) : OrderRepository {
 
@@ -35,7 +52,7 @@ internal class OrderRepositoryImpl(
     override suspend fun insertOrder(order: Order): Order {
 
         // Insert in the server, get the response...
-        val remoteOrder = orderRemoteServerDataSource.insertOrder(order)
+        val remoteOrder = remoteServerDataSource.insertOrder(order)
 
         // ...then insert in our database before returning it, preserving local database as single
         // source of truth.
@@ -57,7 +74,7 @@ internal class OrderRepositoryImpl(
         //      I can always get from the local server and insert on the local or remote. this will
         //      give eventual consistency?
         val order: Order = try {
-            orderRemoteServerDataSource.getOrder(orderId)
+            remoteServerDataSource.getOrder(orderId)
                 ?: throw OrderRepository.OrderRemoteNotFoundException(orderId)
         } catch (e: OrderRemoteServerDataSource.SeverUnavailableException) {
             orderLocalServerDataSource.getOrder(orderId)
@@ -91,5 +108,75 @@ internal class OrderRepositoryImpl(
         // ...then insert in our database before returning it, preserving local database as single
         // source of truth.
         return orderDatabaseDataSource.saveOrder(order)
+    }
+
+    /**
+     * Enqueue a work with WorkManager to send the data to the server.
+     *
+     * The work will only be performed when the battery is not low and there is internet connection.
+     */
+    private fun requestSendData(orderId: Long): Flow<WorkInfo> {
+        return OneTimeWorkRequestBuilder<SyncWorker>()
+            // Run sync as expedited work if the app is able to.
+            // If not, it runs as regular work.
+            .setInputData(
+                Data.Builder()
+                    .putLong(ORDER_ID_KEY, orderId)
+                    .build()
+            )
+            .setExpedited(OutOfQuotaPolicy.RUN_AS_NON_EXPEDITED_WORK_REQUEST)
+            .setConstraints(
+                Constraints.Builder()
+                    .setRequiredNetworkType(NetworkType.CONNECTED)
+                    .build()
+            )
+            .build()
+            .let {
+                // If it's necessary to sync again before a sync work is finish, we replace
+                // the old sync request with the new one.
+                workManager
+                    .enqueueUniqueWork(it.id.toString(), ExistingWorkPolicy.REPLACE, it)
+                workManager.getWorkInfoByIdLiveData(it.id).asFlow()
+            }
+    }
+
+    /**
+     * A Worker that updates all Preferences local data on the server.
+     */
+    // TODO [Tech Debt] Not working.
+    inner class SyncWorker(
+        appContext: Context,
+        val workerParams: WorkerParameters
+    ) : CoroutineWorker(appContext, workerParams) {
+
+        override suspend fun doWork(): Result {
+            return try {
+                // Note: We don't actually care about the sync progress of preferences, but
+                // we leave here as example to future implementations where this is important.
+                setProgress(workDataOf(WorkDataKeys.PROGRESS to 0))
+                val orderId = workerParams.inputData.getLong(ORDER_ID_KEY, -1)
+                val order = orderDatabaseDataSource.getOrder(orderId)
+                remoteServerDataSource.insertOrder(order)
+                setProgress(workDataOf(WorkDataKeys.PROGRESS to 100))
+                Result.success()
+            } catch (e: HttpException) {
+                if (e.code() == 503) Result.retry()
+                else {
+                    Timber.e(
+                        message = "Network failure syncing Preferences object.",
+                        t = e,
+                        args = arrayOf("TAG")
+                    )
+                    Result.failure()
+                }
+            } catch (t: Throwable) {
+                Timber.e(t)
+                Result.failure()
+            }
+        }
+    }
+
+    companion object {
+        const val ORDER_ID_KEY = "ORDER_ID_KEY"
     }
 }

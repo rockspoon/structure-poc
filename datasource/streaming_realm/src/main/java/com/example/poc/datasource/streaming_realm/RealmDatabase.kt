@@ -1,9 +1,10 @@
 package com.example.poc.datasource.streaming_realm
 
+import android.util.Log
 import com.example.poc.datasource.streaming_realm.order.OrderEntity
 import com.example.poc.datasource.streaming_realm.user.UserEntity
 import io.realm.kotlin.Realm
-import io.realm.kotlin.RealmConfiguration
+import io.realm.kotlin.ext.query
 import io.realm.kotlin.mongodb.App
 import io.realm.kotlin.mongodb.Credentials
 import io.realm.kotlin.mongodb.sync.SyncConfiguration
@@ -23,24 +24,32 @@ object RealmDatabase {
         UserEntity::class
     )
 
-    suspend fun init(accessToken: String? = null): Realm {
-        val realmConfiguration = if (accessToken != null) {
-            val realmCredentials = Credentials.jwt(accessToken)
-            val realmUser = realmApp.login(realmCredentials)
-            SyncConfiguration.Builder(
-                user = realmUser,
-                schema = schema
-            )
-                .initialSubscriptions { realm ->
-                    add(realm.query(OrderEntity::class))
-                }
-                .build()
-        } else {
-            RealmConfiguration.Builder(schema = schema)
-                .deleteRealmIfMigrationNeeded()
-                .build()
-        }
+    suspend fun init() {
+        init(Credentials.anonymous())
+    }
+
+    suspend fun apiKey(key: String) {
+        init(Credentials.apiKey(key))
+    }
+
+    suspend fun login(accessToken: String? = null) {
+        init(accessToken?.let { Credentials.jwt(it) } ?: Credentials.anonymous())
+    }
+
+    suspend fun init(realmCredentials: Credentials): Realm {
+        val realmUser = realmApp.login(realmCredentials)
+        Log.d("RealmDatabase", "Realm User: ${realmUser.id}")
+        val realmConfiguration = SyncConfiguration.Builder(
+            user = realmUser,
+            schema = schema
+        )
+            .name("realm-poc")
+            .initialSubscriptions { realm ->
+                add(realm.query<OrderEntity>(), updateExisting = true)
+            }
+            .build()
         instance = Realm.open(realmConfiguration)
+        Log.v("RealmDatabase", "Successfully opened realm: ${instance.configuration.name}")
         return instance
     }
 }

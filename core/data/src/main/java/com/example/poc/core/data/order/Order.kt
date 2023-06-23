@@ -4,6 +4,8 @@ data class Order(
 
     var id: String? = null,
 
+    val name: String = "",
+
     val status: Status = Status.CREATED
 ) {
     enum class Status {

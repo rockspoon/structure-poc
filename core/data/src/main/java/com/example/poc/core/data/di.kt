@@ -87,7 +87,7 @@ fun coreDataModule() = module {
 
 fun datasourceStreamingRealmModule() = module {
 
-    single {
+    factory {
         RealmDatabase.instance
     }
 

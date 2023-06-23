@@ -10,7 +10,7 @@ open class OrderEntity : RealmObject {
 
     @PrimaryKey
     @PersistedName("_id")
-    var id: ObjectId? = null
+    var id: ObjectId? = ObjectId()
 
     var name: String? = null
 

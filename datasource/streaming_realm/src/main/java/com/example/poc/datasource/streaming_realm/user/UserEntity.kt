@@ -10,12 +10,9 @@ open class UserEntity : RealmObject {
 
     @PrimaryKey
     @PersistedName("_id")
-    var id: ObjectId = ObjectId()
+    var id: ObjectId? = ObjectId()
 
-    /**
-     *
-     */
-    var email: String? = null
+    var email: String = ""
 
     var givenName: String? = null
 
