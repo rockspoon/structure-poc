@@ -33,7 +33,13 @@ internal class OrderRealmDataSourceImpl(
 
     private fun OrderEntity.toModel() = Order(
         id = id?.toHexString(),
-        name = name ?: ""
+        name = name ?: "",
+        items = items.map {
+            Order.Item(
+                productId = it.productId.toHexString(),
+                quantity = it.quantity
+            )
+        }
     )
 
     private fun Order.toEntity() = OrderEntity().apply {

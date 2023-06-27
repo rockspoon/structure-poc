@@ -14,4 +14,18 @@ open class OrderEntity : RealmObject {
 
     var name: String? = null
 
+    var items: List<Item> = emptyList()
+
+    @PersistedName("order_item")
+    open class Item {
+
+        @PrimaryKey
+        @PersistedName("_id")
+        var id: ObjectId? = ObjectId()
+
+        var productId: ObjectId = ObjectId()
+
+        var quantity: Int = 1
+
+    }
 }

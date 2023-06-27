@@ -7,15 +7,14 @@ import com.example.poc.core.data.credentials.CredentialsRemoteDataSource
 import com.example.poc.core.data.credentials.CredentialsRemoteDataSourceImpl
 import com.example.poc.core.data.order.Order
 import com.example.poc.core.data.order.OrderRealmDataSourceImpl
+import com.example.poc.core.data.product.Product
+import com.example.poc.core.data.product.ProductRealmDataSourceImpl
 import com.example.poc.datasource.streaming_realm.RealmDatabase
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.AuthenticationApi
-import io.realm.kotlin.mongodb.Credentials
 import io.realm.kotlin.mongodb.syncSession
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
@@ -27,7 +26,6 @@ import org.junit.Test
 import org.junit.runner.RunWith
 import retrofit2.Retrofit
 import java.util.UUID
-import kotlin.time.Duration
 import kotlin.time.Duration.Companion.milliseconds
 
 /**
@@ -92,6 +90,51 @@ class OrderRealmDataSourceImplTest {
         // check if it was synced
         assertNotNull(order.id)
         val orderInDatabase = datasource.getOrder(order.id!!)
+        assertNotNull(orderInDatabase)
+
+        // check if order was uploaded
+        val wasUploaded = RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
+        assertTrue(wasUploaded)
+    }
+
+    @Test
+    fun realmSaveOrderWithItem() = runBlocking {
+        // Init Realm without login (login anonymous)
+        RealmDatabase.init()
+
+        // insert an product
+        val productDataSource = ProductRealmDataSourceImpl(
+            database = RealmDatabase.instance
+        )
+        val product = productDataSource.saveProduct(
+            Product()
+        )
+
+        // insert an order
+        val orderDataSource = OrderRealmDataSourceImpl(
+            database = RealmDatabase.instance
+        )
+        val order = orderDataSource.saveOrder(
+            Order(
+                name = "Android test order with items",
+                items = listOf(
+                    Order.Item(
+
+                    )
+                )
+            )
+        )
+
+        // log in
+        val testCredentials = getPasswordCredentials()
+        val credentialsDataSource = getCredentialsDataSource()
+        val credentials = credentialsDataSource
+            .getCredentials(testCredentials.email, testCredentials.password)!!
+        RealmDatabase.login(credentials.accessToken)
+
+        // check if it was synced
+        assertNotNull(order.id)
+        val orderInDatabase = orderDataSource.getOrder(order.id!!)
         assertNotNull(orderInDatabase)
 
         // check if order was uploaded
