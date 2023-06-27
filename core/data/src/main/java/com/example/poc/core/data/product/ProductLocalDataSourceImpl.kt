@@ -65,12 +65,12 @@ class ProductLocalDataSourceImpl(
             Product(
                 id = 5,
                 title = "Big Mac",
-                drawableId = com.example.poc.core.ui.R.drawable.ic_fastfood,
+                imageUrl = "",
                 description = "The Big Mac is a hamburger sold by the international fast food restaurant chain McDonald's. It was introduced in the Greater Pittsburgh area in 1967 and across the United States in 1968. It is one of the company's flagship products and signature dishes. The Big Mac contains two beef patties, cheese, shredded lettuce, pickles, minced onions, and a Thousand Island-type dressing advertised as \"special sauce\", on a three-slice sesame-seed bun. "
             ),
             Product(6, "Fries"),
-            Product(7, "Pizza Pasta", com.example.poc.core.ui.R.drawable.ic_local_pizza),
-            Product(8, "Ramen", com.example.poc.core.ui.R.drawable.ic_ramen_dining),
+            Product(7, "Pizza Pasta"),
+            Product(8, "Ramen"),
             Product(9, "Food"),
             Product(10, "Food"),
             Product(11, "Food"),

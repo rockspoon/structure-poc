@@ -10,7 +10,7 @@ data class Order(
 
     val status: Status = Status.CREATED,
 
-    val items: List<Item>
+    val items: List<Item> = emptyList()
 ) {
     enum class Status {
 
@@ -29,7 +29,7 @@ data class Order(
 
     data class Item(
 
-        val productId: String,
+        val productId: Long,
 
         val quantity: Int = 1
     )

@@ -119,7 +119,7 @@ class OrderRealmDataSourceImplTest {
                 name = "Android test order with items",
                 items = listOf(
                     Order.Item(
-
+                        productId = product.id!!
                     )
                 )
             )
