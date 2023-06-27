@@ -17,7 +17,7 @@ apply {
 
 dependencies {
 
-    project(":core:common")
+    implementation(project(":core:common"))
 
     api("io.realm.kotlin:library-sync:1.8.0")
     
