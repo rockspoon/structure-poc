@@ -107,7 +107,9 @@ class OrderRealmDataSourceImplTest {
             database = RealmDatabase.instance
         )
         val product = productDataSource.saveProduct(
-            Product()
+            Product(
+                title = "Android test product title"
+            )
         )
 
         // insert an order
@@ -119,7 +121,8 @@ class OrderRealmDataSourceImplTest {
                 name = "Android test order with items",
                 items = listOf(
                     Order.Item(
-                        productId = product.id!!
+                        productId = product.id!!,
+                        quantity = 2
                     )
                 )
             )

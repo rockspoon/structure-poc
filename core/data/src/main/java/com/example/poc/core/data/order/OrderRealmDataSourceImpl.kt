@@ -2,6 +2,7 @@ package com.example.poc.core.data.order
 
 import com.example.poc.datasource.streaming_realm.order.OrderEntity
 import io.realm.kotlin.Realm
+import io.realm.kotlin.ext.toRealmList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.map
 import org.mongodb.kbson.ObjectId
@@ -11,7 +12,8 @@ internal class OrderRealmDataSourceImpl(
 ) : OrderRealmDataSource {
 
     override suspend fun getOrder(id: String): Order {
-        return database.query(OrderEntity::class, "_id == $0", ObjectId(id)).first().find()?.toModel()
+        return database.query(OrderEntity::class, "_id == $0", ObjectId(id)).first().find()
+            ?.toModel()
             ?: throw OrderRealmDataSource.OrderNotFoundException(id)
     }
 
@@ -36,7 +38,7 @@ internal class OrderRealmDataSourceImpl(
         name = name ?: "",
         items = items.map {
             Order.Item(
-                productId = it.productId.toHexString(),
+                productId = it.productId.asNumber().longValue(),
                 quantity = it.quantity
             )
         }
@@ -45,5 +47,12 @@ internal class OrderRealmDataSourceImpl(
     private fun Order.toEntity() = OrderEntity().apply {
         this.id = this@toEntity.id?.let { ObjectId(it) } ?: ObjectId()
         this.name = this@toEntity.name
+        this.items = this@toEntity.items.map {orderItem ->
+            OrderEntity.Item().apply {
+                id = orderItem.id?.let { ObjectId(it) } ?: ObjectId()
+                productId = ObjectId(orderItem.productId)
+                quantity = orderItem.quantity
+            }
+        }.toRealmList()
     }
 }

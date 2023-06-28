@@ -29,6 +29,8 @@ data class Order(
 
     data class Item(
 
+        val id: String? = null,
+
         val productId: Long,
 
         val quantity: Int = 1

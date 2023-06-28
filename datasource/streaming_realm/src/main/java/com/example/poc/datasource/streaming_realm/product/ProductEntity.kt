@@ -19,6 +19,6 @@ open class ProductEntity : RealmObject {
 
     var imageUrl: String? = null
 
-    var price: BigDecimal = BigDecimal.ZERO
+    var priceInCents: Long = 0
 
 }
