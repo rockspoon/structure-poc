@@ -1,11 +1,6 @@
 package com.example.poc.core.data.order
 
-import com.rockspoon.merchant.datasource.rockspoon_merchant.merchant_profile.models.Product
-import io.realm.kotlin.ext.realmListOf
-import io.realm.kotlin.types.RealmList
-import io.realm.kotlin.types.RealmObject
-
-class Order(
+data class Order(
 
     var id: String? = null,
 
@@ -13,7 +8,7 @@ class Order(
 
     val status: Status = Status.CREATED,
 
-    val items: RealmList<Item> = realmListOf()
+    val items: List<Item> = emptyList()
 ) {
     enum class Status {
 
@@ -30,12 +25,12 @@ class Order(
         PAID
     }
 
-    class Item(
+    data class Item(
 
         val id: String? = null,
 
         val productId: Long,
 
         val quantity: Int = 1
-    ): RealmObject
+    )
 }

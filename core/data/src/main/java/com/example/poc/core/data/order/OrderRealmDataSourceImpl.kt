@@ -41,7 +41,7 @@ internal class OrderRealmDataSourceImpl(
                 productId = it.productId.asNumber().longValue(),
                 quantity = it.quantity
             )
-        }.toRealmList()
+        }
     )
 
     private fun Order.toEntity() = OrderEntity().apply {
