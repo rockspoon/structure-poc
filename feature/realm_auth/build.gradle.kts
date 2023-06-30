@@ -27,15 +27,12 @@ android {
 }
 
 dependencies {
-    //implementation(project(":app:poc"))
     implementation(project(":core:common"))
     implementation(project(":core:data"))
     implementation(project(":core:domain"))
     implementation(project(":core:ui"))
 
     implementation("io.realm.kotlin:library-sync:1.8.0")
-
-    //androidTestImplementation(project(":app:poc"))
 
 
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.6.2")
