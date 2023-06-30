@@ -24,4 +24,6 @@ dependencies {
     androidTestImplementation("androidx.test.ext:junit:1.1.3")
     androidTestImplementation("androidx.test.espresso:espresso-core:3.4.0")
     androidTestImplementation("androidx.annotation:annotation:1.3.0")
+
+    implementation("io.realm.kotlin:library-sync:1.8.0")
 }

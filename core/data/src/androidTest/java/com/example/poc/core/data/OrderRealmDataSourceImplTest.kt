@@ -12,6 +12,7 @@ import com.example.poc.core.data.product.ProductRealmDataSourceImpl
 import com.example.poc.datasource.streaming_realm.RealmDatabase
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.AuthenticationApi
+import io.realm.kotlin.ext.toRealmList
 import io.realm.kotlin.mongodb.syncSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -124,7 +125,7 @@ class OrderRealmDataSourceImplTest {
                         productId = product.id!!,
                         quantity = 2
                     )
-                )
+                ).toRealmList()
             )
         )
 

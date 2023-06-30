@@ -3,6 +3,13 @@ package com.example.poc.core.data
 import androidx.room.Room
 import com.example.poc.core.common.di.NetworkQualifiers
 import com.example.poc.core.data.common.DataSourcesConfig
+import com.example.poc.core.data.credentials.CredentialsLocalDataSource
+import com.example.poc.core.data.credentials.CredentialsLocalDataSourceImpl
+import com.example.poc.core.data.credentials.CredentialsRealmDataSource
+import com.example.poc.core.data.credentials.CredentialsRealmDataSourceImpl
+import com.example.poc.core.data.credentials.CredentialsRemoteDataSource
+import com.example.poc.core.data.credentials.CredentialsRemoteDataSourceImpl
+import com.example.poc.core.data.credentials.CredentialsRepository
 import com.example.poc.core.data.order.OrderRealmDataSource
 import com.example.poc.core.data.order.OrderRealmDataSourceImpl
 import com.example.poc.core.data.preferences.PreferencesDataSource
@@ -18,6 +25,7 @@ import com.example.poc.datasource.database.Database
 import com.example.poc.datasource.remoteclientapi.RemoteClientApiClient
 import com.example.poc.datasource.streaming_realm.RealmDatabase
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
+import com.rockspoon.merchant.datasource.datastore.credentials.CredentialsSerializer.credentialsDataStore
 import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.AuthenticationApi
 import com.rockspoon.merchant.datasource.rockspoon_merchant.cash_management.CashManagementApi
 import com.rockspoon.merchant.datasource.rockspoon_merchant.catalog.CatalogApi
@@ -38,12 +46,16 @@ import com.rockspoon.merchant.datasource.rockspoon_merchant.order_item.OrderItem
 import com.rockspoon.merchant.datasource.rockspoon_merchant.order_receipt.OrderReceiptApi
 import com.rockspoon.merchant.datasource.rockspoon_merchant.time_clock.TimeClockApi
 import com.rockspoon.merchant.datasource.rockspoon_merchant.user_profile.UserProfileV1Api
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.bind
+import org.koin.core.module.dsl.binds
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
@@ -101,13 +113,13 @@ fun datasourceRockspoonMerchantModule() = module {
      */
     single(NetworkQualifiers.ROCKSPOON_MERCHANT_CLIENT_RETROFIT) {
         Retrofit.Builder()
-            .callFactory { request ->
+            /*.callFactory { request ->
                 val newRequest = request
                     .newBuilder()
                     .tag(UUID.randomUUID().toString())
                     .build()
                 get<OkHttpClient>().newCall(newRequest)
-            }
+            }*/
             .baseUrl(get<DataSourcesConfig>().rockspoonMerchantWebServiceUrl)
             .apply {
                 val json = Json {
@@ -216,5 +228,27 @@ fun datasourceRockspoonMerchantModule() = module {
     single<OrderItemApi> {
         get<Retrofit>(NetworkQualifiers.ROCKSPOON_MERCHANT_CLIENT_RETROFIT)
             .create(OrderItemApi::class.java)
+    }
+
+    singleOf(::CredentialsRepository )
+
+    singleOf(::CredentialsRemoteDataSourceImpl){
+        bind<CredentialsRemoteDataSource>()
+    }
+    singleOf(::CredentialsLocalDataSourceImpl){
+        bind<CredentialsLocalDataSource>()
+    }
+    singleOf(::CredentialsRealmDataSourceImpl){
+        bind<CredentialsRealmDataSource>()
+    }
+
+    single {
+        androidApplication().credentialsDataStore
+    }
+
+    single() {
+        CoroutineScope(
+            SupervisorJob()
+        )
     }
 }

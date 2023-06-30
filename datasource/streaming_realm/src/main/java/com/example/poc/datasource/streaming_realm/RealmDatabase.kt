@@ -1,6 +1,7 @@
 package com.example.poc.datasource.streaming_realm
 
 import com.example.poc.datasource.streaming_realm.order.OrderEntity
+import com.example.poc.datasource.streaming_realm.product.ProductEntity
 import com.example.poc.datasource.streaming_realm.user.UserEntity
 import io.realm.kotlin.MutableRealm
 import io.realm.kotlin.Realm
@@ -27,7 +28,9 @@ object RealmDatabase {
 
     private val schema = setOf(
         OrderEntity::class,
-        UserEntity::class
+        UserEntity::class,
+        OrderEntity.Item::class,
+        ProductEntity::class
     )
 
     suspend fun init() {
@@ -50,6 +53,7 @@ object RealmDatabase {
             schema = schema
         )
             .name("realm-poc")
+            .schemaVersion(7)
             .initialSubscriptions { realm ->
                 add(realm.query<OrderEntity>(), updateExisting = true)
             }

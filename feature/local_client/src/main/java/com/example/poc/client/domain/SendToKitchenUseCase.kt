@@ -42,9 +42,13 @@ class SendToKitchenUseCase(
 
         return try {
             // ...Change the status and update in the repository
-            order.copy(status = Order.Status.IN_PROGRESS).also {
+            Order(
+                id = order.id,
+                status = Order.Status.IN_PROGRESS,
+                items = order.items
+            ).apply {
                 // TODO Create update method
-                orderRepository.insertOrder(it)
+                orderRepository.insertOrder(this)
             }
 
         } catch (e: ServerUnavailableException) {
