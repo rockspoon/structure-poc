@@ -18,7 +18,6 @@ open class OrderEntity : RealmObject {
 
     var items: RealmList<Item> = realmListOf()
 
-//    @PersistedName("order_item")
     open class Item : RealmObject {
 
         @PrimaryKey
