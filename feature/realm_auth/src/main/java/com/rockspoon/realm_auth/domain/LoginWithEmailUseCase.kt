@@ -8,10 +8,10 @@ import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 
-class AuthUseCase(
+class LoginWithEmailUseCase(
     private val credentialsRepository: CredentialsRepository,
     coroutineDispatcher: CoroutineDispatcher
-) : FlowUseCase<AuthUseCase.Params, Credentials?>(coroutineDispatcher) {
+) : FlowUseCase<LoginWithEmailUseCase.Params, Credentials?>(coroutineDispatcher) {
 
     override fun execute(parameters: Params): Flow<UseCase.Result<Credentials?>> =
         flow {

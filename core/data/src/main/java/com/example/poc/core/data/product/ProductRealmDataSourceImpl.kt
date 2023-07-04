@@ -34,7 +34,7 @@ internal class ProductRealmDataSourceImpl(
     }
 
     private fun ProductEntity.toModel() = Product(
-        id = id?.asNumber()?.longValue(),
+        id = id?.timestamp?.toLong(),
         title = title,
         description = description ?: "",
     )

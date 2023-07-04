@@ -4,7 +4,7 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.poc.core.data.credentials.Credentials
 import com.example.poc.core.domain.base.UseCase
-import com.rockspoon.realm_auth.domain.AuthUseCase
+import com.rockspoon.realm_auth.domain.LoginWithEmailUseCase
 import com.rockspoon.realm_auth.ui.RealmAuthViewModel.UiState.Loading.Companion.INDETERMINATE
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -13,7 +13,7 @@ import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 
 class RealmAuthViewModel(
-    private val authUserUseCase: AuthUseCase
+    private val authUserUseCase: LoginWithEmailUseCase
 ) : ViewModel() {
 
     var authJob: Job? = null
@@ -23,9 +23,10 @@ class RealmAuthViewModel(
 
 
     fun auth(email: String, password: String) {
+        authJob?.cancel()
         authJob = viewModelScope.launch {
             if (email.isNotBlank() && password.isNotBlank()) {
-                authUserUseCase(AuthUseCase.Params(email, password))
+                authUserUseCase(LoginWithEmailUseCase.Params(email, password))
                     .collect { result ->
                         when (result) {
                             is UseCase.Result.Loading -> _uiState.update {

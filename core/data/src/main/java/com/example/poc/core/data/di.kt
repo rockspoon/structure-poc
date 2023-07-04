@@ -1,6 +1,7 @@
 package com.example.poc.core.data
 
 import androidx.room.Room
+import com.example.poc.core.common.di.CoroutineQualifiers
 import com.example.poc.core.common.di.NetworkQualifiers
 import com.example.poc.core.data.common.DataSourcesConfig
 import com.example.poc.core.data.credentials.CredentialsLocalDataSource
@@ -46,20 +47,14 @@ import com.rockspoon.merchant.datasource.rockspoon_merchant.order_item.OrderItem
 import com.rockspoon.merchant.datasource.rockspoon_merchant.order_receipt.OrderReceiptApi
 import com.rockspoon.merchant.datasource.rockspoon_merchant.time_clock.TimeClockApi
 import com.rockspoon.merchant.datasource.rockspoon_merchant.user_profile.UserProfileV1Api
-import kotlinx.coroutines.CoroutineDispatcher
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.SupervisorJob
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.json.Json
 import okhttp3.MediaType.Companion.toMediaType
-import okhttp3.OkHttpClient
 import org.koin.android.ext.koin.androidApplication
 import org.koin.core.module.dsl.bind
-import org.koin.core.module.dsl.binds
 import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
-import java.util.UUID
 
 fun coreDataModule() = module {
 
@@ -230,15 +225,22 @@ fun datasourceRockspoonMerchantModule() = module {
             .create(OrderItemApi::class.java)
     }
 
-    singleOf(::CredentialsRepository )
+    single {
+        CredentialsRepository(
+            credentialsRemoteDataSource = get(),
+            credentialsLocalDataSource = get(),
+            credentialsRealmDataSource = get(),
+            externalScope = get(CoroutineQualifiers.APPLICATION_SCOPE)
+        )
+    }
 
-    singleOf(::CredentialsRemoteDataSourceImpl){
+    singleOf(::CredentialsRemoteDataSourceImpl) {
         bind<CredentialsRemoteDataSource>()
     }
-    singleOf(::CredentialsLocalDataSourceImpl){
+    singleOf(::CredentialsLocalDataSourceImpl) {
         bind<CredentialsLocalDataSource>()
     }
-    singleOf(::CredentialsRealmDataSourceImpl){
+    singleOf(::CredentialsRealmDataSourceImpl) {
         bind<CredentialsRealmDataSource>()
     }
 
@@ -246,9 +248,4 @@ fun datasourceRockspoonMerchantModule() = module {
         androidApplication().credentialsDataStore
     }
 
-    single() {
-        CoroutineScope(
-            SupervisorJob()
-        )
-    }
 }

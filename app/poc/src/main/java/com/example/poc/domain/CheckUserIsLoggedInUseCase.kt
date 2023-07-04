@@ -15,7 +15,7 @@ class CheckUserIsLoggedInUseCase(
     override fun execute(parameters: Unit): Flow<UseCase.Result<Boolean>> {
         return flow {
             emit(UseCase.Result.Loading())
-            emit(UseCase.Result.Success(credentialsRepository.getCredentials() != null))
+            emit(UseCase.Result.Success(credentialsRepository.getCredentials(forceRefresh = true) != null))
         }
     }
 }

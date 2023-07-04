@@ -30,7 +30,8 @@ object RealmDatabase {
         OrderEntity::class,
         UserEntity::class,
         OrderEntity.Item::class,
-        ProductEntity::class
+        ProductEntity::class,
+        OrderEntity.EmbeddedItem::class,
     )
 
     suspend fun init() {
@@ -53,9 +54,10 @@ object RealmDatabase {
             schema = schema
         )
             .name("realm-poc")
-            .schemaVersion(7)
+            .schemaVersion(8)
             .initialSubscriptions { realm ->
                 add(realm.query<OrderEntity>(), updateExisting = true)
+                add(realm.query<ProductEntity>(), updateExisting = true)
             }
             .errorHandler { session, error ->
                 when (error) {

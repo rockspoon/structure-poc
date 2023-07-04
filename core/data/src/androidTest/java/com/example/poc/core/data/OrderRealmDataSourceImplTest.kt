@@ -10,8 +10,13 @@ import com.example.poc.core.data.order.OrderRealmDataSourceImpl
 import com.example.poc.core.data.product.Product
 import com.example.poc.core.data.product.ProductRealmDataSourceImpl
 import com.example.poc.datasource.streaming_realm.RealmDatabase
+import com.example.poc.datasource.streaming_realm.order.OrderEntity
+import com.example.poc.datasource.streaming_realm.product.ProductEntity
+import com.example.poc.datasource.streaming_realm.user.UserEntity
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.AuthenticationApi
+import io.realm.kotlin.ext.query
+import io.realm.kotlin.mongodb.subscriptions
 import io.realm.kotlin.mongodb.syncSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
@@ -104,6 +109,13 @@ class OrderRealmDataSourceImplTest {
         // Init Realm without login (login anonymous)
         RealmDatabase.init()
 
+        RealmDatabase.instance.subscriptions.update {
+            add(it.query<OrderEntity>(), "order_entity", updateExisting = true)
+            add(it.query<ProductEntity>(), "product_entity", updateExisting = true)
+            add(it.query<OrderEntity.Item>(), "item_entity", updateExisting = true)
+            add(it.query<UserEntity>(), "user_entity", updateExisting = true)
+        }
+
         // insert an product
         val productDataSource = ProductRealmDataSourceImpl(
             database = RealmDatabase.instance
@@ -177,6 +189,10 @@ class OrderRealmDataSourceImplTest {
         )
     }
 
+    /**
+     * add credentials file to \src\androidTest\res\raw directory in json format
+     * {"email":"","password":""}
+     */
     private fun getPasswordCredentials() = readRawJson<PasswordCredentials>(
         com.example.poc.core.data.test.R.raw.credentials
     )
