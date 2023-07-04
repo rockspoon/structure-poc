@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+option java_package = "com.rockspoon.merchant.datasource.datastore.venue";
+option java_multiple_files = true;
+
+message VenueProto {
+  optional string id = 1;
+  optional string apiKey = 2;
+  optional string name = 3;
+  optional string country = 4;
+  optional string address = 5;
+  optional bool showSalaryInfo = 6;
+  optional string state = 7;
+  optional string countryPhoneCode = 8;
+  optional string timeZoneId = 9;
+  optional string logo = 10;
+  optional string code = 11;
+}

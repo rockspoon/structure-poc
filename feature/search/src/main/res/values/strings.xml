@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="search">Search</string>
+	<string name="subtitle">A composable list</string>
+	<string name="body">This screen will be a composable list of a search element.</string>
+	<string name="confirm">Confirm</string>
+    <string name="search_label">Type your query…</string>
+    <string name="invalid_query">Invalid query</string>
+	<string name="product_details">Product details</string>
+	<string name="dismiss">Dismiss</string>
+</resources>

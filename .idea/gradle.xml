@@ -11,20 +11,34 @@
           <set>
             <option value="$PROJECT_DIR$" />
             <option value="$PROJECT_DIR$/app" />
-            <option value="$PROJECT_DIR$/core_data" />
-            <option value="$PROJECT_DIR$/core_domain" />
-            <option value="$PROJECT_DIR$/core_provider" />
-            <option value="$PROJECT_DIR$/core_receiver" />
-            <option value="$PROJECT_DIR$/core_service" />
-            <option value="$PROJECT_DIR$/core_ui" />
-            <option value="$PROJECT_DIR$/datasource_database" />
-            <option value="$PROJECT_DIR$/datasource_network" />
-            <option value="$PROJECT_DIR$/feature_auth" />
-            <option value="$PROJECT_DIR$/feature_home" />
-            <option value="$PROJECT_DIR$/feature_search" />
-            <option value="$PROJECT_DIR$/feature_settings" />
-            <option value="$PROJECT_DIR$/macrobenchmark" />
-            <option value="$PROJECT_DIR$/microbenchmark" />
+            <option value="$PROJECT_DIR$/app/poc" />
+            <option value="$PROJECT_DIR$/core" />
+            <option value="$PROJECT_DIR$/core/common" />
+            <option value="$PROJECT_DIR$/core/data" />
+            <option value="$PROJECT_DIR$/core/domain" />
+            <option value="$PROJECT_DIR$/core/service" />
+            <option value="$PROJECT_DIR$/core/ui" />
+            <option value="$PROJECT_DIR$/datasource" />
+            <option value="$PROJECT_DIR$/datasource/database" />
+            <option value="$PROJECT_DIR$/datasource/datastore" />
+            <option value="$PROJECT_DIR$/datasource/local_client" />
+            <option value="$PROJECT_DIR$/datasource/local_server_database" />
+            <option value="$PROJECT_DIR$/datasource/local_server_datastore" />
+            <option value="$PROJECT_DIR$/datasource/remote_client" />
+            <option value="$PROJECT_DIR$/datasource/rockspoon_merchant" />
+            <option value="$PROJECT_DIR$/datasource/streaming_realm" />
+            <option value="$PROJECT_DIR$/feature" />
+            <option value="$PROJECT_DIR$/feature/auth" />
+            <option value="$PROJECT_DIR$/feature/home" />
+            <option value="$PROJECT_DIR$/feature/local_client" />
+            <option value="$PROJECT_DIR$/feature/local_server" />
+            <option value="$PROJECT_DIR$/feature/search" />
+            <option value="$PROJECT_DIR$/feature/settings" />
+            <option value="$PROJECT_DIR$/test" />
+            <option value="$PROJECT_DIR$/test/common" />
+            <option value="$PROJECT_DIR$/test/data" />
+            <option value="$PROJECT_DIR$/test/macrobenchmark" />
+            <option value="$PROJECT_DIR$/test/microbenchmark" />
           </set>
         </option>
       </GradleProjectSettings>
