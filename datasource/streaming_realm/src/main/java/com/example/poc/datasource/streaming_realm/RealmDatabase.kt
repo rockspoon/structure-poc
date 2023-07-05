@@ -38,8 +38,8 @@ object RealmDatabase {
         init(Credentials.anonymous())
     }
 
-    suspend fun apiKey(key: String) {
-        init(Credentials.apiKey(key))
+    suspend fun rockspoonApiKey(key: String) {
+        init(Credentials.customFunction(mapOf("rockspoon_api_key" to key)))
     }
 
     suspend fun accessToken(
