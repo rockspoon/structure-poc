@@ -48,7 +48,7 @@ class OrderRealmDataSourceImplTest {
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
             .getCredentials(testCredentials.email, testCredentials.password)!!
-        RealmDatabase.login(credentials.accessToken)
+        RealmDatabase.accessToken(credentials.accessToken)
 
         // insert an order
         val datasource = OrderRealmDataSourceImpl(
@@ -91,7 +91,7 @@ class OrderRealmDataSourceImplTest {
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
             .getCredentials(testCredentials.email, testCredentials.password)!!
-        RealmDatabase.login(credentials.accessToken)
+        RealmDatabase.accessToken(credentials.accessToken)
 
         // check if it was synced
         assertNotNull(order.id)
@@ -147,7 +147,7 @@ class OrderRealmDataSourceImplTest {
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
             .getCredentials(testCredentials.email, testCredentials.password)!!
-        RealmDatabase.login(credentials.accessToken)
+        RealmDatabase.accessToken(credentials.accessToken)
 
         // check if it was synced
         assertNotNull(order.id)

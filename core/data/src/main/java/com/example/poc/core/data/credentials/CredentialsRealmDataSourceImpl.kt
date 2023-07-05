@@ -11,7 +11,9 @@ internal class CredentialsRealmDataSourceImpl(
     override suspend fun setCredentials(credentials: Credentials?) {
         withContext(ioDispatcher){
             credentials?.accessToken?.let {
-                RealmDatabase.login(it)
+                RealmDatabase.accessToken(it){
+                    // TODO
+                }
             }
         }
     }
