@@ -19,8 +19,7 @@ private val featureAuthModule = module {
 
    factory {
         SignInWithPasswordUseCase(
-            credentialsRepository = get(),
-            coroutineDispatcher = get(CoroutineQualifiers.IO_DISPATCHER)
+            credentialsRepository = get()
         )
     }
 
