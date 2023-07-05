@@ -21,7 +21,14 @@ class CredentialsRepository(
     init {
         externalScope.launch {
             // Initialize Realm with credentials if it has it
-            credentialsRealmDataSource.setCredentials(getCredentials())
+            credentialsRealmDataSource.setCredentials(
+                credentials = getCredentials(),
+                onAccessTokenExpired = {
+                    externalScope.launch {
+                        getCredentials(forceRefresh = true)
+                    }
+                }
+            )
         }
     }
 
@@ -53,7 +60,11 @@ class CredentialsRepository(
                 updateCredentialsWithRefreshToken(refreshToken)
             }.also {
                 // Log in Realm
-                credentialsRealmDataSource.setCredentials(it)
+                credentialsRealmDataSource.setCredentials(it) {
+                    externalScope.launch {
+                        getCredentials(forceRefresh = true)
+                    }
+                }
             }
         } else {
             // Try to get on data store to keep single source of truth
