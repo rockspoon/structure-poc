@@ -42,11 +42,20 @@ object RealmDatabase {
         init(Credentials.apiKey(key))
     }
 
-    suspend fun login(accessToken: String? = null) {
-        init(accessToken?.let { Credentials.jwt(it) } ?: Credentials.anonymous())
+    suspend fun accessToken(
+        accessToken: String? = null,
+        onTokenExpired: (() -> Unit)? = null
+    ) {
+        init(
+            realmCredentials = accessToken?.let { Credentials.jwt(it) } ?: Credentials.anonymous(),
+            onTokenExpired = onTokenExpired
+        )
     }
 
-    suspend fun init(realmCredentials: Credentials): Realm {
+    suspend fun init(
+        realmCredentials: Credentials,
+        onTokenExpired: (() -> Unit)? = null
+    ): Realm {
         val realmUser = realmApp.login(realmCredentials)
         Timber.tag("RealmDatabase").d("Realm User: %s", realmUser.id)
         val realmConfiguration = SyncConfiguration.Builder(
@@ -89,10 +98,8 @@ object RealmDatabase {
                 ) {
                     Timber.i("Client reset: manual reset required")
                     // ... Handle the reset manually here
-                    when(session.state){
-                        SyncSession.State.WAITING_FOR_ACCESS_TOKEN -> {
-                            // TODO update the access token
-                        }
+                    when (session.state) {
+                        SyncSession.State.WAITING_FOR_ACCESS_TOKEN -> onTokenExpired.invoke()
                         else -> {}
                     }
                 }
