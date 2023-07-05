@@ -71,7 +71,6 @@ dependencies {
     implementation(project(":core:service"))
     implementation(project(":core:ui"))
     implementation(project(":feature:settings"))
-    implementation(project(":feature:realm_auth"))
 
     api("androidx.datastore:datastore:1.0.0")
     implementation("com.google.protobuf:protobuf-javalite:3.21.2")

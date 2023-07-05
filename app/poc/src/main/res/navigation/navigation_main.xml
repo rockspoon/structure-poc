@@ -15,12 +15,7 @@
     <include-dynamic
         android:id="@+id/featureAuthGraphId"
         app:graphResName="navigation_auth"
+        app:graphPackage="com.example.poc.auth"
         app:moduleName="auth" />
-
-    <action
-        android:id="@+id/action_realm_auth_navigation"
-        app:destination="@id/realm_auth_navigation" />
-
-    <include app:graph="@navigation/navigation_realm_auth"/>
 
 </navigation>

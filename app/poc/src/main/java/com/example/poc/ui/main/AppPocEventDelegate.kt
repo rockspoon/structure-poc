@@ -27,7 +27,7 @@ internal class AppPocEventDelegateImpl : AppPocEventDelegate {
     }
 
     private fun navigateToAuthScreen() {
-        _appPosDestinations.trySend(MainViewModel.Destination(resId = R.id.action_realm_auth_navigation))
+        _appPosDestinations.trySend(MainViewModel.Destination(resId = R.id.featureAuthGraphId))
     }
 
     private fun navigateToLoadingScreen() {

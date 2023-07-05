@@ -119,7 +119,7 @@ class AuthFragment : BindableFragment<AuthFragmentBinding>() {
             }
         }
 
-        data class Success(val item: User) : UiState()
+        object Success : UiState()
         data class Error(val exception: Exception) : UiState()
     }
 }

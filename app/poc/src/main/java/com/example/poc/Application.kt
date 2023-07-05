@@ -7,7 +7,6 @@ import com.example.poc.core.data.coreDataModule
 import com.example.poc.core.domain.coreDomainModule
 import com.example.poc.core.ui.coreUiModule
 import com.example.poc.settings.featureSettingsModule
-import com.rockspoon.realm_auth.featureRealmAuthModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import timber.log.Timber
@@ -35,8 +34,7 @@ class Application : MultiDexApplication() {
                 coreDataModule(),
                 coreDomainModule(),
                 coreUiModule(),
-                featureSettingsModule(),
-                featureRealmAuthModule()
+                featureSettingsModule()
             )
         }
     }
