@@ -99,7 +99,7 @@ object RealmDatabase {
                     Timber.i("Client reset: manual reset required")
                     // ... Handle the reset manually here
                     when (session.state) {
-                        SyncSession.State.WAITING_FOR_ACCESS_TOKEN -> onTokenExpired.invoke()
+                        SyncSession.State.WAITING_FOR_ACCESS_TOKEN -> onTokenExpired?.invoke()
                         else -> {}
                     }
                 }
