@@ -108,13 +108,6 @@ fun datasourceRockspoonMerchantModule() = module {
      */
     single(NetworkQualifiers.ROCKSPOON_MERCHANT_CLIENT_RETROFIT) {
         Retrofit.Builder()
-            /*.callFactory { request ->
-                val newRequest = request
-                    .newBuilder()
-                    .tag(UUID.randomUUID().toString())
-                    .build()
-                get<OkHttpClient>().newCall(newRequest)
-            }*/
             .baseUrl(get<DataSourcesConfig>().rockspoonMerchantWebServiceUrl)
             .apply {
                 val json = Json {
