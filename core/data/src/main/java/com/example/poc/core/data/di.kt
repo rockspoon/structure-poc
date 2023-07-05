@@ -48,6 +48,13 @@ import org.koin.core.module.dsl.singleOf
 import org.koin.dsl.module
 import retrofit2.Retrofit
 import java.util.UUID
+import com.example.poc.core.data.credentials.CredentialsRepository
+import com.example.poc.core.data.credentials.CredentialsLocalDataSource
+import com.example.poc.core.data.credentials.CredentialsLocalDataSourceImpl
+import com.example.poc.core.data.credentials.CredentialsRealmDataSource
+import com.example.poc.core.data.credentials.CredentialsRealmDataSourceImpl
+import com.example.poc.core.data.credentials.CredentialsRemoteDataSource
+import com.example.poc.core.data.credentials.CredentialsRemoteDataSourceImpl
 
 fun coreDataModule() = module {
 
@@ -73,6 +80,12 @@ fun coreDataModule() = module {
             dataStore = androidApplication().preferencesDataStore
         )
     }
+
+    // Credentials
+    singleOf(::CredentialsRepository)
+    singleOf(::CredentialsRealmDataSourceImpl) { bind<CredentialsRealmDataSource>() }
+    singleOf(::CredentialsRemoteDataSourceImpl) { bind<CredentialsRemoteDataSource>() }
+    singleOf(::CredentialsLocalDataSourceImpl) { bind<CredentialsLocalDataSource>() }
 
     // User
     singleOf(::UserDatabaseDataSourceImpl) { bind<UserDatabaseDataSource>() }
