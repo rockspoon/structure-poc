@@ -38,7 +38,7 @@ internal class OrderRealmDataSourceImpl(
         name = name ?: "",
         items = items.map {
             Order.Item(
-                productId = it.productId.asNumber().longValue(),
+                productId = it.productId.timestamp.toLong(),
                 quantity = it.quantity
             )
         }

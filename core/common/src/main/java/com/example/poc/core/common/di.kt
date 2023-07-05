@@ -1,9 +1,10 @@
 package com.example.poc.core.common
 
 import com.example.poc.core.common.di.CoroutineQualifiers
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
-import org.koin.core.qualifier.Qualifier
-import org.koin.core.qualifier.QualifierValue
+import kotlinx.coroutines.SupervisorJob
 import org.koin.dsl.module
 
 fun coreCommonModule() = module {
@@ -19,5 +20,15 @@ private fun coroutineModule() = module {
 
     single(CoroutineQualifiers.IO_DISPATCHER) {
         Dispatchers.IO
+    }
+
+    single(CoroutineQualifiers.APPLICATION_SCOPE) {
+        CoroutineScope(
+            SupervisorJob() + get<CoroutineDispatcher>(CoroutineQualifiers.DEFAULT_DISPATCHER)
+        )
+    }
+
+    single(CoroutineQualifiers.DEFAULT_DISPATCHER) {
+        Dispatchers.Default
     }
 }

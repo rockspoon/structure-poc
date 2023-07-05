@@ -1,7 +1,5 @@
 package com.example.poc.core.data.order
 
-import com.rockspoon.merchant.datasource.rockspoon_merchant.merchant_profile.models.Product
-
 data class Order(
 
     var id: String? = null,

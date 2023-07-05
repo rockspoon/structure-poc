@@ -23,7 +23,7 @@ class ExampleUnitTest {
 
 		// log in
 		val accessToken = ""
-		RealmDatabase.init(accessToken)
+		//RealmDatabase.init(accessToken)
 
 		// check if it was synced
 

@@ -1,5 +1,6 @@
 package com.example.poc.auth
 
+import com.example.poc.auth.domain.SignInWithPasswordUseCase
 import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.auth.ui.main.AuthViewModel
 import com.example.poc.core.common.di.CoroutineQualifiers
@@ -13,6 +14,12 @@ private val featureAuthModule = module {
         SignUpWithPasswordUseCase(
             coroutineDispatcher = get(CoroutineQualifiers.IO_DISPATCHER),
             userRepository = get()
+        )
+    }
+
+   factory {
+        SignInWithPasswordUseCase(
+            credentialsRepository = get()
         )
     }
 

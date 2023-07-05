@@ -10,6 +10,7 @@ import kotlinx.coroutines.flow.flowOn
  * [Result<R>].
  * Handling an exception (emit [UseCasae.Result.Error] to the result) is the subclasses's responsibility.
  */
+@Deprecated("Experiment failed. Use .asResult() instead.")
 abstract class FlowUseCase<in P, R>(private val coroutineDispatcher: CoroutineDispatcher) {
 
 	operator fun invoke(parameters: P): Flow<UseCase.Result<R>> = execute(parameters)

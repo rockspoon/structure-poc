@@ -22,7 +22,12 @@ internal class AppPocEventDelegateImpl : AppPocEventDelegate {
         when (event) {
             AppPocEvent.OnAppPocStarted -> navigateToLoadingScreen()
             AppPocEvent.OnAppPocReady -> navigateToContainerScreen()
+            AppPocEvent.OnAppPocAuthNeed -> navigateToAuthScreen()
         }
+    }
+
+    private fun navigateToAuthScreen() {
+        _appPosDestinations.trySend(MainViewModel.Destination(resId = R.id.featureAuthGraphId))
     }
 
     private fun navigateToLoadingScreen() {

@@ -185,8 +185,9 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
      * NavController of this activity, tries to find on the fragments.
      */
     private fun findNavController(@IdRes destinationId: Int): NavController {
-        // Throws if doesn't find it.
-        return if (this.navController.graph.contains(destinationId)) this.navController
+        return this.navController
+        // Throws if doesn't find it. TODO by Oleg didn't get how to work with this dynamic navigation features
+        /*return if (this.navController.graph.contains(destinationId)) this.navController
         else supportFragmentManager.fragments
             .find { it is DynamicNavHostFragment }!!
             .childFragmentManager.fragments
@@ -194,6 +195,6 @@ class MainActivity : AppCompatActivity(R.layout.main_activity) {
             .childFragmentManager.fragments
             .find { it is DynamicNavHostFragment }
             .let { it as NavHostFragment }
-            .navController
+            .navController*/
     }
 }

@@ -5,5 +5,5 @@ interface CredentialsRealmDataSource {
     /**
      * Set the Credentials object in the DataStore.
      */
-    suspend fun setCredentials(credentials: Credentials?)
+    suspend fun setCredentials(credentials: Credentials?, onAccessTokenExpired: () -> Unit)
 }

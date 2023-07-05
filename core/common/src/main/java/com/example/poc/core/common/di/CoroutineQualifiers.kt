@@ -8,6 +8,15 @@ enum class CoroutineQualifiers(override val value: QualifierValue) : Qualifier {
     /**
      * Qualifier for CoroutineDispatcher for IO tasks
      */
-    IO_DISPATCHER("IO_DISPATCHER")
+    IO_DISPATCHER("IO_DISPATCHER"),
 
+    /**
+     * Qualifier for CoroutineDispatcher for computation tasks.
+     */
+    DEFAULT_DISPATCHER("DEFAULT_DISPATCHER"),
+
+    /**
+     * Qualifier for a CoroutineScope that follows the application lifecycle.
+     */
+    APPLICATION_SCOPE("APPLICATION_SCOPE")
 }

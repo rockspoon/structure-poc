@@ -15,6 +15,7 @@ import kotlinx.coroutines.flow.*
  * by the IOScheduler developers, we leave it like this and monitor if JetPack will
  * release something for this.
  */
+@Deprecated("Failed experiment")
 abstract class UseCase<in P, R>(private val coroutineDispatcher: CoroutineDispatcher) {
 
     /**
