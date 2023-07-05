@@ -89,6 +89,12 @@ object RealmDatabase {
                 ) {
                     Timber.i("Client reset: manual reset required")
                     // ... Handle the reset manually here
+                    when(session.state){
+                        SyncSession.State.WAITING_FOR_ACCESS_TOKEN -> {
+                            // TODO update the access token
+                        }
+                        else -> {}
+                    }
                 }
                 // Automatic reset failed.
             }) // Set your client reset strategy
