@@ -4,13 +4,6 @@ import androidx.room.Room
 import com.example.poc.core.common.di.CoroutineQualifiers
 import com.example.poc.core.common.di.NetworkQualifiers
 import com.example.poc.core.data.common.DataSourcesConfig
-import com.example.poc.core.data.credentials.CredentialsLocalDataSource
-import com.example.poc.core.data.credentials.CredentialsLocalDataSourceImpl
-import com.example.poc.core.data.credentials.CredentialsRealmDataSource
-import com.example.poc.core.data.credentials.CredentialsRealmDataSourceImpl
-import com.example.poc.core.data.credentials.CredentialsRemoteDataSource
-import com.example.poc.core.data.credentials.CredentialsRemoteDataSourceImpl
-import com.example.poc.core.data.credentials.CredentialsRepository
 import com.example.poc.core.data.order.OrderRealmDataSource
 import com.example.poc.core.data.order.OrderRealmDataSourceImpl
 import com.example.poc.core.data.preferences.PreferencesDataSource
