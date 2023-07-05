@@ -3,7 +3,6 @@ package com.example.poc.auth.ui.main
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.poc.auth.domain.SignInWithPasswordUseCase
-import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.core.data.user.User
 import com.example.poc.core.domain.base.UseCase
 import kotlinx.coroutines.Job
@@ -13,7 +12,7 @@ import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 
 class AuthViewModel constructor(
-    private val signUpWithPasswordUseCase: SignInWithPasswordUseCase
+    private val signInWithPasswordUseCase: SignInWithPasswordUseCase
 ) : ViewModel() {
 
     val user = User(id = 1, givenName = "Jon", familyName = "Snow")
@@ -22,12 +21,12 @@ class AuthViewModel constructor(
         MutableStateFlow(AuthFragment.UiState.None)
     val uiState: StateFlow<AuthFragment.UiState> = _uiState
 
-    private var signUpJob: Job? = null
+    private var signInJob: Job? = null
 
     fun signUp() {
-        signUpJob?.cancel()
+        signInJob?.cancel()
 
-        signUpJob = signUpWithPasswordUseCase(SignInWithPasswordUseCase.Params(user.email, user.password))
+        signInJob = signInWithPasswordUseCase(SignInWithPasswordUseCase.Params(user.email, user.password))
             .onEach { result ->
                 when (result) {
                     is UseCase.Result.Error -> _uiState.value =
