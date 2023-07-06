@@ -24,7 +24,7 @@ object RealmDatabase {
     @Volatile
     lateinit var instance: Realm
 
-    private val realmApp = App.create("realmpoc-qvjdf")
+    val realmApp = App.create("realmpoc-qvjdf")
 
     private val schema = setOf(
         OrderEntity::class,
@@ -39,7 +39,7 @@ object RealmDatabase {
     }
 
     suspend fun rockspoonApiKey(key: String) {
-        init(Credentials.customFunction(mapOf("rockspoon_api_key" to key)))
+        init(Credentials.customFunction(mapOf("api_key" to key)))
     }
 
     suspend fun accessToken(
