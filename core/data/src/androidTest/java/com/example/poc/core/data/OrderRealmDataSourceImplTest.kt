@@ -72,6 +72,17 @@ class OrderRealmDataSourceImplTest {
     }
 
     @Test
+    fun realmLoginCustomFunction() = runBlocking {
+        /**
+         * add test_api_key string resource to \src\androidTest\res\values\values.xml directory to launch this test
+         */
+        val apiKey = getInstrumentation().context.resources.getString(com.example.poc.core.data.test.R.string.test_api_key)
+        RealmDatabase.rockspoonApiKey(apiKey)
+        assertNotNull(RealmDatabase.realmApp.currentUser)
+        println(RealmDatabase.realmApp.currentUser?.id)
+    }
+
+    @Test
     fun realmPostLogin() = runBlocking {
         // Init Realm without login (login anonymous)
         RealmDatabase.init()
