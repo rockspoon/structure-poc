@@ -52,6 +52,10 @@ object RealmDatabase {
         )
     }
 
+    suspend fun apiKey(apiKey: String){
+        init(realmCredentials = Credentials.apiKey(apiKey))
+    }
+
     suspend fun init(
         realmCredentials: Credentials,
         onAccessTokenExpired: (() -> Unit)? = null
