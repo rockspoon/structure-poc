@@ -21,11 +21,14 @@ open class OrderEntity : RealmObject {
 
     var embeddedItems: RealmList<EmbeddedItem> = realmListOf()
 
+    // @PersistedName does not work when used in a RealmList for some reason
+//    @PersistedName("order_item")
     open class Item : RealmObject {
 
         @PrimaryKey
         @PersistedName("_id")
         var id: ObjectId? = ObjectId()
+
         var productId: ObjectId = ObjectId()
 
         var quantity: Int = 1

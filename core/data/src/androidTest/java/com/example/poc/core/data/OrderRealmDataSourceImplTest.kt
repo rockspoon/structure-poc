@@ -21,6 +21,7 @@ import io.realm.kotlin.mongodb.syncSession
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
+import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.decodeFromString
 import kotlinx.serialization.json.Json
@@ -111,31 +112,40 @@ class OrderRealmDataSourceImplTest {
 
         RealmDatabase.instance.subscriptions.update {
             add(it.query<OrderEntity>(), "order_entity", updateExisting = true)
-            add(it.query<ProductEntity>(), "product_entity", updateExisting = true)
             add(it.query<OrderEntity.Item>(), "item_entity", updateExisting = true)
+            add(it.query<ProductEntity>(), "product_entity", updateExisting = true)
             add(it.query<UserEntity>(), "user_entity", updateExisting = true)
         }
 
-        // insert an product
+        // Insert some products
         val productDataSource = ProductRealmDataSourceImpl(
             database = RealmDatabase.instance
         )
-        val product = productDataSource.saveProduct(
+        val product1 = productDataSource.saveProduct(
             Product(
-                title = "Android test product title"
+                title = "Coca-cola"
+            )
+        )
+        val product2 = productDataSource.saveProduct(
+            Product(
+                title = "Burger"
             )
         )
 
-        // insert an order
+        // Insert an order with two items
         val orderDataSource = OrderRealmDataSourceImpl(
             database = RealmDatabase.instance
         )
         val order = orderDataSource.saveOrder(
             Order(
-                name = "Android test order with items",
+                name = "Order #1",
                 items = listOf(
                     Order.Item(
-                        productId = product.id!!,
+                        productId = product1.id!!,
+                        quantity = 1
+                    ),
+                    Order.Item(
+                        productId = product2.id!!,
                         quantity = 2
                     )
                 )
@@ -205,7 +215,12 @@ class OrderRealmDataSourceImplTest {
 
     @Serializable
     data class PasswordCredentials(
+
         val email: String,
-        val password: String
+
+        val password: String,
+
+        @SerialName("api_key")
+        val apiKey: String
     )
 }
