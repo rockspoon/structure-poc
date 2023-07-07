@@ -43,6 +43,9 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
             notificationSwitch.setOnCheckedChangeListener { _, isChecked ->
                 viewModel.setIsNotificationEnabled(isChecked)
             }
+            logout.setOnClickListener {
+                viewModel.logout()
+            }
         }
 
         // UI state
@@ -68,9 +71,11 @@ class SettingsFragment : Fragment(R.layout.settings_fragment) {
                 binding.notificationSwitch.isChecked = state.isNotificationEnabled
                 binding.notificationTextView.text = state.isNotificationEnabled.toString()
             }
+
             is UiState.Error -> {
                 eventViewModel.postEvent(FeatureSettingsEvent.OnPermissionRequired)
             }
+
             is UiState.Loading -> {}
         }
     }

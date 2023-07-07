@@ -14,6 +14,8 @@ import io.realm.kotlin.mongodb.exceptions.UnrecoverableSyncException
 import io.realm.kotlin.mongodb.sync.RecoverOrDiscardUnsyncedChangesStrategy
 import io.realm.kotlin.mongodb.sync.SyncConfiguration
 import io.realm.kotlin.mongodb.sync.SyncSession
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.withTimeout
 import timber.log.Timber
 
 /**
@@ -50,6 +52,15 @@ object RealmDatabase {
             realmCredentials = accessToken?.let { Credentials.jwt(it) } ?: Credentials.anonymous(),
             onAccessTokenExpired = onTokenExpired
         )
+    }
+
+    suspend fun logout() {
+        withTimeout(2000) {
+            realmApp.currentUser?.logOut()
+            while (realmApp.currentUser != null) {
+                delay(500)
+            }
+        }
     }
 
     suspend fun init(

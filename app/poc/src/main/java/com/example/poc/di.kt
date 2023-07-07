@@ -2,7 +2,7 @@ package com.example.poc
 
 import com.example.poc.core.common.di.NetworkQualifiers
 import com.example.poc.core.data.common.DataSourcesConfig
-import com.example.poc.domain.CheckUserIsLoggedInUseCase
+import com.example.poc.domain.ObserveUserLoggedInUseCase
 import com.example.poc.ui.main.AppPocEventDelegate
 import com.example.poc.ui.main.AppPocEventDelegateImpl
 import com.example.poc.ui.main.FeatureAuthEventDelegate
@@ -63,6 +63,6 @@ fun appPocModule() = module {
 
     viewModelOf(::MainViewModel)
 
-    factoryOf(::CheckUserIsLoggedInUseCase)
+    factoryOf(::ObserveUserLoggedInUseCase)
 
 }

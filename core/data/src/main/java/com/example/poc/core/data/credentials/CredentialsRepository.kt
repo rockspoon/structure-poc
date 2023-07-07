@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * A repository for the application credentials information.
@@ -110,5 +111,16 @@ class CredentialsRepository(
      */
     suspend fun deleteCredentials() = withContext(externalScope.coroutineContext) {
         credentialsLocalDataSource.deleteCredentials()
+    }
+
+    suspend fun logout() {
+        withContext(externalScope.coroutineContext) {
+            try {
+                credentialsRealmDataSource.logout()
+                credentialsLocalDataSource.deleteCredentials()
+            } catch (ex: Exception) {
+                Timber.tag("CredentialsRepository").e(ex, "CredentialsRepository::logout")
+            }
+        }
     }
 }
