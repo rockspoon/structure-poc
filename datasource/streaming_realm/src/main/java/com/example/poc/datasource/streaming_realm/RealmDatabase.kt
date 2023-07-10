@@ -54,6 +54,10 @@ object RealmDatabase {
         )
     }
 
+    suspend fun apiKey(apiKey: String){
+        init(realmCredentials = Credentials.apiKey(apiKey))
+    }
+
     suspend fun logout() {
         withTimeout(2000) {
             realmApp.currentUser?.logOut()

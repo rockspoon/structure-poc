@@ -16,6 +16,8 @@ import com.example.poc.datasource.streaming_realm.user.UserEntity
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
 import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.AuthenticationApi
 import io.realm.kotlin.ext.query
+import io.realm.kotlin.mongodb.User
+import io.realm.kotlin.mongodb.exceptions.AppException
 import io.realm.kotlin.mongodb.subscriptions
 import io.realm.kotlin.mongodb.syncSession
 import kotlinx.coroutines.Dispatchers
@@ -175,27 +177,89 @@ class OrderRealmDataSourceImplTest {
         assertTrue(wasUploaded)
     }
 
+    @Test
+    fun testUserApiKey() = runBlocking {
+        val testCredentials = getPasswordCredentials()
+        val credentialsDataSource = getCredentialsDataSource()
+        val credentials =
+                credentialsDataSource.getCredentials(testCredentials.email, testCredentials.password)!!
+        RealmDatabase.accessToken(credentials.accessToken)
+        val provider = RealmDatabase.realmApp.currentUser?.apiKeyAuth
+        val apiKeys = provider?.fetchAll()
+        val existingKey = apiKeys?.find { it.name == "test_api_key" }
+        existingKey?.let {
+            provider.delete(it.id)
+        }
+        val key = provider?.create("test_api_key")?.value
+        println(key)
+        val userId = RealmDatabase.realmApp.currentUser?.id
+        assertNotNull(userId)
+        RealmDatabase.realmApp.currentUser?.logOut()
+
+        RealmDatabase.init()
+        assertNotNull(RealmDatabase.realmApp.currentUser?.id)
+        assertNotEquals(userId, RealmDatabase.realmApp.currentUser?.id)
+
+        if (key != null) {
+            RealmDatabase.apiKey(key)
+            println("api_key  = $key")
+            println("user_id  = $userId")
+        }
+        assertEquals(userId, RealmDatabase.realmApp.currentUser?.id)
+        assertEquals(User.State.LOGGED_IN, RealmDatabase.realmApp.currentUser?.state)
+
+    }
+
+    @Test
+    fun testApiKeyCount() = runBlocking {
+        val testCredentials = getPasswordCredentials()
+        val credentialsDataSource = getCredentialsDataSource()
+        val credentials =
+                credentialsDataSource.getCredentials(testCredentials.email, testCredentials.password)!!
+        RealmDatabase.accessToken(credentials.accessToken)
+        val provider = RealmDatabase.realmApp.currentUser?.apiKeyAuth
+        val apiKeys = provider?.fetchAll()
+        apiKeys?.forEach {
+            provider.delete(it.id)
+        }
+
+        val keys = (0..19).mapNotNull {
+            try {
+                provider?.create("key_$it")
+            } catch (ex: Exception) {
+                null
+            }
+        }
+        assertEquals(20, keys.size)
+
+        val lastKey = try {
+            provider?.create("key_21")
+        } catch (ex: Exception) {
+            assert(ex is AppException)
+            null
+        }
+
+        assertNull(lastKey)
+        keys.forEach {
+            provider?.delete(it.id)
+        }
+    }
+
+
     @OptIn(ExperimentalSerializationApi::class)
     private fun getCredentialsDataSource(): CredentialsRemoteDataSource {
-        val client = OkHttpClient.Builder()
-            .cache(null) // Make sure we do not cache any HTTP request
-            .build()
-        val retrofit = Retrofit.Builder()
-            .callFactory { request ->
-                val newRequest = request
-                    .newBuilder()
-                    .tag(UUID.randomUUID().toString())
-                    .build()
-                client.newCall(newRequest)
+        val client =
+                OkHttpClient.Builder().cache(null) // Make sure we do not cache any HTTP request
+                        .build()
+        val retrofit = Retrofit.Builder().callFactory { request ->
+            val newRequest = request.newBuilder().tag(UUID.randomUUID().toString()).build()
+            client.newCall(newRequest)
+        }.baseUrl("https://api.stg.rockspoon.io/").apply {
+            val json = Json {
+                ignoreUnknownKeys = true
             }
-            .baseUrl("https://api.stg.rockspoon.io/")
-            .apply {
-                val json = Json {
-                    ignoreUnknownKeys = true
-                }
-                addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
-            }
-            .build()
+            addConverterFactory(json.asConverterFactory("application/json".toMediaType()))
+        }.build()
         val authenticationApi = retrofit.create(AuthenticationApi::class.java)
 
         return CredentialsRemoteDataSourceImpl(

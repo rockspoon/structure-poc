@@ -3,12 +3,12 @@ package com.example.poc.ui.main
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.poc.core.data.credentials.CredentialsRepository
 import com.example.poc.core.ui.event.AppPocEvent
 import com.example.poc.core.ui.event.EventViewModel
 import com.example.poc.core.ui.event.FeatureAuthEvent
 import com.example.poc.core.ui.event.FeatureSearchEvent
 import com.example.poc.core.ui.event.FeatureSettingsEvent
-import com.example.poc.domain.ObserveUserLoggedInUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -24,7 +24,7 @@ internal class MainViewModel(
     private val appPocEventDelegate: AppPocEventDelegate,
     private val featureSearchEventDelegate: FeatureSearchEventDelegate,
     private val featureSettingsEventDelegate: FeatureSettingsEventDelegate,
-    private val observeUserLoggedInUseCase: ObserveUserLoggedInUseCase
+    private val credentialsRepository: CredentialsRepository
 ) : ViewModel(),
     AppPocEventDelegate by appPocEventDelegate,
     FeatureAuthEventDelegate by featureAuthEventDelegate,
@@ -59,7 +59,7 @@ internal class MainViewModel(
     private fun slowInitializationTask() {
         viewModelScope.launch {
             onEvent(AppPocEvent.OnAppPocStarted)
-            observeUserLoggedInUseCase()
+            credentialsRepository.observeCredentials()
                 .collect {
                     if (it == null) {
                         onEvent(AppPocEvent.OnAppPocAuthNeed)
