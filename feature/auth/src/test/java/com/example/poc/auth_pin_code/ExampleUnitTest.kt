@@ -1,4 +1,4 @@
-package com.example.poc.auth
+package com.example.poc.auth_pin_code
 
 import org.junit.Test
 

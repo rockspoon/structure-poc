@@ -2,6 +2,7 @@ package com.example.poc.core.data.credentials
 
 import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.AuthenticationApi
 import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.models.LoginRequest
+import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.models.PinLoginRequest
 import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.models.RefreshRequest
 import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.models.Token
 import kotlinx.coroutines.CoroutineDispatcher
@@ -12,12 +13,29 @@ internal class CredentialsRemoteDataSourceImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : CredentialsRemoteDataSource {
 
+    override suspend fun getCredentials(request: Request): Credentials =
+        when (request) {
+            is Request.Email -> getCredentials(request.email, request.password)
+            is Request.PinCode -> getCredentialsByPinCode(request.pinCode, request.key, request.deviceId)
+        }
+
     override suspend fun getCredentials(email: String, password: String): Credentials =
         withContext(ioDispatcher) {
             authenticationApi.login(
                 loginRequest = LoginRequest(
                     username = email,
                     password = password
+                )
+            ).toModel()
+        }
+
+    override suspend fun getCredentialsByPinCode(pinCode: String, key: String, deviceId: String): Credentials =
+        withContext(ioDispatcher) {
+            authenticationApi.pinLogin(
+                key = key,
+                deviceId = deviceId,
+                pinLoginRequest = PinLoginRequest(
+                    pin = pinCode
                 )
             ).toModel()
         }

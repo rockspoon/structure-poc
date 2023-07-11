@@ -76,14 +76,14 @@ class MainActivityTest {
             // Type the credentials
             val email = "jon.snow@example.com"
             onView(
-                withId(com.example.poc.auth.R.id.emailEditText)
+                withId(com.example.poc.auth_pin_code.R.id.emailEditText)
             ).perform(
                 clearText(),
                 typeText(email)
             )
             val password = "12345678"
             onView(
-                withId(com.example.poc.auth.R.id.passwordEditText)
+                withId(com.example.poc.auth_pin_code.R.id.passwordEditText)
             ).perform(
                 clearText(),
                 typeText(password)
@@ -92,12 +92,12 @@ class MainActivityTest {
             // Close the keyboard and click the auth button. It's important
             // to close the keyboard because the button is behind it.
             onView(
-                withId(com.example.poc.auth.R.id.passwordEditText)
+                withId(com.example.poc.auth_pin_code.R.id.passwordEditText)
             ).perform(
                 closeSoftKeyboard()
             )
             onView(
-                withId(com.example.poc.auth.R.id.authButton)
+                withId(com.example.poc.auth_pin_code.R.id.authButton)
             ).perform(
                 click()
             )

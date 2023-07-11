@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="auth_pin_code">Pin Code</string>
+    <string name="confirm">Confirm</string>
+    <string name="error_authentication_unknown">Something weird went wrong while authentication. Sorry, our bad. Try later.</string>
+</resources>

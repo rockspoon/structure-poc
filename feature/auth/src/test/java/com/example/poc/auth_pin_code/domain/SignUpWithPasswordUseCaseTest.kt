@@ -1,5 +1,6 @@
-package com.example.poc.auth.domain
+package com.example.poc.auth_pin_code.domain
 
+import com.example.poc.auth.domain.SignUpWithPasswordUseCase
 import com.example.poc.core.domain.base.UseCase
 import com.example.poc.core.data.user.User
 import com.example.poc.core.data.user.UserRepository

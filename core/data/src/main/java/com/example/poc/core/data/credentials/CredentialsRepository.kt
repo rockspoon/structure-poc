@@ -46,13 +46,12 @@ class CredentialsRepository(
      */
     suspend fun getCredentials(
         forceRefresh: Boolean = false,
-        email: String? = null,
-        password: String? = null
+        request: Request? = null
     ): Credentials? {
         return if (forceRefresh) {
-            if (email != null && password != null) {
+            if (request != null) {
                 // If provided email and password, use them
-                updateCredentialsWithPassword(email, password)
+                updateCredentialsWithPassword(request)
             } else {
                 // If email and password were not provided, use the refresh token
                 val refreshToken = observeCredentials().value?.refreshToken
@@ -73,15 +72,12 @@ class CredentialsRepository(
     }
 
     private suspend fun updateCredentialsWithPassword(
-        email: String,
-        password: String
+        request: Request
     ): Credentials? {
-        return credentialsRemoteDataSource.getCredentials(
-            email = email,
-            password = password
-        )?.let { remoteCredentials ->
-            updateCredentials(remoteCredentials)
-        }
+        return credentialsRemoteDataSource.getCredentials(request)
+            ?.let { remoteCredentials ->
+                updateCredentials(remoteCredentials)
+            }
     }
 
     private suspend fun updateCredentialsWithRefreshToken(
@@ -111,4 +107,9 @@ class CredentialsRepository(
     suspend fun deleteCredentials() = withContext(externalScope.coroutineContext) {
         credentialsLocalDataSource.deleteCredentials()
     }
+}
+
+sealed class Request {
+    data class Email(val email: String, val password: String) : Request()
+    data class PinCode(val pinCode: String, val key: String, val deviceId: String) : Request()
 }
