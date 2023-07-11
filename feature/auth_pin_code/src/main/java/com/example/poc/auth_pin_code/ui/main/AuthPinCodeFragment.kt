@@ -37,13 +37,16 @@ class AuthPinCodeFragment : BindableFragment<AuthPinCodeFragmentBinding>() {
         }
 
         binding.authButton.setOnClickListener {
+            //TODO by Oleg. add test_api_key file with venue api_key to use pin code authorization
             val key = resources.openRawResource(R.raw.test_api_key).bufferedReader().use {
                 it.readText()
             }
 
+            //TODO by Oleg. add test_device_id file with venue deviceId to use pin code authorization
             val deviceId = resources.openRawResource(R.raw.test_device_id).bufferedReader().use {
                 it.readText()
             }
+
             viewModel.authWithPinCode(
                 pinCode = binding.pinCodeEditText.text.toString(),
                 key = key,
