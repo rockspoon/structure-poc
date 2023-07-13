@@ -40,10 +40,8 @@ import io.realm.kotlin.types.annotations.PrimaryKey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
-import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.test.runTest
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
@@ -283,50 +281,49 @@ class OrderRealmDataSourceImplTest {
 	@OptIn(ExperimentalCoroutinesApi::class)
 	@Test
 	fun givenClientObservingOrder_whenAnotherClientModifyTheOrder_thenTheFirstClientFlowMustEmit() =
-		runTest {
-			runBlocking {
-				/** Given that client 1 creates an order and listen to changes on it **/
-				val realmDatabaseClient1 = getRealm(
-					schema = setOf(
-						OrderEntity::class,
-						OrderEntity.EmbeddedItem::class,
-						OrderEntity.Item::class,
-						ProductEntity::class,
-						UserEntity::class
-					),
-					schemaVersion = 10
-				)
+		runBlocking {
+			/** Given that client 1 creates an order and listen to changes on it **/
+			val realmDatabaseClient1 = getRealm(
+				schema = setOf(
+					OrderEntity::class,
+					OrderEntity.EmbeddedItem::class,
+					OrderEntity.Item::class,
+					ProductEntity::class,
+					UserEntity::class
+				),
+				schemaVersion = 8
+			)
 
-				val productDataSource = ProductRealmDataSourceImpl(
-					database = realmDatabaseClient1
-				)
+			val productDataSource = ProductRealmDataSourceImpl(
+				database = realmDatabaseClient1
+			)
 
-				val product = productDataSource.saveProduct(
-					Product(
-						title = "RedBull"
-					)
+			val product = productDataSource.saveProduct(
+				Product(
+					title = "RedBull"
 				)
+			)
 
-				val orderDataSource = OrderRealmDataSourceImpl(
-					database = realmDatabaseClient1
-				)
+			val orderDataSource = OrderRealmDataSourceImpl(
+				database = realmDatabaseClient1
+			)
 
-				val order = orderDataSource.saveOrder(
-					Order(
-						name = "Order observable",
-						items = listOf(
-							Order.Item(
-								productId = product.id!!,
-								quantity = 2
-							)
+			val order = orderDataSource.saveOrder(
+				Order(
+					name = "Order observable",
+					items = listOf(
+						Order.Item(
+							productId = product.id!!,
+							quantity = 2
 						)
 					)
 				)
-				val orderId = order.id!!
+			)
+			val orderId = order.id!!
 
-				val orderFlowClient1 = orderDataSource.observeOrder(orderId)
+			val orderFlowClient1 = orderDataSource.observeOrder(orderId)
 
-				/** When client 2 modifies the order of client 1 **/
+			/** When client 2 modifies the order of client 1 **/
 //				val realmDatabaseClient2 = getRealm(
 //					schema = setOf(
 //						OrderEntity::class,
@@ -335,7 +332,7 @@ class OrderRealmDataSourceImplTest {
 //						ProductEntity::class,
 //						UserEntity::class
 //					),
-//					schemaVersion = 11
+//					schemaVersion = 8
 //				)
 //
 //				val orderDataSourceClient2 = OrderRealmDataSourceImpl(
@@ -349,7 +346,6 @@ class OrderRealmDataSourceImplTest {
 //				/** Then client 1 must receive an emission **/
 //				val client1OrderEmission = orderFlowClient1.first()
 //				assertEquals(newQuantity, client1OrderEmission.items.first().quantity)
-			}
 		}
 
 	/**
