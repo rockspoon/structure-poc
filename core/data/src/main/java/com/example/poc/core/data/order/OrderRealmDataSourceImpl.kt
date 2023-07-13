@@ -27,10 +27,17 @@ internal class OrderRealmDataSourceImpl(
         model: Order
     ): Order {
         val entity = model.toEntity()
-        val result = database.writeBlocking {
+        val result = database.write {
             copyToRealm(entity)
         }
         return result.toModel()
+    }
+
+    suspend fun deleteOrder(id: String) {
+        return database.write {
+            val order = database.query(OrderEntity::class, "_id == $0", ObjectId(id)).first()
+            delete(order)
+        }
     }
 
     private fun OrderEntity.toModel() = Order(
