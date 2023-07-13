@@ -2,6 +2,7 @@ package com.example.poc.settings.ui
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.poc.core.data.credentials.CredentialsRepository
 import com.example.poc.core.data.preferences.Theme
 import com.example.poc.core.domain.base.UseCase
 import com.example.poc.core.domain.preference.ObserveIsNotificationEnabledUseCase
@@ -22,7 +23,7 @@ class SettingsViewModel(
     observeThemeUseCase: ObserveThemeUseCase,
     private val updateThemeUseCase: UpdateThemeUseCase,
     private val updateIsNotificationEnabledUseCase: UpdateIsNotificationEnabledUseCase,
-    private val logoutUseCase: LogoutUserUseCase
+    private val credentialsRepository: CredentialsRepository
 ) : ViewModel() {
 
     // Prefer not make more than one uiState per view model. If you need more data
@@ -87,7 +88,7 @@ class SettingsViewModel(
 
     fun logout() {
         viewModelScope.launch {
-            logoutUseCase()
+            credentialsRepository.logout()
         }
     }
 }
