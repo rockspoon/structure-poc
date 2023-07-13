@@ -40,6 +40,7 @@ import io.realm.kotlin.types.annotations.PrimaryKey
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.ExperimentalCoroutinesApi
 import kotlinx.coroutines.flow.Flow
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
@@ -293,6 +294,12 @@ class OrderRealmDataSourceImplTest {
 				),
 				schemaVersion = 8
 			)
+			realmDatabaseClient1.subscriptions.update {
+				add(it.query<OrderEntity>(), "order_entity", updateExisting = true)
+				add(it.query<ProductEntity>(), "product_entity", updateExisting = true)
+				add(it.query<OrderEntity.Item>(), "item_entity", updateExisting = true)
+				add(it.query<UserEntity>(), "user_entity", updateExisting = true)
+			}
 
 			val productDataSource = ProductRealmDataSourceImpl(
 				database = realmDatabaseClient1
@@ -324,28 +331,34 @@ class OrderRealmDataSourceImplTest {
 			val orderFlowClient1 = orderDataSource.observeOrder(orderId)
 
 			/** When client 2 modifies the order of client 1 **/
-//				val realmDatabaseClient2 = getRealm(
-//					schema = setOf(
-//						OrderEntity::class,
-//						OrderEntity.EmbeddedItem::class,
-//						OrderEntity.Item::class,
-//						ProductEntity::class,
-//						UserEntity::class
-//					),
-//					schemaVersion = 8
-//				)
-//
-//				val orderDataSourceClient2 = OrderRealmDataSourceImpl(
-//					database = realmDatabaseClient2
-//				)
-//				val orderClient2 = orderDataSourceClient2.getOrder(orderId)
-//				val newQuantity = 3
-//				orderClient2.items.first().quantity = newQuantity
-//				orderDataSourceClient2.saveOrder(orderClient2)
-//
-//				/** Then client 1 must receive an emission **/
-//				val client1OrderEmission = orderFlowClient1.first()
-//				assertEquals(newQuantity, client1OrderEmission.items.first().quantity)
+			val realmDatabaseClient2 = getRealm(
+				schema = setOf(
+					OrderEntity::class,
+					OrderEntity.EmbeddedItem::class,
+					OrderEntity.Item::class,
+					ProductEntity::class,
+					UserEntity::class
+				),
+				schemaVersion = 8
+			)
+			realmDatabaseClient2.subscriptions.update {
+				add(it.query<OrderEntity>(), "order_entity", updateExisting = true)
+				add(it.query<ProductEntity>(), "product_entity", updateExisting = true)
+				add(it.query<OrderEntity.Item>(), "item_entity", updateExisting = true)
+				add(it.query<UserEntity>(), "user_entity", updateExisting = true)
+			}
+
+			val orderDataSourceClient2 = OrderRealmDataSourceImpl(
+				database = realmDatabaseClient2
+			)
+			val orderClient2 = orderDataSourceClient2.getOrder(orderId)
+			val newQuantity = 3
+			orderClient2.items.first().quantity = newQuantity
+			orderDataSourceClient2.saveOrder(orderClient2)
+
+			/** Then client 1 must receive an emission **/
+			val client1OrderEmission = orderFlowClient1.first()
+			assertEquals(newQuantity, client1OrderEmission.items.first().quantity)
 		}
 
 	/**
