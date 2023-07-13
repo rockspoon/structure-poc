@@ -9,18 +9,22 @@
         app:graphResName="navigation_home"
         app:moduleName="home" />
 
-<!--    <navigation>-->
+    <include
+        android:id="@id/featureOrdersGraphId"
+        app:graph="@navigation/navigation_orders" />
 
-<!--        <fragment-->
-<!--            android:id="@+id/settingsFragment"-->
-<!--            android:name="com.example.poc.settings.ui.SettingsFragment" />-->
-<!--        -->
-<!--        <include-dynamic-->
-<!--            android:id="@+id/homeFragment"-->
-<!--            android:name="com.example.poc.home.ui.HomeFragment"-->
-<!--            app:moduleName="home"/>-->
+    <!--    <navigation>-->
 
-<!--    </navigation>-->
+    <!--        <fragment-->
+    <!--            android:id="@+id/settingsFragment"-->
+    <!--            android:name="com.example.poc.settings.ui.SettingsFragment" />-->
+    <!--        -->
+    <!--        <include-dynamic-->
+    <!--            android:id="@+id/homeFragment"-->
+    <!--            android:name="com.example.poc.home.ui.HomeFragment"-->
+    <!--            app:moduleName="home"/>-->
+
+    <!--    </navigation>-->
 
     <include-dynamic
         android:id="@+id/featureSearchGraphId"

@@ -28,7 +28,13 @@ open class OrderEntity : RealmObject {
         var id: ObjectId? = ObjectId()
         var productId: ObjectId = ObjectId()
 
+        var name: String = ""
+
         var quantity: Int = 1
+        override fun toString(): String {
+            return "Item(id=$id, name='$name')"
+        }
+
 
     }
 

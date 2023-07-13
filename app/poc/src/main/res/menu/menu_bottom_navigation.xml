@@ -7,6 +7,11 @@
 		android:title="@string/title_feature_home" />
 
 	<item
+		android:id="@id/featureOrdersGraphId"
+		android:icon="@drawable/ic_orders"
+		android:title="@string/title_feature_orders" />
+
+		<item
 		android:id="@id/featureSearchGraphId"
 		android:icon="@drawable/ic_search"
 		android:title="@string/title_feature_search" />

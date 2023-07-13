@@ -22,6 +22,9 @@ import io.realm.kotlin.mongodb.exceptions.AppException
 import io.realm.kotlin.mongodb.subscriptions
 import io.realm.kotlin.mongodb.syncSession
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.launch
 import kotlinx.coroutines.runBlocking
 import kotlinx.serialization.ExperimentalSerializationApi
 import kotlinx.serialization.Serializable
@@ -32,6 +35,7 @@ import okhttp3.OkHttpClient
 import org.junit.Assert.*
 import org.junit.Test
 import org.junit.runner.RunWith
+import org.mongodb.kbson.ObjectId
 import retrofit2.Retrofit
 import java.util.UUID
 import kotlin.time.Duration.Companion.milliseconds
@@ -154,8 +158,19 @@ class OrderRealmDataSourceImplTest {
                 items = listOf(
                     Order.Item(
                         productId = product.id!!,
-                        quantity = 2
-                    )
+                        quantity = 2,
+                        name = "test order item"
+                    ),
+                    Order.Item(
+                        productId = product.id!!,
+                        quantity = 2,
+                        name = "test order item2"
+                    ),
+                    Order.Item(
+                        productId = product.id!!,
+                        quantity = 2,
+                        name = "test order item3"
+                    ),
                 )
             )
         )
@@ -171,6 +186,8 @@ class OrderRealmDataSourceImplTest {
         assertNotNull(order.id)
         val orderInDatabase = orderDataSource.getOrder(order.id!!)
         assertNotNull(orderInDatabase)
+
+        assertTrue(orderInDatabase.items.isNotEmpty())
 
         // check if order was uploaded
         val wasUploaded =
@@ -267,6 +284,74 @@ class OrderRealmDataSourceImplTest {
             authenticationApi = authenticationApi,
             ioDispatcher = Dispatchers.IO
         )
+    }
+
+    @Test
+    fun testRealmRequests() = runBlocking {
+        // Init Realm without login (login anonymous)
+        RealmDatabase.init()
+        val dataSource = OrderRealmDataSourceImpl(RealmDatabase.instance)
+        var collection: List<OrderEntity> = emptyList()
+        val observationJob = launch {
+            dataSource.observeOrders().collect {
+                collection = it
+            }
+        }
+
+        delay(200)
+
+        val size = collection.size
+        println("old size = $size")
+
+        dataSource.saveOrder(
+            Order(
+                name = "Android test order with items", items = emptyList()
+            )
+        )
+        delay(200)
+        println("new size = ${collection.size}")
+        assertEquals(size + 1, collection.size)
+        observationJob.cancel()
+    }
+
+    @Test
+    fun removeOrderEntities() = runBlocking {
+        val testCredentials = getPasswordCredentials()
+        val credentialsDataSource = getCredentialsDataSource()
+        val credentials =
+            credentialsDataSource.getCredentials(testCredentials)!!
+        RealmDatabase.accessToken(credentials.accessToken)
+        RealmDatabase.instance.writeBlocking {
+            val orders = RealmDatabase.instance.query(OrderEntity::class).find()
+            delete(orders)
+        }
+        val dataSource = OrderRealmDataSourceImpl(RealmDatabase.instance)
+
+        println(dataSource.getOrders().size)
+
+    }
+
+    @Test
+    fun testRemoveRelationObject() = runBlocking {
+        val testCredentials = getPasswordCredentials()
+        val credentialsDataSource = getCredentialsDataSource()
+        val credentials =
+            credentialsDataSource.getCredentials(testCredentials)!!
+        RealmDatabase.accessToken(credentials.accessToken)
+        val order =
+            RealmDatabase.instance.query(OrderEntity::class, "_id=$0", ObjectId("64b53551d9e60248592920a9"))
+                .find().first()
+
+        RealmDatabase.instance.write {
+            val item = order.items.first()
+            findLatest(item)?.apply {
+                delete(this)
+            }
+        }
+        val updatedOrder =
+            RealmDatabase.instance.query(OrderEntity::class, "_id=$0", ObjectId("64b53551d9e60248592920a9"))
+                .find().first()
+        assertTrue(updatedOrder.items.size == order.items.size -1 )
     }
 
     /**
