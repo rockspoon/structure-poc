@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * A repository for the application credentials information.
@@ -22,7 +23,7 @@ class CredentialsRepository(
         externalScope.launch {
             // Initialize Realm with credentials if it has it
             credentialsRealmDataSource.setCredentials(
-                credentials = getCredentials(),
+                credentials = getCredentials(true),
                 onAccessTokenExpired = {
                     externalScope.launch {
                         getCredentials(forceRefresh = true)
@@ -109,6 +110,12 @@ class CredentialsRepository(
      * Remove a RockSpoon Credentials on DataStore.
      */
     suspend fun deleteCredentials() = withContext(externalScope.coroutineContext) {
-        credentialsLocalDataSource.deleteCredentials()
+        try {
+            credentialsRealmDataSource.logout()
+            credentialsLocalDataSource.deleteCredentials()
+        } catch (ex: Exception) {
+            Timber.tag("CredentialsRepository").e(ex, "CredentialsRepository::deleteCredentials")
+        }
     }
+
 }

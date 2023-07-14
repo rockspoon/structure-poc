@@ -3,13 +3,12 @@ package com.example.poc.ui.main
 import android.os.Bundle
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.poc.core.domain.base.UseCase
+import com.example.poc.core.data.credentials.CredentialsRepository
 import com.example.poc.core.ui.event.AppPocEvent
 import com.example.poc.core.ui.event.EventViewModel
 import com.example.poc.core.ui.event.FeatureAuthEvent
 import com.example.poc.core.ui.event.FeatureSearchEvent
 import com.example.poc.core.ui.event.FeatureSettingsEvent
-import com.example.poc.domain.CheckUserIsLoggedInUseCase
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
@@ -25,7 +24,7 @@ internal class MainViewModel(
     private val appPocEventDelegate: AppPocEventDelegate,
     private val featureSearchEventDelegate: FeatureSearchEventDelegate,
     private val featureSettingsEventDelegate: FeatureSettingsEventDelegate,
-    private val checkUserIsLoggedInUseCase: CheckUserIsLoggedInUseCase,
+    private val credentialsRepository: CredentialsRepository
 ) : ViewModel(),
     AppPocEventDelegate by appPocEventDelegate,
     FeatureAuthEventDelegate by featureAuthEventDelegate,
@@ -59,20 +58,15 @@ internal class MainViewModel(
 
     private fun slowInitializationTask() {
         viewModelScope.launch {
-            checkUserIsLoggedInUseCase(Unit).collect { result ->
-                when (result) {
-                    is UseCase.Result.Success -> {
-                        if (result.data) {
-                            onEvent(AppPocEvent.OnAppPocReady)
-                        } else {
-                            onEvent(AppPocEvent.OnAppPocAuthNeed)
-                        }
+            onEvent(AppPocEvent.OnAppPocStarted)
+            credentialsRepository.observeCredentials()
+                .collect {
+                    if (it == null) {
+                        onEvent(AppPocEvent.OnAppPocAuthNeed)
+                    } else {
+                        onEvent(AppPocEvent.OnAppPocReady)
                     }
-
-                    is UseCase.Result.Loading -> onEvent(AppPocEvent.OnAppPocStarted)
-                    else -> Unit
                 }
-            }
         }
     }
 

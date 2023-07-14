@@ -3,7 +3,6 @@ package com.example.poc.settings
 import com.example.poc.settings.domain.UpdateIsNotificationEnabledUseCase
 import com.example.poc.settings.domain.UpdateThemeUseCase
 import com.example.poc.settings.ui.SettingsViewModel
-import kotlinx.coroutines.Dispatchers
 import org.koin.androidx.viewmodel.dsl.viewModelOf
 import org.koin.core.context.GlobalContext
 import org.koin.core.module.dsl.singleOf
@@ -16,6 +15,7 @@ fun featureSettingsModule() = module {
     singleOf(::UpdateThemeUseCase)
 
     viewModelOf(::SettingsViewModel)
+
 }
 
 // Use lazy to only call it once
