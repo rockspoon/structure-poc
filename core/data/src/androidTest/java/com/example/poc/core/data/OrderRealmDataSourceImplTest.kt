@@ -447,11 +447,10 @@ class OrderRealmDataSourceImplTest {
 	 */
 	@Test
 	fun givenAnOldScheme_whenUpdateTheScheme_thenTheDataMustBePreserved() {
-		// 1. Create a Realm with current scheme
-
-		// 2. Create a Realm with another scheme and implement on migration
-
-		// 3. Check if it was uploaded
+		// This test is not possible to be done because configuration with sync requires the
+		// app to send all the data to the server and then download the new version after the server
+		// migration. So the whole migration happens on the server side rather than on the client
+		// side.
 	}
 
 	private val realmApp = App.create("realmpoc-qvjdf")
