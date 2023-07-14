@@ -48,18 +48,18 @@ class OrderRealmDataSourceImplTest {
         // Init realm with login
         val testCredentials = getPasswordCredentials()
         val credentialsDataSource = getCredentialsDataSource()
-        val credentials =
-                credentialsDataSource.getCredentials(testCredentials.email, testCredentials.password)!!
+        val credentials = credentialsDataSource
+            .getCredentials(testCredentials.email, testCredentials.password)!!
         RealmDatabase.accessToken(credentials.accessToken)
 
         // insert an order
         val datasource = OrderRealmDataSourceImpl(
-                database = RealmDatabase.instance
+            database = RealmDatabase.instance
         )
         val order = datasource.saveOrder(
-                Order(
-                        name = "Order test Android 2"
-                )
+            Order(
+                name = "Order test Android 2"
+            )
         )
 
         // check if it was synced
@@ -69,7 +69,7 @@ class OrderRealmDataSourceImplTest {
 
         // check if order was uploaded
         val wasUploaded =
-                RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
+            RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
         assertTrue(wasUploaded)
     }
 
@@ -78,9 +78,11 @@ class OrderRealmDataSourceImplTest {
         /**
          * add api_key text file to \src\androidTest\res\raw\ directory to launch this test
          */
-        val apiKey = getInstrumentation().context.resources.openRawResource(com.example.poc.core.data.test.R.raw.api_key).bufferedReader().use {
-            it.readText()
-        }
+        val apiKey =
+            getInstrumentation().context.resources.openRawResource(com.example.poc.core.data.test.R.raw.api_key)
+                .bufferedReader().use {
+                it.readText()
+            }
         RealmDatabase.rockspoonApiKey(apiKey)
         assertNotNull(RealmDatabase.realmApp.currentUser)
         println(RealmDatabase.realmApp.currentUser?.id)
@@ -93,19 +95,19 @@ class OrderRealmDataSourceImplTest {
 
         // insert an order
         val datasource = OrderRealmDataSourceImpl(
-                database = RealmDatabase.instance
+            database = RealmDatabase.instance
         )
         val order = datasource.saveOrder(
-                Order(
-                        name = "Android test post login 2"
-                )
+            Order(
+                name = "Android test post login 2"
+            )
         )
 
         // log in
         val testCredentials = getPasswordCredentials()
         val credentialsDataSource = getCredentialsDataSource()
-        val credentials =
-                credentialsDataSource.getCredentials(testCredentials.email, testCredentials.password)!!
+        val credentials = credentialsDataSource
+            .getCredentials(testCredentials.email, testCredentials.password)!!
         RealmDatabase.accessToken(credentials.accessToken)
 
         // check if it was synced
@@ -115,7 +117,7 @@ class OrderRealmDataSourceImplTest {
 
         // check if order was uploaded
         val wasUploaded =
-                RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
+            RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
         assertTrue(wasUploaded)
     }
 
@@ -133,33 +135,35 @@ class OrderRealmDataSourceImplTest {
 
         // insert an product
         val productDataSource = ProductRealmDataSourceImpl(
-                database = RealmDatabase.instance
+            database = RealmDatabase.instance
         )
         val product = productDataSource.saveProduct(
-                Product(
-                        title = "Android test product title"
-                )
+            Product(
+                title = "Android test product title"
+            )
         )
 
         // insert an order
         val orderDataSource = OrderRealmDataSourceImpl(
-                database = RealmDatabase.instance
+            database = RealmDatabase.instance
         )
         val order = orderDataSource.saveOrder(
-                Order(
-                        name = "Android test order with items", items = listOf(
-                        Order.Item(
-                                productId = product.id!!, quantity = 2
-                        )
+            Order(
+                name = "Android test order with items",
+                items = listOf(
+                    Order.Item(
+                        productId = product.id!!,
+                        quantity = 2
+                    )
                 )
-                )
+            )
         )
 
         // log in
         val testCredentials = getPasswordCredentials()
         val credentialsDataSource = getCredentialsDataSource()
-        val credentials =
-                credentialsDataSource.getCredentials(testCredentials.email, testCredentials.password)!!
+        val credentials = credentialsDataSource
+            .getCredentials(testCredentials.email, testCredentials.password)!!
         RealmDatabase.accessToken(credentials.accessToken)
 
         // check if it was synced
@@ -169,7 +173,7 @@ class OrderRealmDataSourceImplTest {
 
         // check if order was uploaded
         val wasUploaded =
-                RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
+            RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
         assertTrue(wasUploaded)
     }
 
@@ -259,7 +263,8 @@ class OrderRealmDataSourceImplTest {
         val authenticationApi = retrofit.create(AuthenticationApi::class.java)
 
         return CredentialsRemoteDataSourceImpl(
-                authenticationApi = authenticationApi, ioDispatcher = Dispatchers.IO
+            authenticationApi = authenticationApi,
+            ioDispatcher = Dispatchers.IO
         )
     }
 
@@ -268,7 +273,7 @@ class OrderRealmDataSourceImplTest {
      * {"email":"","password":""}
      */
     private fun getPasswordCredentials() = readRawJson<PasswordCredentials>(
-            com.example.poc.core.data.test.R.raw.credentials
+        com.example.poc.core.data.test.R.raw.credentials
     )
 
     private inline fun <reified T> readRawJson(@RawRes rawResId: Int): T {
@@ -279,6 +284,7 @@ class OrderRealmDataSourceImplTest {
 
     @Serializable
     data class PasswordCredentials(
-            val email: String, val password: String
+        val email: String,
+        val password: String
     )
 }
