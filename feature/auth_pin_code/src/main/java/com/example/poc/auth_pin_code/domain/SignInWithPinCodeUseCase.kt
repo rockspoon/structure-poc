@@ -17,8 +17,9 @@ class SignInWithPinCodeUseCase(
     /**
      * Makes the sign in of a new user.
      *
-     * @param email
-     * @param password
+     * @param pinCode
+     * @param key rockspoon venue api_key
+     * @param deviceId rockspoon venue deivceId
      */
     operator fun invoke(pinCode: String, key: String, deviceId: String): Flow<Result<Unit>> = flow {
         emit(Result.Loading())
@@ -30,7 +31,7 @@ class SignInWithPinCodeUseCase(
             if (credentials != null) {
                 emit(Result.Success(Unit))
             } else {
-                emit(Result.Error(InvalidEmailOrPasswordException))
+                emit(Result.Error(InvalidParametersException))
             }
 
         } catch (e: Exception) {
@@ -39,5 +40,5 @@ class SignInWithPinCodeUseCase(
         }
     }
 
-    object InvalidEmailOrPasswordException : RuntimeException("Invalid email or password.")
+    object InvalidParametersException : RuntimeException("Invalid pincode or key or deviceId.")
 }

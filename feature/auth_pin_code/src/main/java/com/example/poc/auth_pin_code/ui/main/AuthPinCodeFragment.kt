@@ -92,7 +92,6 @@ class AuthPinCodeFragment : BindableFragment<AuthPinCodeFragmentBinding>() {
      * executing.
      */
     private fun updateProgressIndicator(progress: Int?) {
-        binding.authButton.isEnabled = progress == null
         binding.progressIndicator.isVisible = progress != null
         binding.progressIndicator.isIndeterminate = progress == UiState.Loading.INDETERMINATE
         binding.progressIndicator.progress = progress ?: 0
