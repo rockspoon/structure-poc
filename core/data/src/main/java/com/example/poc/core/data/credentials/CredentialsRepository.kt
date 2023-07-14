@@ -23,7 +23,7 @@ class CredentialsRepository(
         externalScope.launch {
             // Initialize Realm with credentials if it has it
             credentialsRealmDataSource.setCredentials(
-                credentials = getCredentials(true),
+                credentials = getCredentials(),
                 onAccessTokenExpired = {
                     externalScope.launch {
                         getCredentials(forceRefresh = true)

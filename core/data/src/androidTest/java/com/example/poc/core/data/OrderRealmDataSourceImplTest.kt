@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.example.poc.core.data.credentials.CredentialsRemoteDataSource
 import com.example.poc.core.data.credentials.CredentialsRemoteDataSourceImpl
+import com.example.poc.core.data.credentials.GetCredentialsRequest
 import com.example.poc.core.data.order.Order
 import com.example.poc.core.data.order.OrderRealmDataSourceImpl
 import com.example.poc.core.data.product.Product
@@ -49,7 +50,7 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getPasswordCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
-            .getCredentials(testCredentials.email, testCredentials.password)!!
+            .getCredentials(testCredentials)!!
         RealmDatabase.accessToken(credentials.accessToken)
 
         // insert an order
@@ -81,8 +82,8 @@ class OrderRealmDataSourceImplTest {
         val apiKey =
             getInstrumentation().context.resources.openRawResource(com.example.poc.core.data.test.R.raw.api_key)
                 .bufferedReader().use {
-                it.readText()
-            }
+                    it.readText()
+                }
         RealmDatabase.rockspoonApiKey(apiKey)
         assertNotNull(RealmDatabase.realmApp.currentUser)
         println(RealmDatabase.realmApp.currentUser?.id)
@@ -107,7 +108,7 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getPasswordCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
-            .getCredentials(testCredentials.email, testCredentials.password)!!
+            .getCredentials(testCredentials)!!
         RealmDatabase.accessToken(credentials.accessToken)
 
         // check if it was synced
@@ -163,7 +164,7 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getPasswordCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
-            .getCredentials(testCredentials.email, testCredentials.password)!!
+            .getCredentials(testCredentials)!!
         RealmDatabase.accessToken(credentials.accessToken)
 
         // check if it was synced
@@ -182,7 +183,7 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getPasswordCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials =
-                credentialsDataSource.getCredentials(testCredentials.email, testCredentials.password)!!
+            credentialsDataSource.getCredentials(testCredentials)!!
         RealmDatabase.accessToken(credentials.accessToken)
         val provider = RealmDatabase.realmApp.currentUser?.apiKeyAuth
         val apiKeys = provider?.fetchAll()
@@ -215,7 +216,7 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getPasswordCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials =
-                credentialsDataSource.getCredentials(testCredentials.email, testCredentials.password)!!
+            credentialsDataSource.getCredentials(testCredentials)!!
         RealmDatabase.accessToken(credentials.accessToken)
         val provider = RealmDatabase.realmApp.currentUser?.apiKeyAuth
         val apiKeys = provider?.fetchAll()
@@ -249,8 +250,8 @@ class OrderRealmDataSourceImplTest {
     @OptIn(ExperimentalSerializationApi::class)
     private fun getCredentialsDataSource(): CredentialsRemoteDataSource {
         val client =
-                OkHttpClient.Builder().cache(null) // Make sure we do not cache any HTTP request
-                        .build()
+            OkHttpClient.Builder().cache(null) // Make sure we do not cache any HTTP request
+                .build()
         val retrofit = Retrofit.Builder().callFactory { request ->
             val newRequest = request.newBuilder().tag(UUID.randomUUID().toString()).build()
             client.newCall(newRequest)
@@ -274,7 +275,7 @@ class OrderRealmDataSourceImplTest {
      */
     private fun getPasswordCredentials() = readRawJson<PasswordCredentials>(
         com.example.poc.core.data.test.R.raw.credentials
-    )
+    ).let { GetCredentialsRequest.Email(it.email, it.password) }
 
     private inline fun <reified T> readRawJson(@RawRes rawResId: Int): T {
         getInstrumentation().context.resources.openRawResource(rawResId).bufferedReader().use {

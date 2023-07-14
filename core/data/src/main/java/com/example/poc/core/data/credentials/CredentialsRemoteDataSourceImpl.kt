@@ -19,7 +19,7 @@ internal class CredentialsRemoteDataSourceImpl(
             is GetCredentialsRequest.PinCode -> getCredentialsByPinCode(request.pinCode, request.key, request.deviceId)
         }
 
-    override suspend fun getCredentials(email: String, password: String): Credentials =
+    private suspend fun getCredentials(email: String, password: String): Credentials =
         withContext(ioDispatcher) {
             authenticationApi.login(
                 loginRequest = LoginRequest(
@@ -29,7 +29,7 @@ internal class CredentialsRemoteDataSourceImpl(
             ).toModel()
         }
 
-    override suspend fun getCredentialsByPinCode(pinCode: String, key: String, deviceId: String): Credentials =
+    private suspend fun getCredentialsByPinCode(pinCode: String, key: String, deviceId: String): Credentials =
         withContext(ioDispatcher) {
             authenticationApi.pinLogin(
                 key = key,
