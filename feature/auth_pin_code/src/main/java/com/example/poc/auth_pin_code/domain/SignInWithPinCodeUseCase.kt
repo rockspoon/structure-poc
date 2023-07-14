@@ -1,7 +1,7 @@
 package com.example.poc.auth_pin_code.domain
 
 import com.example.poc.core.data.credentials.CredentialsRepository
-import com.example.poc.core.data.credentials.Request
+import com.example.poc.core.data.credentials.GetCredentialsRequest
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import com.example.poc.core.domain.Result
@@ -25,7 +25,7 @@ class SignInWithPinCodeUseCase(
         try {
             val credentials = credentialsRepository.getCredentials(
                 forceRefresh = true,
-                request = Request.PinCode(pinCode = pinCode, key = key, deviceId = deviceId)
+                request = GetCredentialsRequest.PinCode(pinCode = pinCode, key = key, deviceId = deviceId)
             )
             if (credentials != null) {
                 emit(Result.Success(Unit))

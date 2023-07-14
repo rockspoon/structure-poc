@@ -47,7 +47,7 @@ class CredentialsRepository(
      */
     suspend fun getCredentials(
         forceRefresh: Boolean = false,
-        request: Request? = null
+        request: GetCredentialsRequest? = null
     ): Credentials? {
         return if (forceRefresh) {
             if (request != null) {
@@ -73,7 +73,7 @@ class CredentialsRepository(
     }
 
     private suspend fun updateCredentialsWithPassword(
-        request: Request
+        request: GetCredentialsRequest
     ): Credentials? {
         return credentialsRemoteDataSource.getCredentials(request)
             ?.let { remoteCredentials ->
@@ -115,7 +115,6 @@ class CredentialsRepository(
     }
 
 
-sealed class Request {
-    data class Email(val email: String, val password: String) : Request()
-    data class PinCode(val pinCode: String, val key: String, val deviceId: String) : Request()
+
 }
+

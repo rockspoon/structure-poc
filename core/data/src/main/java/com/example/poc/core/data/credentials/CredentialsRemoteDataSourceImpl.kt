@@ -13,10 +13,10 @@ internal class CredentialsRemoteDataSourceImpl(
     private val ioDispatcher: CoroutineDispatcher
 ) : CredentialsRemoteDataSource {
 
-    override suspend fun getCredentials(request: Request): Credentials =
+    override suspend fun getCredentials(request: GetCredentialsRequest): Credentials =
         when (request) {
-            is Request.Email -> getCredentials(request.email, request.password)
-            is Request.PinCode -> getCredentialsByPinCode(request.pinCode, request.key, request.deviceId)
+            is GetCredentialsRequest.Email -> getCredentials(request.email, request.password)
+            is GetCredentialsRequest.PinCode -> getCredentialsByPinCode(request.pinCode, request.key, request.deviceId)
         }
 
     override suspend fun getCredentials(email: String, password: String): Credentials =
