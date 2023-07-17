@@ -1,14 +1,11 @@
 package com.example.poc.orders.ui.main
 
 import androidx.compose.runtime.Composable
-import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.navArgument
 import com.example.poc.core.ui.event.EventViewModel
 import com.example.poc.core.ui.event.FeatureSearchEvent
-import com.example.poc.orders.ui.detail.ProductScreen
 import com.example.poc.orders.ui.list.OrdersScreen
 
 // Composable that builds the nav graph internal of the feature. Navigation between features is
@@ -35,15 +32,15 @@ internal fun FeatureOrdersNavHost(
                 }
             )
         }
-        composable(
-            route = "products/{productId}",
-            arguments = listOf(
-                navArgument("productId") { type = NavType.LongType }
-            )
-        ) {
-            ProductScreen(
-                onBackClick = { navController.navigateUp() }
-            )
-        }
+        /* composable(
+             route = "products/{productId}",
+             arguments = listOf(
+                 navArgument("productId") { type = NavType.LongType }
+             )
+         ) {
+             ProductScreen(
+                 onBackClick = { navController.navigateUp() }
+             )
+         }*/
     }
 }

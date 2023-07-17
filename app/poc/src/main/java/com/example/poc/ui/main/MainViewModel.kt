@@ -63,7 +63,7 @@ internal class MainViewModel(
         viewModelScope.launch {
             onEvent(AppPocEvent.OnAppPocStarted)
             credentialsRepository.observeCredentials()
-                //TODO need to subscribe to realm authorization
+                //TODO hotfix to wait until realm authorization is finished
                 .onStart { delay(2000) }
                 .collect {
                     if (it == null) {
