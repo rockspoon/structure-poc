@@ -75,7 +75,12 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getTestCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
-            .getCredentials(testCredentials)!!
+            .getCredentials(
+                GetCredentialsRequest.Email(
+                    testCredentials.email,
+                    testCredentials.password
+                )
+            )!!
         RealmDatabase.accessToken(credentials.accessToken)
 
         // insert an order
@@ -133,7 +138,12 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getTestCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
-            .getCredentials(testCredentials)!!
+            .getCredentials(
+                GetCredentialsRequest.Email(
+                    testCredentials.email,
+                    testCredentials.password
+                )
+            )!!
         RealmDatabase.accessToken(credentials.accessToken)
 
         // check if it was synced
@@ -166,7 +176,7 @@ class OrderRealmDataSourceImplTest {
 
             // insert an product
             val productDataSource = ProductRealmDataSourceImpl(
-            database = RealmDatabase.instance
+                database = RealmDatabase.instance
             )
             val product = productDataSource.saveProduct(
                 Product(
@@ -176,7 +186,7 @@ class OrderRealmDataSourceImplTest {
 
             // insert an order
             val orderDataSource = OrderRealmDataSourceImpl(
-            database = RealmDatabase.instance
+                database = RealmDatabase.instance
             )
             val order = orderDataSource.saveOrder(
                 Order(
@@ -194,7 +204,12 @@ class OrderRealmDataSourceImplTest {
             val testCredentials = getTestCredentials()
             val credentialsDataSource = getCredentialsDataSource()
             val credentials = credentialsDataSource
-                .getCredentials(testCredentials.email, testCredentials.password)!!
+                .getCredentials(
+                    GetCredentialsRequest.Email(
+                        testCredentials.email,
+                        testCredentials.password
+                    )
+                )!!
             RealmDatabase.accessToken(credentials.accessToken)
 
             // check if it was synced
@@ -204,7 +219,7 @@ class OrderRealmDataSourceImplTest {
 
             // check if order was uploaded
             val wasUploaded =
-            RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
+                RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
             assertTrue(wasUploaded)
         }
 
@@ -213,7 +228,12 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getTestCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials =
-            credentialsDataSource.getCredentials(testCredentials.email, testCredentials.password)!!
+            credentialsDataSource.getCredentials(
+                GetCredentialsRequest.Email(
+                    testCredentials.email,
+                    testCredentials.password
+                )
+            )!!
         RealmDatabase.accessToken(credentials.accessToken)
         val provider = RealmDatabase.realmApp.currentUser?.apiKeyAuth
         val apiKeys = provider?.fetchAll()
@@ -246,7 +266,12 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getTestCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials =
-            credentialsDataSource.getCredentials(testCredentials)!!
+            credentialsDataSource.getCredentials(
+                GetCredentialsRequest.Email(
+                    testCredentials.email,
+                    testCredentials.password
+                )
+            )!!
         RealmDatabase.accessToken(credentials.accessToken)
         val provider = RealmDatabase.realmApp.currentUser?.apiKeyAuth
         val apiKeys = provider?.fetchAll()
@@ -466,7 +491,12 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getTestCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
-            .getCredentials(testCredentials.email, testCredentials.password)!!
+            .getCredentials(
+                GetCredentialsRequest.Email(
+                    testCredentials.email,
+                    testCredentials.password
+                )
+            )!!
         RealmDatabase.accessToken(credentials.accessToken)
         val realmUser =
             realmApp.login(io.realm.kotlin.mongodb.Credentials.jwt(credentials.accessToken))
