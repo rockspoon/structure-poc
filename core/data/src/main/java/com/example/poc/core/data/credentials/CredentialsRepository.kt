@@ -5,6 +5,7 @@ import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+import timber.log.Timber
 
 /**
  * A repository for the application credentials information.
@@ -46,13 +47,12 @@ class CredentialsRepository(
      */
     suspend fun getCredentials(
         forceRefresh: Boolean = false,
-        email: String? = null,
-        password: String? = null
+        request: GetCredentialsRequest? = null
     ): Credentials? {
         return if (forceRefresh) {
-            if (email != null && password != null) {
+            if (request != null) {
                 // If provided email and password, use them
-                updateCredentialsWithPassword(email, password)
+                updateCredentialsWithPassword(request)
             } else {
                 // If email and password were not provided, use the refresh token
                 val refreshToken = observeCredentials().value?.refreshToken
@@ -73,15 +73,12 @@ class CredentialsRepository(
     }
 
     private suspend fun updateCredentialsWithPassword(
-        email: String,
-        password: String
+        request: GetCredentialsRequest
     ): Credentials? {
-        return credentialsRemoteDataSource.getCredentials(
-            email = email,
-            password = password
-        )?.let { remoteCredentials ->
-            updateCredentials(remoteCredentials)
-        }
+        return credentialsRemoteDataSource.getCredentials(request)
+            ?.let { remoteCredentials ->
+                updateCredentials(remoteCredentials)
+            }
     }
 
     private suspend fun updateCredentialsWithRefreshToken(
@@ -109,6 +106,12 @@ class CredentialsRepository(
      * Remove a RockSpoon Credentials on DataStore.
      */
     suspend fun deleteCredentials() = withContext(externalScope.coroutineContext) {
-        credentialsLocalDataSource.deleteCredentials()
+        try {
+            credentialsRealmDataSource.logout()
+            credentialsLocalDataSource.deleteCredentials()
+        } catch (ex: Exception) {
+            Timber.tag("CredentialsRepository").e(ex, "CredentialsRepository::deleteCredentials")
+        }
     }
+
 }

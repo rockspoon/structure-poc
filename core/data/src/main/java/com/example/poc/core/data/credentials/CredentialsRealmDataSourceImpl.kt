@@ -16,4 +16,10 @@ internal class CredentialsRealmDataSourceImpl(
             }
         }
     }
+
+    override suspend fun logout() {
+        withContext(ioDispatcher){
+            RealmDatabase.logout()
+        }
+    }
 }

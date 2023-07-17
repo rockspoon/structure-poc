@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+	xmlns:app="http://schemas.android.com/apk/res-auto"
+	android:id="@id/featureAuthPinCodeGraphId"
+	app:startDestination="@id/authPinCodeFragment">
+
+	<fragment
+		android:id="@+id/authPinCodeFragment"
+		android:name="com.example.poc.auth_pin_code.ui.main.AuthPinCodeFragment" /> <!-- it needs to be the complete path because the relative path is completed with the :app module package instead of the feature module path -->
+
+</navigation>

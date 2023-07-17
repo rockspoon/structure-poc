@@ -4,8 +4,9 @@ interface CredentialsRemoteDataSource {
 
     /**
      * Retrieves an user from the RockSpoon merchant web service
+     * @param request GetCredentialsRequest.Email or GetCredentialsRequest.PinCode
      */
-    suspend fun getCredentials(email: String, password: String): Credentials?
+    suspend fun getCredentials(request: GetCredentialsRequest): Credentials?
 
     /**
      * Uses the refresh token to get new credentials tokens

@@ -9,6 +9,7 @@ import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.model
 import com.rockspoon.merchant.datasource.rockspoon_merchant.authentication.models.Token
 import retrofit2.http.Body
 import retrofit2.http.Header
+import retrofit2.http.Headers
 import retrofit2.http.POST
 import retrofit2.http.Path
 
@@ -35,8 +36,9 @@ interface AuthenticationApi {
     /** Authenticates user through his pin. */
     @POST("authentication/v1/user/pin")
     suspend fun pinLogin(
+        @Header("deviceId") deviceId: String? = null,
         @Header("access_token") accessToken: String? = null,
-        @Header("key") key: String? = null,
+        @Header("api_key") key: String? = null,
         @Body pinLoginRequest: PinLoginRequest
     ): Token
 

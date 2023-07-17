@@ -16,14 +16,24 @@ internal interface FeatureAuthEventDelegate {
 
 internal class FeatureAuthEventDelegateImpl : FeatureAuthEventDelegate {
 
-    private val _featureAuthDestinations = Channel<MainViewModel.Destination>(capacity = Channel.CONFLATED)
+    private val _featureAuthDestinations =
+        Channel<MainViewModel.Destination>(capacity = Channel.CONFLATED)
     override val featureAuthDestinations = _featureAuthDestinations.receiveAsFlow()
 
     override fun onFeatureAuthEvent(event: FeatureAuthEvent) {
         when (event) {
             is FeatureAuthEvent.OnAuthenticationCompleted -> onAuthSuccess(event.token)
             is FeatureAuthEvent.OnShitHappens -> onShitHappens(event)
+            is FeatureAuthEvent.OnPinLoginSelected -> onPinLoginSelected()
         }
+    }
+
+    private fun onPinLoginSelected() {
+        _featureAuthDestinations.trySend(
+            MainViewModel.Destination(
+                resId = R.id.featureAuthPinCodeGraphId,
+            )
+        )
     }
 
     private fun onAuthSuccess(token: String) {

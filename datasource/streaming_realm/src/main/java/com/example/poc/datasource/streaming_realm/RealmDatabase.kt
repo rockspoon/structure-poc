@@ -9,11 +9,18 @@ import io.realm.kotlin.TypedRealm
 import io.realm.kotlin.ext.query
 import io.realm.kotlin.mongodb.App
 import io.realm.kotlin.mongodb.Credentials
+import io.realm.kotlin.mongodb.LoggedOut
 import io.realm.kotlin.mongodb.exceptions.ClientResetRequiredException
 import io.realm.kotlin.mongodb.exceptions.UnrecoverableSyncException
 import io.realm.kotlin.mongodb.sync.RecoverOrDiscardUnsyncedChangesStrategy
 import io.realm.kotlin.mongodb.sync.SyncConfiguration
 import io.realm.kotlin.mongodb.sync.SyncSession
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.filter
+import kotlinx.coroutines.flow.first
+import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.withTimeout
 import kotlinx.coroutines.flow.collect
 import kotlinx.coroutines.flow.forEach
 import kotlinx.coroutines.flow.launchIn
@@ -56,8 +63,23 @@ object RealmDatabase {
         )
     }
 
-    suspend fun apiKey(apiKey: String){
+    suspend fun apiKey(apiKey: String) {
         init(realmCredentials = Credentials.apiKey(apiKey))
+    }
+
+    suspend fun logout() {
+        withTimeout(2000) {
+            realmApp.currentUser?.logOut()
+            while (realmApp.currentUser != null) {
+                delay(500)
+            }
+            //TODO by Oleg. This code doesn't work to wait until user is really logged out
+           /* realmApp.authenticationChangeAsFlow()
+                .onStart { realmApp.currentUser?.logOut() }
+                .onEach { Timber.tag("RealmDatabase").i("new authentication status is $it") }
+                .filter { it is LoggedOut }
+                .first()*/
+        }
     }
 
     suspend fun init(

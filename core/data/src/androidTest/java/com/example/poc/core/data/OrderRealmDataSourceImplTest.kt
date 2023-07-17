@@ -5,6 +5,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry.getInstrumentation
 import com.example.poc.core.data.credentials.CredentialsRemoteDataSource
 import com.example.poc.core.data.credentials.CredentialsRemoteDataSourceImpl
+import com.example.poc.core.data.credentials.GetCredentialsRequest
 import com.example.poc.core.data.order.Order
 import com.example.poc.core.data.order.OrderRealmDataSource
 import com.example.poc.core.data.order.OrderRealmDataSourceImpl
@@ -74,7 +75,7 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getTestCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
-            .getCredentials(testCredentials.email, testCredentials.password)!!
+            .getCredentials(testCredentials)!!
         RealmDatabase.accessToken(credentials.accessToken)
 
         // insert an order
@@ -132,7 +133,7 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getTestCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials = credentialsDataSource
-            .getCredentials(testCredentials.email, testCredentials.password)!!
+            .getCredentials(testCredentials)!!
         RealmDatabase.accessToken(credentials.accessToken)
 
         // check if it was synced
@@ -165,7 +166,7 @@ class OrderRealmDataSourceImplTest {
 
             // insert an product
             val productDataSource = ProductRealmDataSourceImpl(
-                database = RealmDatabase.instance
+            database = RealmDatabase.instance
             )
             val product = productDataSource.saveProduct(
                 Product(
@@ -175,7 +176,7 @@ class OrderRealmDataSourceImplTest {
 
             // insert an order
             val orderDataSource = OrderRealmDataSourceImpl(
-                database = RealmDatabase.instance
+            database = RealmDatabase.instance
             )
             val order = orderDataSource.saveOrder(
                 Order(
@@ -203,7 +204,7 @@ class OrderRealmDataSourceImplTest {
 
             // check if order was uploaded
             val wasUploaded =
-                RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
+            RealmDatabase.instance.syncSession.uploadAllLocalChanges(10000.milliseconds)
             assertTrue(wasUploaded)
         }
 
@@ -245,7 +246,7 @@ class OrderRealmDataSourceImplTest {
         val testCredentials = getTestCredentials()
         val credentialsDataSource = getCredentialsDataSource()
         val credentials =
-            credentialsDataSource.getCredentials(testCredentials.email, testCredentials.password)!!
+            credentialsDataSource.getCredentials(testCredentials)!!
         RealmDatabase.accessToken(credentials.accessToken)
         val provider = RealmDatabase.realmApp.currentUser?.apiKeyAuth
         val apiKeys = provider?.fetchAll()

@@ -6,7 +6,7 @@
 
     <fragment
         android:id="@+id/loadingFragment"
-        android:name="com.example.poc.ui.loading.LoadingFragment"/>
+        android:name="com.example.poc.ui.loading.LoadingFragment" />
 
     <fragment
         android:id="@+id/containerFragment"
@@ -14,8 +14,14 @@
 
     <include-dynamic
         android:id="@+id/featureAuthGraphId"
-        app:graphResName="navigation_auth"
         app:graphPackage="com.example.poc.auth"
+        app:graphResName="navigation_auth"
         app:moduleName="auth" />
+
+    <include-dynamic
+        android:id="@+id/featureAuthPinCodeGraphId"
+        app:graphPackage="com.example.poc.auth_pin_code"
+        app:graphResName="navigation_auth_pin_code"
+        app:moduleName="auth_pin_code" />
 
 </navigation>
