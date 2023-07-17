@@ -42,6 +42,7 @@ android {
     setDynamicFeatures(
         setOf(
             ":feature:auth",
+            ":feature:auth_pin_code",
             ":feature:home",
             ":feature:search",
             ":feature:local_client",
