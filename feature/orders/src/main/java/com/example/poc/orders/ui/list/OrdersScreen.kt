@@ -81,6 +81,7 @@ internal fun OrderListScreen(
             }
         )
 
+        // load data using Paging example
         /* val lazyPagingItems = uiState.ordersPaging?.collectAsLazyPagingItems()
 
          LazyColumn(
@@ -149,7 +150,6 @@ fun OrderPreview(modifier: Modifier = Modifier) {
     }
 }
 
-// Local component
 @Composable
 private fun OrderListItem(
     item: Order,
@@ -213,50 +213,4 @@ private fun OrderItem(item: Order.Item, modifier: Modifier = Modifier) {
         Spacer(modifier = Modifier.width(16.dp))
         Text(text = item.id.orEmpty())
     }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ProductListItemPreview() {
-
-    OrderListItem(
-        item = Order(name = "Coca cola"),
-        onItemDeleteClickListener = null
-    )
-}
-
-// Previews
-@Preview(showBackground = true)
-@Composable
-private fun ProductListScreenLoadingPreview() {
-    OrderListScreen(
-        uiState = OrderListUiState(
-            isLoading = true
-        )
-    )
-}
-
-// Note: Paging preview only works in interactive mode
-// See https://issuetracker.google.com/issues/194544557
-@Preview(showBackground = true)
-@Composable
-private fun ProductListScreenNotEmptyListPreview() {
-    OrderListScreen(
-        uiState = OrderListUiState(
-            orders = emptyList(),
-            isLoading = false
-        )
-    )
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun ProductListScreenErrorPreview() {
-    OrderListScreen(
-        uiState = OrderListUiState(
-            orders = emptyList(),
-            isLoading = false,
-            error = RuntimeException("Invalid query exception.")
-        )
-    )
 }

@@ -353,7 +353,7 @@ class OrderRealmDataSourceImplTest {
                 .find().first()
         assertTrue(updatedOrder.items.size == order.items.size -1 )
     }
-    
+
 
     /**
      * add credentials file to \src\androidTest\res\raw directory in json format

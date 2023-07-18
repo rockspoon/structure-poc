@@ -2,5 +2,4 @@
 <resources>
 	<string name="orders">Orders</string>
 	<string name="order_details">details</string>
-	<string name="dismiss">dismiss</string>
 </resources>
