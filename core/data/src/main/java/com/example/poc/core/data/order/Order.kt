@@ -31,6 +31,8 @@ data class Order(
 
         val productId: Long,
 
-        val quantity: Int = 1
+        val quantity: Int = 1,
+
+        val name: String = ""
     )
 }

@@ -89,10 +89,11 @@ object RealmDatabase {
             schema = schema
         )
             .name("realm-poc")
-            .schemaVersion(8)
+            .schemaVersion(9)
             .initialSubscriptions { realm ->
                 add(realm.query<OrderEntity>(), updateExisting = true)
                 add(realm.query<ProductEntity>(), updateExisting = true)
+                add(realm.query<OrderEntity.Item>(), updateExisting = true)
             }
             .errorHandler { session, error ->
                 when (error) {

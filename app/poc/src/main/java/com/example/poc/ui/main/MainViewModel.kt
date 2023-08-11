@@ -10,8 +10,11 @@ import com.example.poc.core.ui.event.FeatureAuthEvent
 import com.example.poc.core.ui.event.FeatureSearchEvent
 import com.example.poc.core.ui.event.FeatureSettingsEvent
 import kotlinx.coroutines.channels.Channel
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.flow.delayFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.flow.onStart
 import kotlinx.coroutines.flow.receiveAsFlow
 import kotlinx.coroutines.launch
 
@@ -60,6 +63,8 @@ internal class MainViewModel(
         viewModelScope.launch {
             onEvent(AppPocEvent.OnAppPocStarted)
             credentialsRepository.observeCredentials()
+                //TODO hotfix to wait until realm authorization is finished
+                .onStart { delay(2000) }
                 .collect {
                     if (it == null) {
                         onEvent(AppPocEvent.OnAppPocAuthNeed)

@@ -6,6 +6,7 @@ import com.example.poc.core.common.coreCommonModule
 import com.example.poc.core.data.coreDataModule
 import com.example.poc.core.domain.coreDomainModule
 import com.example.poc.core.ui.coreUiModule
+import com.example.poc.orders.featureOrdersModule
 import com.example.poc.settings.featureSettingsModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -34,7 +35,8 @@ class Application : MultiDexApplication() {
                 coreDataModule(),
                 coreDomainModule(),
                 coreUiModule(),
-                featureSettingsModule()
+                featureSettingsModule(),
+                featureOrdersModule()
             )
         }
     }
